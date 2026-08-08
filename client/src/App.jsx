@@ -11,6 +11,7 @@ import {
   ExternalLink,
   GraduationCap,
   CheckCircle,
+  TrendingUp,
   Globe,
   Compass,
   Zap,
@@ -30,10 +31,17 @@ import {
   Mail,
   Sliders,
   SlidersHorizontal,
-  LayoutDashboard
+  LayoutDashboard,
+  Sun,
+  Moon,
+  Send,
+  User,
+  Phone,
+  MapPin,
+  Link as LinkIcon
 } from 'lucide-react'
 
-// Lightweight Multi-Language Dictionary (Default English)
+// Multilingual Dictionary (Default English)
 const TRANSLATIONS = {
   en: {
     langName: 'English',
@@ -50,7 +58,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'Welcome to VynkAI CareerForge',
-      desc: 'A simple, ultra-fast, and lightweight platform for students to build ATS resumes, find internships, and start freelancing.',
+      desc: 'An expansive, high-impact career suite for engineering students. Build ATS-compliant multi-section resumes, discover global internships, and monetize technical skills.',
       atsCardTitle: 'Resume ATS Score',
       atsCardDesc: 'Automated screening compatibility',
       savedJobsTitle: 'Saved Opportunities',
@@ -61,70 +69,69 @@ const TRANSLATIONS = {
       btnWriteEmail: 'Draft Cold Email'
     },
     resume: {
-      title: 'Professional ATS Resume Studio',
-      subtitle: 'Structured format matching engineering standards with live vector PDF export.',
+      title: 'Professional Multi-Section ATS Resume Studio',
+      subtitle: 'Structured format matching top engineering standards with live vector PDF export and multi-section layouts.',
       personalTab: '1. Personal & Contact',
       summaryTab: '2. Summary & Motto',
       educationTab: '3. Education History',
       experienceTab: '4. Industrial Training',
       projectsTab: '5. Key Projects',
       skillsTab: '6. Categorized Skills',
-      accomplishmentsTab: '7. Hackathons',
+      accomplishmentsTab: '7. Hackathons & Honors',
       fullName: 'Full Name',
       targetRole: 'Target Role / Specialization',
       email: 'Email Address',
       phone: 'Phone / WhatsApp',
-      location: 'Location / City',
-      links: 'GitHub / LinkedIn / Portfolio',
+      location: 'Location / State / Country',
+      links: 'GitHub / LinkedIn / Portfolio URLs',
       summaryLabel: 'Professional Summary',
-      mottoLabel: 'Career Motto / Inspiring Quote',
-      aiPolish: 'AI Enhance',
-      templateStyle: 'Format Style:',
-      btnUpdate: 'Update Sheet',
+      mottoLabel: 'Career Motto / Inspiring Quote (Optional)',
+      aiPolish: 'AI Enhance Summary',
+      btnUpdate: 'Update Live Sheet',
       btnDownload: 'Download Vector PDF',
-      btnPrint: 'Print',
-      btnExportJson: 'Export JSON',
-      btnImportJson: 'Import JSON',
-      liveSheetTitle: 'Live A4 Print Document',
+      btnPrint: 'Print Document',
+      btnExportJson: 'Export Profile JSON',
+      btnImportJson: 'Import Profile JSON',
+      liveSheetTitle: 'Live A4 Print-Ready Canvas',
       atsAnalysisTitle: 'ATS Quality Checklist'
     },
     emailTool: {
       title: 'AI Cold Email & Pitch Generator',
-      subtitle: 'Generate clean outreach emails for recruiters and startup founders in seconds.',
+      subtitle: 'Generate clean, personalized outreach emails for recruiters, HRs, and tech founders in seconds.',
       recipientRole: 'Recipient Role / Name',
       companyName: 'Company Name',
-      targetPosition: 'Target Internship / Job',
+      targetPosition: 'Target Job / Internship Role',
       myStrongSkill: 'Your Core Technical Skill',
       btnGenerate: 'Generate Pitch',
-      btnCopy: 'Copy Email',
-      previewTitle: 'Generated Cold Email:'
+      btnCopy: 'Copy Outreach Email',
+      previewTitle: 'Generated Cold Email Message:'
     },
     jobs: {
       title: 'Global Internship & Fresher Job Radar',
-      subtitle: 'Curated remote, hybrid, and campus opportunities for students.',
-      searchPlaceholder: 'Search by role or tech stack (e.g. React, Node.js, Python)...',
+      subtitle: 'Curated remote, hybrid, and campus opportunities tailored for engineering students and freshers.',
+      searchPlaceholder: 'Search by role, company, or tech stack (e.g. React, Node.js, Python, Full Stack)...',
       allLocations: 'All Locations',
-      remoteOnly: 'Remote Only',
+      remoteOnly: 'Remote Only (Work From Home)',
       stipendFilter: 'Paid / Stipend',
       directApply: 'Direct Apply',
-      saveJob: 'Save',
+      saveJob: 'Save Opportunity',
       saved: 'Saved',
-      trending: 'Trending:'
+      trending: 'Trending Searches:'
     },
     freelance: {
       title: 'Student Freelance Launchpad & Invoicing',
-      subtitle: 'Actionable tactics to secure initial contracts on Upwork and Fiverr.',
+      subtitle: 'Actionable tactics to secure initial contracts on Upwork, Fiverr, and Contra while in college.',
       hourlyRateCalc: 'Hourly Rate & Monthly Earnings Estimator',
-      hoursPerWeek: 'Available hours / week:',
+      hoursPerWeek: 'Available hours per week:',
       expectedRate: 'Target hourly rate:',
       projectedMonthly: 'Projected Monthly Earnings:',
       proposalGen: 'Instant Client Proposal Generator',
-      selectGig: 'Select Service:',
-      copyProposal: 'Copy Proposal'
+      selectGig: 'Select Service Type:',
+      copyProposal: 'Copy Proposal to Clipboard'
     },
     roadmaps: {
       title: 'Engineering Roadmaps & Technical Interview Prep',
-      subtitle: 'Step-by-step learning paths and core interview flashcards.',
+      subtitle: 'Step-by-step verified learning paths and technical flashcards for top software engineering interviews.',
       interviewPrepTitle: 'Top Technical Interview Flashcards',
       showAnswer: 'Show Answer',
       hideAnswer: 'Hide Answer'
@@ -145,7 +152,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'VynkAI CareerForge मध्ये आपले स्वागत आहे',
-      desc: 'ATS रिझ्युमे तयार करा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्ये असतानाच कमाई सुरू करा.',
+      desc: 'विद्यार्थ्यांसाठी एक सुटसुटीत आणि वेगवान प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
       atsCardTitle: 'ATS रिझ्युमे दर्जा',
       atsCardDesc: 'ऑटोमेटेड सिस्टममध्ये पास होणारा स्कोअर',
       savedJobsTitle: 'सेव्ह केलेल्या नोकऱ्या',
@@ -157,7 +164,7 @@ const TRANSLATIONS = {
     },
     resume: {
       title: 'व्यावसायिक ATS Resume स्टुडिओ',
-      subtitle: 'भारतीय व आंतरराष्ट्रीय कंपन्यांसाठी प्रमाणित A4 फॉरमॅट',
+      subtitle: 'भारतीय व आंतरराष्ट्रीय कंपन्यांसाठी प्रमाणित A4 फॉरमॅट आणि मल्टि-सेक्शन लेआउट.',
       personalTab: '१. वैयक्तिक माहिती',
       summaryTab: '२. सारांश व ब्रीदवाक्य',
       educationTab: '३. शिक्षण व कॉलेज',
@@ -174,7 +181,6 @@ const TRANSLATIONS = {
       summaryLabel: 'करिअर उद्दिष्ट (Summary)',
       mottoLabel: 'करिअर ब्रीदवाक्य / Quote',
       aiPolish: 'AI ने सुधारणा करा',
-      templateStyle: 'फॉरमॅट स्टाईल:',
       btnUpdate: 'Preview अपडेट करा',
       btnDownload: 'Vector PDF डाउनलोड करा',
       btnPrint: 'प्रिंट करा',
@@ -269,7 +275,6 @@ const TRANSLATIONS = {
       summaryLabel: 'करियर सारांश',
       mottoLabel: 'करियर मोटो / Quote',
       aiPolish: 'AI से सुधारें',
-      templateStyle: 'Resume थीम:',
       btnUpdate: 'Preview अपडेट करें',
       btnDownload: 'Vector PDF डाउनलोड करें',
       btnPrint: 'प्रिंट करें',
@@ -429,7 +434,7 @@ const MOCK_JOBS = [
     company: 'CloudScale Global Technologies',
     location: 'Remote (Worldwide / US / India)',
     stipend: '$1,200 - $2,200 / month (₹45,000 - ₹85,000)',
-    tags: ['React.js', 'Python', 'Node.js', 'Remote'],
+    tags: ['React.js', 'Python', 'Node.js', 'Remote', 'Mentorship'],
     description: 'Work with senior AI engineers building interactive dashboards, LLM integrations, and responsive React applications. Direct pre-placement job offer (PPO) pathway.',
     url: 'https://www.linkedin.com/jobs'
   },
@@ -456,36 +461,39 @@ const MOCK_JOBS = [
 ]
 
 export default function App() {
-  // Simple, ultra-lightweight clean state (Default language: English)
+  // 1. Dark Theme Toggle state (Defaults to clean dark/light)
+  const [isDark, setIsDark] = useState(true) // Sleek Dark Theme + Clean Light Switcher
+
+  // 2. Language state (Defaults to English)
   const [lang, setLang] = useState('en')
   const [currency, setCurrency] = useState('USD')
   const [activeTab, setActiveTab] = useState('dashboard')
   const [resumeSubTab, setResumeSubTab] = useState('personal')
   const [toastMsg, setToastMsg] = useState('')
 
-  // Candidate Data (Structured format matching reference)
+  // 3. Candidate Data
   const [candidate, setCandidate] = useState(DEFAULT_CANDIDATE)
   const [resumeHtml, setResumeHtml] = useState('')
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
 
-  // Cold Email State
+  // 4. Cold Email State
   const [emailRecipient, setEmailRecipient] = useState('Hiring Manager / Tech Lead')
   const [emailCompany, setEmailCompany] = useState('CloudScale Technologies')
   const [emailTargetRole, setEmailTargetRole] = useState('AI & Software Engineering Intern (Summer 2025)')
   const [emailStrongSkill, setEmailStrongSkill] = useState('Full-Stack Web & Machine Learning')
   const [generatedColdEmail, setGeneratedColdEmail] = useState('')
 
-  // Jobs State
+  // 5. Jobs State
   const [jobSearchQuery, setJobSearchQuery] = useState('')
   const [jobFilterLocation, setJobFilterLocation] = useState('all')
   const [savedJobIds, setSavedJobIds] = useState([1])
 
-  // Freelance Calculator
+  // 6. Freelance Calculator
   const [calcHours, setCalcHours] = useState(15)
   const [calcRate, setCalcRate] = useState(30)
   const [proposalService, setProposalService] = useState('react')
 
-  // Flashcards
+  // 7. Flashcards
   const [revealedAnswers, setRevealedAnswers] = useState({})
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en
@@ -508,7 +516,7 @@ Dear ${emailRecipient} at ${emailCompany},
 
 I hope this email finds you well.
 
-I have been closely following ${emailCompany}'s engineering initiatives and was deeply inspired by your high-impact software products. I am writing to express my strong interest in the ${emailTargetRole} position.
+I have been following ${emailCompany}'s engineering initiatives and was deeply inspired by your high-impact digital solutions. I am writing to express my strong interest in the ${emailTargetRole} position.
 
 As an Artificial Intelligence & Software Engineering student with hands-on experience in ${emailStrongSkill}, I have built production-ready web platforms, native mobile applications, and automated document engines.
 
@@ -547,91 +555,90 @@ ${candidate.links}`
       const res = await axios.post('http://localhost:4000/api/resume/generate', candidate)
       setResumeHtml(res.data)
     } catch (err) {
-      // Clean fast fallback
       const skillsHtml = Object.entries(candidate.skillsCategorized).map(([cat, items]) => `
-        <div style="margin-bottom: 6px;">
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 3px;">${cat}</div>
-          <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-            ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600;">${s.trim()}</span>`).join('')}
+        <div style="margin-bottom: 8px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 4px;">${cat}</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+            ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">${s.trim()}</span>`).join('')}
           </div>
         </div>
       `).join('')
 
       const eduHtml = candidate.educationList.map(ed => `
-        <div style="margin-bottom: 8px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 12.5px; color: #0f172a;">
+        <div style="margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
             <span>${ed.degree}</span>
             <span style="color: #64748b; font-weight: 500;">${ed.year}</span>
           </div>
-          <div style="font-size: 12px; color: #2563eb; font-weight: 600;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
-          <ul style="margin-left: 16px; margin-top: 3px; font-size: 12px; color: #334155;">
+          <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 1px;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
+          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12px; color: #334155; line-height: 1.5;">
             ${ed.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
           </ul>
         </div>
       `).join('')
 
       const expHtml = candidate.experienceList.map(exp => `
-        <div style="margin-bottom: 8px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 12.5px; color: #0f172a;">
+        <div style="margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
             <span>${exp.title}</span>
             <span style="color: #64748b; font-weight: 500;">${exp.period}</span>
           </div>
-          <div style="font-size: 12px; color: #2563eb; font-weight: 600;">${exp.company}</div>
-          <ul style="margin-left: 16px; margin-top: 3px; font-size: 12px; color: #334155;">
+          <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 1px;">${exp.company}</div>
+          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12px; color: #334155; line-height: 1.5;">
             ${exp.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
           </ul>
         </div>
       `).join('')
 
       const projHtml = candidate.projectsList.map(p => `
-        <div style="margin-bottom: 8px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 12.5px; color: #0f172a;">
+        <div style="margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
             <span>${p.title}</span>
             <span style="color: #2563eb; font-size: 11px; font-weight: 600;">${p.domain}</span>
           </div>
-          <div style="color: #334155; font-size: 12px; margin-top: 2px;">${p.desc}</div>
+          <div style="color: #334155; font-size: 12.5px; margin-top: 2px; line-height: 1.5;">${p.desc}</div>
         </div>
       `).join('')
 
       const fallback = `
-        <div style="font-family: 'Plus Jakarta Sans', Inter, sans-serif; padding: 24px 28px; color: #0f172a; line-height: 1.5; font-size: 12.5px;">
-          <div style="border-bottom: 2px solid #2563eb; padding-bottom: 10px; margin-bottom: 12px;">
-            <div style="font-size: 22px; font-weight: 800; color: #0f172a;">${candidate.name}</div>
-            <div style="font-size: 13px; font-weight: 700; color: #2563eb; margin-top: 2px;">${candidate.role}</div>
-            <div style="margin-top: 4px; font-size: 11px; color: #475569;">
-              📧 ${candidate.email} • 📱 ${candidate.phone} • 📍 ${candidate.location} • 🔗 ${candidate.links}
+        <div style="font-family: 'Plus Jakarta Sans', Inter, sans-serif; padding: 32px 36px; color: #0f172a; line-height: 1.55; font-size: 12.8px;">
+          <div style="border-bottom: 2.5px solid #2563eb; padding-bottom: 14px; margin-bottom: 16px;">
+            <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${candidate.name}</div>
+            <div style="font-size: 13.5px; font-weight: 700; color: #2563eb; margin-top: 2px;">${candidate.role}</div>
+            <div style="margin-top: 6px; font-size: 11.5px; color: #475569; line-height: 1.6;">
+              📧 ${candidate.email} • 📱 ${candidate.phone} • 📍 ${candidate.location}<br/>🔗 ${candidate.links}
             </div>
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px;">Professional Summary</div>
-            <div style="font-size: 11.8px; color: #334155;">${candidate.summary}</div>
-            ${candidate.motto ? `<div style="margin-top: 4px; padding: 4px 8px; background: #f8fafc; border-left: 2.5px solid #3b82f6; font-style: italic; color: #475569; font-size: 11px;">"${candidate.motto}"</div>` : ''}
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 6px; letter-spacing: 0.5px;">Professional Summary</div>
+            <div style="font-size: 12.5px; color: #334155; line-height: 1.55;">${candidate.summary}</div>
+            ${candidate.motto ? `<div style="margin-top: 6px; padding: 6px 12px; background: #f8fafc; border-left: 3px solid #3b82f6; font-style: italic; color: #475569; font-size: 11.8px;">"${candidate.motto}"</div>` : ''}
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px;">Education</div>
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Education</div>
             ${eduHtml}
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px;">Industrial Training & Experience</div>
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Industrial Training & Experience</div>
             ${expHtml}
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px;">Key Projects</div>
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Key Projects</div>
             ${projHtml}
           </div>
 
-          <div style="margin-bottom: 10px;">
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px;">Technical Skillset</div>
+          <div style="margin-bottom: 14px;">
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Technical Skillset</div>
             ${skillsHtml}
           </div>
 
           <div>
-            <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 3px;">Hackathons & Accomplishments</div>
-            <div style="font-size: 11.8px; color: #334155; white-space: pre-line;">${candidate.accomplishments}</div>
+            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px; letter-spacing: 0.5px;">Hackathons & Accomplishments</div>
+            <div style="font-size: 12.5px; color: #334155; white-space: pre-line; line-height: 1.55;">${candidate.accomplishments}</div>
           </div>
         </div>
       `
@@ -718,57 +725,81 @@ ${candidate.links}`
     return matchQuery && matchLocation
   })
 
+  // Theme Class Mappings
+  const themeBg = isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
+  const headerBg = isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white/95 border-slate-200 shadow-sm'
+  const cardBg = isDark ? 'bg-slate-900/90 border-slate-800 shadow-xl' : 'bg-white border-slate-200/80 shadow-sm'
+  const inputBg = isDark ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-indigo-500' : 'bg-slate-50/70 border-slate-300 text-slate-900 focus:border-indigo-600 focus:bg-white'
+  const textMuted = isDark ? 'text-slate-400' : 'text-slate-500'
+  const navInactive = isDark ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-16">
+    <div className={`min-h-screen ${themeBg} transition-colors duration-200 font-sans pb-24`}>
       
       {/* Toast Notification */}
       {toastMsg && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white font-semibold text-xs px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 border border-slate-700 animate-fadeIn">
-          <CheckCircle className="w-4 h-4 text-emerald-400" />
+        <div className={`fixed bottom-6 right-6 z-50 ${isDark ? 'bg-emerald-400 text-slate-950' : 'bg-slate-900 text-white'} font-bold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 border ${isDark ? 'border-emerald-300' : 'border-slate-700'} animate-bounce`}>
+          <CheckCircle className="w-5 h-5" />
           <span>{toastMsg}</span>
         </div>
       )}
 
-      {/* CLEAN & LIGHTWEIGHT HEADER */}
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+      {/* TOP HEADER */}
+      <header className={`sticky top-0 z-40 ${headerBg} backdrop-blur-xl border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             
             {/* Logo */}
             <div 
               onClick={() => setActiveTab('dashboard')} 
-              className="flex items-center gap-2.5 cursor-pointer"
+              className="flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center shadow-xs">
-                <Compass className="w-5 h-5 text-white" />
+              <div className="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/25 group-hover:scale-105 transition">
+                <Compass className="w-6 h-6 text-white" />
               </div>
               <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-base font-extrabold tracking-tight text-slate-900">
+                <div className="flex items-center gap-2">
+                  <span className={`text-xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {t.brandName}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">
+                  <span className={`text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full ${isDark ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
                     Student
                   </span>
                 </div>
+                <p className={`text-xs ${textMuted} hidden sm:block`}>
+                  {t.brandBadge}
+                </p>
               </div>
             </div>
 
-            {/* Language & Currency Tools */}
-            <div className="flex items-center gap-2">
+            {/* Language, Currency & Dark Mode Switcher */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              
+              {/* Dark Theme Toggle Button */}
+              <button
+                onClick={() => {
+                  setIsDark(!isDark)
+                  showToast(isDark ? '☀️ Clean Light Mode enabled' : '🌙 Sleek Dark Mode enabled')
+                }}
+                className={`p-2.5 rounded-xl border transition ${isDark ? 'bg-slate-900 border-slate-800 text-amber-400 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'}`}
+                title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+
               {/* Language Selector */}
-              <div className="flex items-center bg-slate-100 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold">
-                <Globe className="w-3.5 h-3.5 text-indigo-600 mr-1.5 shrink-0" />
+              <div className={`flex items-center border rounded-xl px-3 py-2 text-xs font-semibold ${isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-800'}`}>
+                <Globe className="w-3.5 h-3.5 text-indigo-600 mr-2 shrink-0" />
                 <select
                   value={lang}
                   onChange={(e) => {
                     setLang(e.target.value)
                     showToast(`Language set to ${TRANSLATIONS[e.target.value]?.langName}`)
                   }}
-                  className="bg-transparent text-slate-800 outline-none cursor-pointer pr-1"
+                  className="bg-transparent outline-none cursor-pointer pr-1"
                 >
                   {Object.entries(TRANSLATIONS).map(([k, v]) => (
-                    <option key={k} value={k} className="bg-white text-slate-900">
+                    <option key={k} value={k} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
                       {v.flag} {v.langName}
                     </option>
                   ))}
@@ -776,16 +807,16 @@ ${candidate.links}`
               </div>
 
               {/* Currency Selector */}
-              <div className="hidden sm:flex items-center bg-slate-100 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-700">
+              <div className={`hidden sm:flex items-center border rounded-xl px-3 py-2 text-xs font-semibold ${isDark ? 'bg-slate-900 border-slate-800 text-indigo-400' : 'bg-slate-100 border-slate-200 text-indigo-600'}`}>
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
                   className="bg-transparent outline-none cursor-pointer"
                 >
-                  <option value="USD">$ USD</option>
-                  <option value="INR">₹ INR</option>
-                  <option value="EUR">€ EUR</option>
-                  <option value="GBP">£ GBP</option>
+                  <option value="USD" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>$ USD</option>
+                  <option value="INR" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>₹ INR</option>
+                  <option value="EUR" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>€ EUR</option>
+                  <option value="GBP" className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>£ GBP</option>
                 </select>
               </div>
 
@@ -794,16 +825,16 @@ ${candidate.links}`
                 href="https://github.com/vina-yak711/student-career-assist"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-900 transition"
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold transition ${isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white' : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-900'}`}
               >
-                <Github className="w-3.5 h-3.5 text-slate-600" />
+                <Github className="w-4 h-4" />
                 <span className="hidden md:inline">GitHub</span>
               </a>
             </div>
           </div>
 
-          {/* MAIN CLEAN NAVIGATION TABS */}
-          <nav className="flex items-center gap-1 overflow-x-auto pb-2 pt-0.5 scrollbar-none border-t border-slate-100 mt-1">
+          {/* HORIZONTAL NAVIGATION TABS (Spacious & Touch-Friendly) */}
+          <nav className={`flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none border-t ${isDark ? 'border-slate-800/80' : 'border-slate-100'} mt-1`}>
             {[
               { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
               { key: 'resume', label: t.nav.resume, icon: FileText },
@@ -815,13 +846,13 @@ ${candidate.links}`
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                   activeTab === key
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                    : navInactive
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-4 h-4" />
                 <span>{label}</span>
               </button>
             ))}
@@ -829,108 +860,108 @@ ${candidate.links}`
         </div>
       </header>
 
-      {/* MAIN CONTAINER */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+      {/* MAIN CONTENT AREA */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
 
         {/* ============================================================ */}
         {/* VIEW 1: DASHBOARD */}
         {/* ============================================================ */}
         {activeTab === 'dashboard' && (
-          <div className="space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-xs">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold mb-2">
-                  <Zap className="w-3 h-3" /> Lightweight Student Career Suite
+          <div className="space-y-8">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-10 border relative overflow-hidden`}>
+              <div className="max-w-3xl">
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold mb-3 ${isDark ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
+                  <Zap className="w-3.5 h-3.5" /> All-in-One Global Career Platform
                 </div>
-                <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
+                <h2 className={`text-2xl sm:text-4xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'} leading-tight`}>
                   {t.dashboard.welcome}
                 </h2>
-                <p className="mt-1.5 text-slate-600 text-xs sm:text-sm leading-relaxed">
+                <p className={`mt-3 ${textMuted} text-sm sm:text-base leading-relaxed`}>
                   {t.dashboard.desc}
                 </p>
-                <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <div className="mt-8 flex flex-wrap items-center gap-3.5">
                   <button
                     onClick={() => setActiveTab('resume')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg shadow-xs transition flex items-center gap-1.5 text-xs sm:text-sm"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg shadow-indigo-600/25 transition flex items-center gap-2 text-xs sm:text-sm"
                   >
                     <FileText className="w-4 h-4" />
                     <span>{t.dashboard.btnBuildResume}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('jobs')}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-lg border border-slate-200 transition flex items-center gap-1.5 text-xs sm:text-sm"
+                    className={`font-bold px-6 py-3.5 rounded-2xl border transition flex items-center gap-2 text-xs sm:text-sm ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'}`}
                   >
                     <Briefcase className="w-4 h-4 text-indigo-600" />
                     <span>{t.dashboard.btnSearchJobs}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('coverLetter')}
-                    className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-lg border border-slate-200 transition flex items-center gap-1.5 text-xs sm:text-sm"
+                    className={`font-bold px-6 py-3.5 rounded-2xl border transition flex items-center gap-2 text-xs sm:text-sm ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'}`}
                   >
-                    <Mail className="w-4 h-4 text-emerald-600" />
+                    <Mail className="w-4 h-4 text-emerald-500" />
                     <span>{t.dashboard.btnWriteEmail}</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Quick Metrics */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div 
                 onClick={() => setActiveTab('resume')}
-                className="bg-white border border-slate-200 hover:border-indigo-400 rounded-xl p-5 shadow-xs cursor-pointer transition"
+                className={`${cardBg} rounded-3xl p-6 border cursor-pointer hover:border-indigo-500/50 transition group`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.dashboard.atsCardTitle}</span>
-                  <FileText className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-bold ${textMuted} uppercase tracking-wider`}>{t.dashboard.atsCardTitle}</span>
+                  <FileText className="w-5 h-5 text-indigo-600 group-hover:scale-110 transition" />
                 </div>
-                <div className="text-2xl font-black text-slate-900">
-                  <span className={atsScore >= 75 ? 'text-emerald-600' : 'text-amber-600'}>{atsScore}%</span>
-                  <span className="text-xs font-normal text-slate-400"> / 100</span>
+                <div className="text-3xl font-black flex items-center gap-2">
+                  <span className={atsScore >= 75 ? 'text-emerald-500' : 'text-amber-500'}>{atsScore}%</span>
+                  <span className={`text-xs font-normal ${textMuted}`}>/ 100</span>
                 </div>
-                <p className="text-xs text-slate-500 mt-1">{t.dashboard.atsCardDesc}</p>
+                <p className={`text-xs ${textMuted} mt-2`}>{t.dashboard.atsCardDesc}</p>
               </div>
 
               <div 
                 onClick={() => setActiveTab('jobs')}
-                className="bg-white border border-slate-200 hover:border-indigo-400 rounded-xl p-5 shadow-xs cursor-pointer transition"
+                className={`${cardBg} rounded-3xl p-6 border cursor-pointer hover:border-indigo-500/50 transition group`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t.dashboard.savedJobsTitle}</span>
-                  <BookmarkCheck className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-bold ${textMuted} uppercase tracking-wider`}>{t.dashboard.savedJobsTitle}</span>
+                  <BookmarkCheck className="w-5 h-5 text-indigo-600 group-hover:scale-110 transition" />
                 </div>
-                <div className="text-2xl font-black text-slate-900">
-                  {savedJobIds.length} <span className="text-xs font-normal text-slate-400">Saved</span>
+                <div className="text-3xl font-black">
+                  {savedJobIds.length} <span className={`text-xs font-normal ${textMuted}`}>Saved</span>
                 </div>
-                <p className="text-xs text-slate-500 mt-1">Active student internships in radar</p>
+                <p className={`text-xs ${textMuted} mt-2`}>Active student internships in radar</p>
               </div>
 
               <div 
                 onClick={() => setActiveTab('freelance')}
-                className="bg-white border border-slate-200 hover:border-indigo-400 rounded-xl p-5 shadow-xs cursor-pointer transition"
+                className={`${cardBg} rounded-3xl p-6 border cursor-pointer hover:border-indigo-500/50 transition group`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Freelance Potential</span>
-                  <DollarSign className="w-4 h-4 text-emerald-600" />
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-bold ${textMuted} uppercase tracking-wider`}>Freelance Studio</span>
+                  <DollarSign className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition" />
                 </div>
-                <div className="text-2xl font-black text-emerald-600">
+                <div className="text-3xl font-black text-emerald-500">
                   {currency === 'INR' ? '₹25,000+' : '$450+'}
                 </div>
-                <p className="text-xs text-slate-500 mt-1">Estimated monthly side-income</p>
+                <p className={`text-xs ${textMuted} mt-2`}>Estimated monthly side-income</p>
               </div>
 
               <div 
                 onClick={() => setActiveTab('roadmaps')}
-                className="bg-white border border-slate-200 hover:border-indigo-400 rounded-xl p-5 shadow-xs cursor-pointer transition"
+                className={`${cardBg} rounded-3xl p-6 border cursor-pointer hover:border-indigo-500/50 transition group`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Technical QA</span>
-                  <Rocket className="w-4 h-4 text-indigo-600" />
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-xs font-bold ${textMuted} uppercase tracking-wider`}>Technical QA</span>
+                  <Rocket className="w-5 h-5 text-indigo-600 group-hover:scale-110 transition" />
                 </div>
-                <div className="text-2xl font-black text-indigo-600">
+                <div className="text-3xl font-black text-indigo-500">
                   50+ Questions
                 </div>
-                <p className="text-xs text-slate-500 mt-1">Flashcards for React, AI/ML & SQL</p>
+                <p className={`text-xs ${textMuted} mt-2`}>Flashcards for React, AI/ML & SQL</p>
               </div>
             </div>
           </div>
@@ -940,48 +971,48 @@ ${candidate.links}`
         {/* VIEW 2: MULTI-SECTION ATS RESUME BUILDER */}
         {/* ============================================================ */}
         {activeTab === 'resume' && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             
             {/* Toolbar */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4`}>
               <div>
-                <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-indigo-600" />
+                <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                  <FileText className="w-6 h-6 text-indigo-600" />
                   {t.resume.title}
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                   {t.resume.subtitle}
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2.5">
                 <button
                   onClick={handleDownloadPdf}
                   disabled={isGeneratingPdf}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg shadow-xs transition flex items-center gap-1.5"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 transition flex items-center gap-2 disabled:opacity-50"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{isGeneratingPdf ? 'Exporting...' : t.resume.btnDownload}</span>
+                  <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
+                  <span>{isGeneratingPdf ? 'Compiling...' : t.resume.btnDownload}</span>
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-2 rounded-lg border border-slate-200 transition flex items-center gap-1"
+                  className={`text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl border transition flex items-center gap-1.5 ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'}`}
                 >
-                  <Printer className="w-3.5 h-3.5" />
+                  <Printer className="w-4 h-4" />
                   <span>{t.resume.btnPrint}</span>
                 </button>
               </div>
             </div>
 
             {/* Split Screen Form & Live Document */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               
               {/* Left Column: Form Builder with 7 Sub-tabs */}
-              <div className="lg:col-span-6 space-y-4">
-                <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+              <div className="lg:col-span-6 space-y-6">
+                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6`}>
                   
                   {/* Step Sub-tabs */}
-                  <div className="flex items-center gap-1 border-b border-slate-200 pb-2.5 mb-4 overflow-x-auto scrollbar-none">
+                  <div className={`flex items-center gap-1.5 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'} pb-3.5 overflow-x-auto scrollbar-none`}>
                     {[
                       { key: 'personal', label: t.resume.personalTab },
                       { key: 'summary', label: t.resume.summaryTab },
@@ -994,10 +1025,10 @@ ${candidate.links}`
                       <button
                         key={key}
                         onClick={() => setResumeSubTab(key)}
-                        className={`px-2.5 py-1 rounded-md text-xs font-bold transition whitespace-nowrap ${
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                           resumeSubTab === key
-                            ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
-                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                            ? 'bg-indigo-600 text-white shadow-xs'
+                            : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                         }`}
                       >
                         {label}
@@ -1007,60 +1038,60 @@ ${candidate.links}`
 
                   {/* SUBTAB 1: PERSONAL & CONTACT */}
                   {resumeSubTab === 'personal' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.fullName}</label>
+                        <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.fullName}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                           value={candidate.name}
                           onChange={(e) => setCandidate({ ...candidate, name: e.target.value })}
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.targetRole}</label>
+                        <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.targetRole}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                           value={candidate.role}
                           onChange={(e) => setCandidate({ ...candidate, role: e.target.value })}
                         />
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.email}</label>
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.email}</label>
                           <input
                             type="email"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                             value={candidate.email}
                             onChange={(e) => setCandidate({ ...candidate, email: e.target.value })}
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.phone}</label>
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.phone}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                             value={candidate.phone}
                             onChange={(e) => setCandidate({ ...candidate, phone: e.target.value })}
                           />
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.location}</label>
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.location}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                             value={candidate.location}
                             onChange={(e) => setCandidate({ ...candidate, location: e.target.value })}
                           />
                         </div>
                         <div>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.links}</label>
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.links}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
                             value={candidate.links}
                             onChange={(e) => setCandidate({ ...candidate, links: e.target.value })}
                           />
@@ -1071,31 +1102,31 @@ ${candidate.links}`
 
                   {/* SUBTAB 2: SUMMARY & MOTTO */}
                   {resumeSubTab === 'summary' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div>
-                        <div className="flex items-center justify-between mb-1">
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">{t.resume.summaryLabel}</label>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted}`}>{t.resume.summaryLabel}</label>
                           <button
                             type="button"
                             onClick={handleAiPolish}
-                            className="text-xs text-indigo-600 hover:text-indigo-700 font-bold flex items-center gap-1"
+                            className="text-xs text-indigo-500 hover:text-indigo-400 font-bold flex items-center gap-1"
                           >
-                            <Sparkles className="w-3 h-3" />
+                            <Sparkles className="w-3.5 h-3.5" />
                             <span>{t.resume.aiPolish}</span>
                           </button>
                         </div>
                         <textarea
                           rows={4}
-                          className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none leading-relaxed"
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none leading-relaxed`}
                           value={candidate.summary}
                           onChange={(e) => setCandidate({ ...candidate, summary: e.target.value })}
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.resume.mottoLabel}</label>
+                        <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.mottoLabel}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none italic"
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none italic`}
                           value={candidate.motto}
                           onChange={(e) => setCandidate({ ...candidate, motto: e.target.value })}
                         />
@@ -1105,13 +1136,13 @@ ${candidate.links}`
 
                   {/* SUBTAB 3: EDUCATION */}
                   {resumeSubTab === 'education' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {candidate.educationList.map((ed, idx) => (
-                        <div key={idx} className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-                          <div className="font-bold text-xs text-indigo-600 uppercase">Degree Program #{idx + 1}</div>
+                        <div key={idx} className={`${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'} p-4 sm:p-5 rounded-2xl border space-y-3`}>
+                          <div className="font-bold text-xs text-indigo-500 uppercase">Degree Program #{idx + 1}</div>
                           <input
                             type="text"
-                            className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                            className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                             placeholder="Degree Name"
                             value={ed.degree}
                             onChange={(e) => {
@@ -1120,10 +1151,10 @@ ${candidate.links}`
                               setCandidate({ ...candidate, educationList: list })
                             }}
                           />
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                               placeholder="College / University"
                               value={ed.institution}
                               onChange={(e) => {
@@ -1134,7 +1165,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                               placeholder="Year / Score"
                               value={ed.year}
                               onChange={(e) => {
@@ -1146,8 +1177,8 @@ ${candidate.links}`
                           </div>
                           <textarea
                             rows={2}
-                            className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
-                            placeholder="Bullet points"
+                            className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
+                            placeholder="Bullet points (one per line)"
                             value={ed.bullets}
                             onChange={(e) => {
                               const list = [...candidate.educationList]
@@ -1162,13 +1193,13 @@ ${candidate.links}`
 
                   {/* SUBTAB 4: INDUSTRIAL TRAINING */}
                   {resumeSubTab === 'experience' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {candidate.experienceList.map((exp, idx) => (
-                        <div key={idx} className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2">
-                          <div className="font-bold text-xs text-emerald-600 uppercase">Training / Program #{idx + 1}</div>
+                        <div key={idx} className={`${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'} p-4 sm:p-5 rounded-2xl border space-y-3`}>
+                          <div className="font-bold text-xs text-emerald-500 uppercase">Training / Program #{idx + 1}</div>
                           <input
                             type="text"
-                            className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                            className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                             placeholder="Program Title"
                             value={exp.title}
                             onChange={(e) => {
@@ -1177,10 +1208,10 @@ ${candidate.links}`
                               setCandidate({ ...candidate, experienceList: list })
                             }}
                           />
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                               placeholder="Company"
                               value={exp.company}
                               onChange={(e) => {
@@ -1191,7 +1222,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                               placeholder="Duration"
                               value={exp.period}
                               onChange={(e) => {
@@ -1202,9 +1233,9 @@ ${candidate.links}`
                             />
                           </div>
                           <textarea
-                            rows={2}
-                            className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
-                            placeholder="Bullet points"
+                            rows={3}
+                            className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
+                            placeholder="Highlights (one bullet per line)"
                             value={exp.bullets}
                             onChange={(e) => {
                               const list = [...candidate.experienceList]
@@ -1219,13 +1250,13 @@ ${candidate.links}`
 
                   {/* SUBTAB 5: KEY PROJECTS */}
                   {resumeSubTab === 'projects' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {candidate.projectsList.map((p, idx) => (
-                        <div key={idx} className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1.5">
-                          <div className="grid grid-cols-2 gap-2">
+                        <div key={idx} className={`${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'} p-4 rounded-2xl border space-y-2.5`}>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 font-bold outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs font-bold outline-none`}
                               placeholder="Project Title"
                               value={p.title}
                               onChange={(e) => {
@@ -1236,7 +1267,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
+                              className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
                               placeholder="Domain (e.g. React • Python)"
                               value={p.domain}
                               onChange={(e) => {
@@ -1248,8 +1279,8 @@ ${candidate.links}`
                           </div>
                           <textarea
                             rows={2}
-                            className="w-full bg-white border border-slate-200 rounded px-2.5 py-1 text-xs text-slate-900 outline-none"
-                            placeholder="Description"
+                            className={`w-full ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-xl px-3 py-2 text-xs outline-none`}
+                            placeholder="Description..."
                             value={p.desc}
                             onChange={(e) => {
                               const list = [...candidate.projectsList]
@@ -1264,13 +1295,13 @@ ${candidate.links}`
 
                   {/* SUBTAB 6: CATEGORIZED SKILLS */}
                   {resumeSubTab === 'skills' && (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       {Object.entries(candidate.skillsCategorized).map(([cat, items]) => (
                         <div key={cat}>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{cat}</label>
+                          <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{cat}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-xs outline-none transition`}
                             value={items}
                             onChange={(e) => {
                               setCandidate({
@@ -1290,10 +1321,10 @@ ${candidate.links}`
                   {/* SUBTAB 7: ACCOMPLISHMENTS */}
                   {resumeSubTab === 'accomplishments' && (
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Hackathons & Accomplishments</label>
+                      <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>Hackathons & Accomplishments</label>
                       <textarea
                         rows={4}
-                        className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none leading-relaxed"
+                        className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-xs outline-none leading-relaxed`}
                         value={candidate.accomplishments}
                         onChange={(e) => setCandidate({ ...candidate, accomplishments: e.target.value })}
                       />
@@ -1301,14 +1332,14 @@ ${candidate.links}`
                   )}
 
                   {/* Export & Import Tools */}
-                  <div className="pt-3 border-t border-slate-200 mt-4 flex items-center justify-between text-xs">
+                  <div className={`pt-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-200'} mt-6 flex items-center justify-between text-xs`}>
                     <button
                       onClick={handleExportJson}
-                      className="text-slate-600 hover:text-slate-900 font-semibold"
+                      className="text-indigo-500 hover:text-indigo-400 font-bold"
                     >
                       💾 Export JSON
                     </button>
-                    <label className="text-indigo-600 hover:text-indigo-700 font-semibold cursor-pointer">
+                    <label className="text-indigo-500 hover:text-indigo-400 font-bold cursor-pointer">
                       📥 Import JSON
                       <input type="file" accept=".json" onChange={handleImportJson} className="hidden" />
                     </label>
@@ -1316,45 +1347,45 @@ ${candidate.links}`
                 </div>
 
                 {/* Real-time ATS Checklist */}
-                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold uppercase text-slate-600 flex items-center gap-1.5">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <div className={`${cardBg} rounded-3xl p-6 border space-y-3`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" />
                       {t.resume.atsAnalysisTitle}
                     </span>
-                    <span className={`text-xs font-extrabold ${atsScore >= 75 ? 'text-emerald-600' : 'text-amber-600'}`}>
-                      {atsScore} / 100
+                    <span className={`text-xs font-extrabold ${atsScore >= 75 ? 'text-emerald-500' : 'text-amber-500'}`}>
+                      {atsScore} / 100 Score
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-1.5 text-xs text-slate-500">
-                    <div className="flex items-center gap-1.5">
-                      <CheckSquare className="w-3 h-3 text-emerald-600" /> Contact details valid
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-400">
+                    <div className="flex items-center gap-2">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-500" /> Contact details valid
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <CheckSquare className="w-3 h-3 text-emerald-600" /> Summary & motto set
+                    <div className="flex items-center gap-2">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-500" /> Summary & motto set
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <CheckSquare className="w-3 h-3 text-emerald-600" /> Industrial training included
+                    <div className="flex items-center gap-2">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-500" /> Industrial training included
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <CheckSquare className="w-3 h-3 text-emerald-600" /> Technical skills categorized
+                    <div className="flex items-center gap-2">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-500" /> Technical skills categorized
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Column: Live A4 White Paper Canvas */}
-              <div className="lg:col-span-6 space-y-4">
-                <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-200">
-                    <span className="font-bold text-xs text-slate-800 flex items-center gap-1.5">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500" />
+              {/* Right Column: Live A4 White Document Preview */}
+              <div className="lg:col-span-6 space-y-6">
+                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col h-full`}>
+                  <div className={`flex items-center justify-between mb-4 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+                    <span className="font-bold text-xs flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                       {t.resume.liveSheetTitle}
                     </span>
-                    <span className="text-[11px] text-slate-400 font-medium">Standard A4</span>
+                    <span className={`text-xs ${textMuted} font-medium`}>Standard A4 Format</span>
                   </div>
 
-                  <div className="flex-1 min-h-[560px] bg-white text-slate-900 rounded-lg p-5 sm:p-7 shadow-xs overflow-y-auto border border-slate-200">
+                  <div className="flex-1 min-h-[600px] bg-white text-slate-950 rounded-2xl p-6 sm:p-8 shadow-inner overflow-y-auto border border-slate-300">
                     <div dangerouslySetInnerHTML={{ __html: resumeHtml }} />
                   </div>
                 </div>
@@ -1368,24 +1399,24 @@ ${candidate.links}`
         {/* VIEW 3: COLD EMAIL GENERATOR */}
         {/* ============================================================ */}
         {activeTab === 'coverLetter' && (
-          <div className="space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-xs">
-              <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <Mail className="w-5 h-5 text-indigo-600" />
+          <div className="space-y-8">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+              <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                <Mail className="w-6 h-6 text-indigo-600" />
                 {t.emailTool.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                 {t.emailTool.subtitle}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-3">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className={`lg:col-span-5 ${cardBg} rounded-3xl p-6 sm:p-8 border space-y-4`}>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.emailTool.companyName}</label>
+                  <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.companyName}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
                     value={emailCompany}
                     onChange={(e) => {
                       setEmailCompany(e.target.value)
@@ -1394,10 +1425,10 @@ ${candidate.links}`
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.emailTool.targetPosition}</label>
+                  <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.targetPosition}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
                     value={emailTargetRole}
                     onChange={(e) => {
                       setEmailTargetRole(e.target.value)
@@ -1406,10 +1437,10 @@ ${candidate.links}`
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.emailTool.recipientRole}</label>
+                  <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.recipientRole}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
                     value={emailRecipient}
                     onChange={(e) => {
                       setEmailRecipient(e.target.value)
@@ -1418,10 +1449,10 @@ ${candidate.links}`
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">{t.emailTool.myStrongSkill}</label>
+                  <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.myStrongSkill}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 outline-none"
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
                     value={emailStrongSkill}
                     onChange={(e) => {
                       setEmailStrongSkill(e.target.value)
@@ -1431,29 +1462,29 @@ ${candidate.links}`
                 </div>
                 <button
                   onClick={generateColdEmail}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 text-xs"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 text-sm"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-4 h-4" />
                   <span>{t.emailTool.btnGenerate}</span>
                 </button>
               </div>
 
-              <div className="lg:col-span-7 bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+              <div className={`lg:col-span-7 ${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col justify-between`}>
                 <div>
-                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-200">
-                    <span className="font-bold text-xs text-slate-800">{t.emailTool.previewTitle}</span>
+                  <div className={`flex items-center justify-between mb-4 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+                    <span className="font-bold text-sm">{t.emailTool.previewTitle}</span>
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(generatedColdEmail)
-                        showToast('📋 Outreach Email Copied!')
+                        showToast('📋 Outreach Email Copied to Clipboard!')
                       }}
-                      className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1 rounded-md text-xs shadow-xs transition"
+                      className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
                     >
-                      <Copy className="w-3 h-3" />
+                      <Copy className="w-3.5 h-3.5" />
                       <span>{t.emailTool.btnCopy}</span>
                     </button>
                   </div>
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed max-h-[420px] overflow-y-auto">
+                  <div className={`${isDark ? 'bg-slate-950 border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'} rounded-2xl p-5 border font-mono text-xs sm:text-sm whitespace-pre-wrap leading-relaxed max-h-[460px] overflow-y-auto`}>
                     {generatedColdEmail}
                   </div>
                 </div>
@@ -1463,48 +1494,48 @@ ${candidate.links}`
         )}
 
         {/* ============================================================ */}
-        {/* VIEW 4: INTERNSHIPS & JOBS */}
+        {/* VIEW 4: INTERNSHIPS & JOBS RADAR */}
         {/* ============================================================ */}
         {activeTab === 'jobs' && (
-          <div className="space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
-              <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-indigo-600" />
+          <div className="space-y-8">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+              <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                <Briefcase className="w-6 h-6 text-indigo-600" />
                 {t.jobs.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                 {t.jobs.subtitle}
               </p>
 
-              <div className="mt-4 flex flex-col sm:flex-row gap-2">
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={jobSearchQuery}
                     onChange={(e) => setJobSearchQuery(e.target.value)}
                     placeholder={t.jobs.searchPlaceholder}
-                    className="w-full bg-slate-50 border border-slate-200 focus:border-indigo-500 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 outline-none"
+                    className={`w-full ${inputBg} border rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm outline-none`}
                   />
                 </div>
 
                 <select
                   value={jobFilterLocation}
                   onChange={(e) => setJobFilterLocation(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-700 outline-none"
+                  className={`${inputBg} border rounded-2xl px-4 py-3 text-xs sm:text-sm font-bold outline-none`}
                 >
                   <option value="all">{t.jobs.allLocations}</option>
                   <option value="remote">{t.jobs.remoteOnly}</option>
                 </select>
               </div>
 
-              <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                <span className="text-xs text-slate-500 font-bold mr-1">{t.jobs.trending}</span>
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <span className={`text-xs ${textMuted} font-bold mr-1`}>{t.jobs.trending}</span>
                 {['React.js', 'Python', 'Node.js', 'Machine Learning', 'Android', 'Remote'].map((tg) => (
                   <button
                     key={tg}
                     onClick={() => setJobSearchQuery(tg)}
-                    className="text-xs px-2.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 transition"
+                    className={`text-xs px-3 py-1 rounded-full border transition ${isDark ? 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'}`}
                   >
                     {tg}
                   </button>
@@ -1513,67 +1544,67 @@ ${candidate.links}`
             </div>
 
             {/* Jobs Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredJobs.map((job) => {
                 const isSaved = savedJobIds.includes(job.id)
 
                 return (
                   <div
                     key={job.id}
-                    className="bg-white border border-slate-200 hover:border-indigo-400 rounded-xl p-5 shadow-xs flex flex-col justify-between transition"
+                    className={`${cardBg} rounded-3xl p-6 sm:p-7 border hover:border-indigo-500/50 transition-all flex flex-col justify-between`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className={`text-xs font-bold px-3 py-1 rounded-full border ${isDark ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border-indigo-200'}`}>
                           {job.location}
                         </span>
                         <button
                           onClick={() => toggleSaveJob(job.id)}
-                          className={`text-xs font-bold flex items-center gap-1 px-2 py-0.5 rounded transition ${
+                          className={`text-xs font-bold flex items-center gap-1.5 px-3 py-1 rounded-xl transition ${
                             isSaved
-                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
-                              : 'bg-slate-50 text-slate-600 border border-slate-200'
+                              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                              : isDark ? 'bg-slate-950 text-slate-400 border border-slate-800' : 'bg-slate-100 text-slate-600 border border-slate-200'
                           }`}
                         >
-                          <Bookmark className="w-3 h-3" />
+                          <Bookmark className="w-3.5 h-3.5" />
                           <span>{isSaved ? t.jobs.saved : t.jobs.saveJob}</span>
                         </button>
                       </div>
 
-                      <h4 className="text-base font-bold text-slate-900">
+                      <h4 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {job.title}
                       </h4>
-                      <div className="text-xs text-slate-500 mt-0.5">{job.company}</div>
+                      <div className={`text-xs font-semibold ${textMuted} mt-1`}>{job.company}</div>
 
-                      <div className="text-xs font-bold text-emerald-600 mt-2">
+                      <div className="text-xs font-bold text-emerald-500 mt-2.5">
                         💰 {job.stipend}
                       </div>
 
-                      <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                      <p className={`text-xs sm:text-sm ${textMuted} mt-3 leading-relaxed`}>
                         {job.description}
                       </p>
 
-                      <div className="mt-3 flex flex-wrap gap-1">
+                      <div className="mt-4 flex flex-wrap gap-1.5">
                         {job.tags.map((tag, i) => (
-                          <span key={i} className="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+                          <span key={i} className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border ${isDark ? 'bg-slate-950 text-slate-300 border-slate-800' : 'bg-slate-100 text-slate-700 border-slate-200'}`}>
                             {tag}
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> {t.jobs.directApply}
+                    <div className={`mt-6 pt-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-100'} flex items-center justify-between`}>
+                      <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5">
+                        <CheckCircle className="w-4 h-4" /> {t.jobs.directApply}
                       </span>
                       <a
                         href={job.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-3 py-1 rounded text-xs shadow-xs transition"
+                        className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
                       >
                         <span>Apply</span>
-                        <ExternalLink className="w-3 h-3" />
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>
                   </div>
@@ -1587,29 +1618,29 @@ ${candidate.links}`
         {/* VIEW 5: FREELANCE HUB */}
         {/* ============================================================ */}
         {activeTab === 'freelance' && (
-          <div className="space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
-              <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-emerald-600" />
+          <div className="space-y-8">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+              <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                <DollarSign className="w-6 h-6 text-emerald-500" />
                 {t.freelance.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                 {t.freelance.subtitle}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              <div className="lg:col-span-6 bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className={`lg:col-span-6 ${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6`}>
+                <h4 className="text-base font-bold flex items-center gap-2">
                   <Sliders className="w-4 h-4 text-indigo-600" />
                   {t.freelance.hourlyRateCalc}
                 </h4>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                    <div className="flex justify-between text-xs font-bold mb-2">
                       <span>{t.freelance.hoursPerWeek}</span>
-                      <span className="text-indigo-600">{calcHours} hrs/week</span>
+                      <span className="text-indigo-500">{calcHours} hrs/week</span>
                     </div>
                     <input
                       type="range"
@@ -1623,14 +1654,14 @@ ${candidate.links}`
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-700 mb-1">
+                    <div className="flex justify-between text-xs font-bold mb-2">
                       <span>{t.freelance.expectedRate}</span>
-                      <span className="text-indigo-600">{currency === 'INR' ? `₹${calcRate * 80}` : `$${calcRate}`} / hr</span>
+                      <span className="text-indigo-500">{currency === 'INR' ? `₹${calcRate * 80}` : `$${calcRate}`} / hr</span>
                     </div>
                     <input
                       type="range"
                       min={10}
-                      max={100}
+                      max={120}
                       step={5}
                       value={calcRate}
                       onChange={(e) => setCalcRate(Number(e.target.value))}
@@ -1638,9 +1669,9 @@ ${candidate.links}`
                     />
                   </div>
 
-                  <div className="pt-3 border-t border-slate-100 bg-slate-50 p-3.5 rounded-lg flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-600">{t.freelance.projectedMonthly}</span>
-                    <span className="text-xl font-black text-emerald-600">
+                  <div className={`pt-4 border-t ${isDark ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50'} p-4 rounded-2xl flex items-center justify-between`}>
+                    <span className={`text-xs font-bold ${textMuted}`}>{t.freelance.projectedMonthly}</span>
+                    <span className="text-2xl font-black text-emerald-500">
                       {currency === 'INR' ? `₹${(calcHours * calcRate * 80 * 4).toLocaleString('en-IN')}` : `$${calcHours * calcRate * 4}`}
                     </span>
                   </div>
@@ -1648,17 +1679,17 @@ ${candidate.links}`
               </div>
 
               {/* Instant Proposal Generator */}
-              <div className="lg:col-span-6 bg-white border border-slate-200 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+              <div className={`lg:col-span-6 ${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col justify-between`}>
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-base font-bold flex items-center gap-2">
                       <Zap className="w-4 h-4 text-indigo-600" />
                       {t.freelance.proposalGen}
                     </h4>
                     <select
                       value={proposalService}
                       onChange={(e) => setProposalService(e.target.value)}
-                      className="bg-slate-50 border border-slate-200 rounded px-2.5 py-1 text-xs font-bold text-slate-800 outline-none"
+                      className={`${inputBg} border rounded-xl px-3 py-1.5 text-xs font-bold outline-none`}
                     >
                       <option value="react">React & Full Stack Web UI</option>
                       <option value="pdf">Automated PDF Generator API</option>
@@ -1666,22 +1697,22 @@ ${candidate.links}`
                     </select>
                   </div>
 
-                  <div className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 text-xs font-mono text-slate-800 leading-relaxed max-h-[140px] overflow-y-auto">
+                  <div className={`${isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'} p-4 rounded-2xl border text-xs font-mono leading-relaxed max-h-[160px] overflow-y-auto`}>
                     {proposalService === 'react' && `Hi [Client],\n\nI noticed you need a clean, responsive, and high-speed web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI can deliver production-ready code with 100% responsiveness within 48 hours.\n\nBest regards,\n${candidate.name}`}
                     {proposalService === 'pdf' && `Hello [Client],\n\nI can build a robust automated PDF document generation service using Node.js, Express, and Puppeteer with custom A4 formatting.\n\nReady to start immediately.\n\nBest,\n${candidate.name}`}
                     {proposalService === 'android' && `Hi there!\n\nI specialize in native Android development with Android Studio, Kotlin/Java, and REST API integrations. I can build clean UI flows with local caching.\n\nWarm regards,\n${candidate.name}`}
                   </div>
                 </div>
 
-                <div className="mt-3 flex justify-end">
+                <div className="mt-4 flex justify-end">
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText(`Hi [Client], I specialize in ${proposalService} development. Contact: ${candidate.email}`)
                       showToast(t.freelance.copyProposal)
                     }}
-                    className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-md text-xs shadow-xs transition"
+                    className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
                   >
-                    <Copy className="w-3 h-3" />
+                    <Copy className="w-3.5 h-3.5" />
                     <span>{t.freelance.copyProposal}</span>
                   </button>
                 </div>
@@ -1694,50 +1725,50 @@ ${candidate.links}`
         {/* VIEW 6: ROADMAPS & FLASHCARDS */}
         {/* ============================================================ */}
         {activeTab === 'roadmaps' && (
-          <div className="space-y-6">
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
-              <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <Rocket className="w-5 h-5 text-indigo-600" />
+          <div className="space-y-8">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+              <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                <Rocket className="w-6 h-6 text-indigo-600" />
                 {t.roadmaps.title}
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                 {t.roadmaps.subtitle}
               </p>
             </div>
 
-            <div className="space-y-3">
-              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <div className="space-y-4">
+              <h4 className="text-base font-bold flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-indigo-600" />
                 {t.roadmaps.interviewPrepTitle}
               </h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {INTERVIEW_QUESTIONS.map((item, idx) => {
                   const isShown = revealedAnswers[idx]
 
                   return (
                     <div
                       key={idx}
-                      className="bg-white border border-slate-200 rounded-xl p-4 shadow-xs flex flex-col justify-between"
+                      className={`${cardBg} rounded-3xl p-6 sm:p-7 border flex flex-col justify-between`}
                     >
                       <div>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${isDark ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border-indigo-200'}`}>
                             {item.topic}
                           </span>
                         </div>
-                        <h5 className="font-bold text-slate-900 text-xs sm:text-sm mt-1">
+                        <h5 className={`font-bold text-sm sm:text-base mt-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                           {item.q}
                         </h5>
 
                         {isShown && (
-                          <div className="mt-3 p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
+                          <div className={`mt-4 p-4 rounded-2xl border text-xs sm:text-sm leading-relaxed ${isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
                             {item.a}
                           </div>
                         )}
                       </div>
 
-                      <div className="mt-3 pt-2 border-t border-slate-100 flex justify-end">
+                      <div className={`mt-5 pt-3 border-t ${isDark ? 'border-slate-800' : 'border-slate-100'} flex justify-end`}>
                         <button
                           onClick={() => {
                             setRevealedAnswers({
@@ -1745,7 +1776,7 @@ ${candidate.links}`
                               [idx]: !isShown
                             })
                           }}
-                          className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition"
+                          className="text-xs font-bold text-indigo-500 hover:text-indigo-400 transition"
                         >
                           {isShown ? t.roadmaps.hideAnswer : t.roadmaps.showAnswer}
                         </button>
