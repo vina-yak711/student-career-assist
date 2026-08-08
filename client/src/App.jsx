@@ -52,7 +52,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'Welcome to VynkAI CareerForge',
-      desc: 'An expansive, high-impact career suite for engineering students. Build ATS-compliant multi-section resumes, discover global internships, and monetize technical skills.',
+      desc: 'An expansive, edge-to-edge career suite for engineering students. Build ATS-compliant multi-section resumes, discover global internships, and monetize technical skills with zero wasted space.',
       atsCardTitle: 'Resume ATS Score',
       atsCardDesc: 'Automated screening compatibility',
       savedJobsTitle: 'Saved Opportunities',
@@ -146,7 +146,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'VynkAI CareerForge मध्ये आपले स्वागत आहे',
-      desc: 'विद्यार्थ्यांसाठी एक सुटसुटीत आणि प्रशस्त प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
+      desc: 'संपूर्ण स्क्रीन व्यापणारा, मोकळा आणि वेगवान प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
       atsCardTitle: 'ATS रिझ्युमे दर्जा',
       atsCardDesc: 'ऑटोमेटेड सिस्टममध्ये पास होणारा स्कोअर',
       savedJobsTitle: 'सेव्ह केलेल्या नोकऱ्या',
@@ -240,7 +240,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'VynkAI CareerForge में आपका स्वागत है',
-      desc: 'ATS रिज्यूमे बनाएं, वैश्विक इंटर्नशिप खोजें और कॉलेज में ही कमाई शुरू करें।',
+      desc: 'पूरी स्क्रीन में फैला हुआ, सहज और तेज़ प्लेटफॉर्म। ATS रिज्यूमे बनाएं, वैश्विक इंटर्नशिप खोजें और कॉलेज में ही कमाई शुरू करें।',
       atsCardTitle: 'Resume ATS स्कोर',
       atsCardDesc: 'ऑटोमेटेड स्क्रीनिंग पास करने की क्षमता',
       savedJobsTitle: 'सेव किए गए अवसर',
@@ -321,7 +321,7 @@ const TRANSLATIONS = {
   }
 }
 
-// Clean Default Candidate (Matching reference layout structure)
+// Clean Default Candidate (Structured format matching reference)
 const DEFAULT_CANDIDATE = {
   name: 'Alex Morgan',
   role: 'Artificial Intelligence & Data Science Student | Software Engineer',
@@ -455,7 +455,7 @@ const MOCK_JOBS = [
 ]
 
 export default function App() {
-  // 1. Dark Theme State (Default: Dark Mode for sleek contrast)
+  // 1. Dark Theme State (Default: Dark Mode)
   const [isDark, setIsDark] = useState(true)
 
   // 2. Language State (Default: English)
@@ -543,102 +543,100 @@ ${candidate.links}`
   }
   const atsScore = calculateAtsScore()
 
-  // Generate Live Resume HTML (Clean and free of unparsed tags)
-  async function renderLiveResume() {
-    try {
-      const res = await axios.post('http://localhost:4000/api/resume/generate', candidate)
-      setResumeHtml(res.data)
-    } catch (err) {
-      // Fallback clean renderer with 100% substituted values
-      const skillsHtml = Object.entries(candidate.skillsCategorized).map(([cat, items]) => `
-        <div style="margin-bottom: 8px;">
-          <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 4px;">${cat}</div>
-          <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-            ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 2.5px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600;">${s.trim()}</span>`).join('')}
+  // Generate Live Resume HTML (100% Client + Backend Synchronized with NO unparsed tags)
+  function buildCleanResumeHtml(cand) {
+    const skillsHtml = Object.entries(cand.skillsCategorized).map(([cat, items]) => `
+      <div style="margin-bottom: 8px;">
+        <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 4px; letter-spacing: 0.5px;">${cat}</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 2.5px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600;">${s.trim()}</span>`).join('')}
+        </div>
+      </div>
+    `).join('')
+
+    const eduHtml = cand.educationList.map(ed => `
+      <div style="margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
+          <span>${ed.degree}</span>
+          <span style="color: #64748b; font-weight: 500;">${ed.year}</span>
+        </div>
+        <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
+        <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
+          ${ed.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('')
+
+    const expHtml = cand.experienceList.map(exp => `
+      <div style="margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
+          <span>${exp.title}</span>
+          <span style="color: #64748b; font-weight: 500;">${exp.period}</span>
+        </div>
+        <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${exp.company}</div>
+        <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
+          ${exp.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('')
+
+    const projHtml = cand.projectsList.map(p => `
+      <div style="margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
+          <span>${p.title}</span>
+          <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">${p.domain}</span>
+        </div>
+        <div style="color: #334155; font-size: 12.5px; margin-top: 2px; line-height: 1.55;">${p.desc}</div>
+      </div>
+    `).join('')
+
+    return `
+      <div style="font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif; padding: 32px 38px; color: #0f172a; line-height: 1.55; font-size: 13px; background: #ffffff;">
+        <div style="border-bottom: 2.5px solid #2563eb; padding-bottom: 14px; margin-bottom: 16px;">
+          <div style="font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${cand.name}</div>
+          <div style="font-size: 14px; font-weight: 700; color: #2563eb; margin-top: 3px;">${cand.role}</div>
+          <div style="margin-top: 8px; font-size: 12px; color: #475569; line-height: 1.6;">
+            📧 ${cand.email} • 📱 ${cand.phone} • 📍 ${cand.location}<br/>🔗 ${cand.links}
           </div>
         </div>
-      `).join('')
 
-      const eduHtml = candidate.educationList.map(ed => `
-        <div style="margin-bottom: 10px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
-            <span>${ed.degree}</span>
-            <span style="color: #64748b; font-weight: 500;">${ed.year}</span>
-          </div>
-          <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
-          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
-            ${ed.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
-          </ul>
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Professional Summary</div>
+          <div style="font-size: 12.8px; color: #334155; line-height: 1.55;">${cand.summary}</div>
+          ${cand.motto ? `<div style="margin-top: 6px; padding: 6px 12px; background: #f8fafc; border-left: 3px solid #3b82f6; font-style: italic; color: #475569; font-size: 12px; border-radius: 0 4px 4px 0;">"${cand.motto}"</div>` : ''}
         </div>
-      `).join('')
 
-      const expHtml = candidate.experienceList.map(exp => `
-        <div style="margin-bottom: 10px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
-            <span>${exp.title}</span>
-            <span style="color: #64748b; font-weight: 500;">${exp.period}</span>
-          </div>
-          <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${exp.company}</div>
-          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
-            ${exp.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
-          </ul>
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Education & Academic Background</div>
+          ${eduHtml}
         </div>
-      `).join('')
 
-      const projHtml = candidate.projectsList.map(p => `
-        <div style="margin-bottom: 10px;">
-          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
-            <span>${p.title}</span>
-            <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">${p.domain}</span>
-          </div>
-          <div style="color: #334155; font-size: 12.5px; margin-top: 2px; line-height: 1.55;">${p.desc}</div>
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Industrial Training & Experience</div>
+          ${expHtml}
         </div>
-      `).join('')
 
-      const fallback = `
-        <div style="font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif; padding: 32px 38px; color: #0f172a; line-height: 1.55; font-size: 13px;">
-          <div style="border-bottom: 2.5px solid #2563eb; padding-bottom: 14px; margin-bottom: 16px;">
-            <div style="font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${candidate.name}</div>
-            <div style="font-size: 14px; font-weight: 700; color: #2563eb; margin-top: 3px;">${candidate.role}</div>
-            <div style="margin-top: 8px; font-size: 12px; color: #475569; line-height: 1.6;">
-              📧 ${candidate.email} • 📱 ${candidate.phone} • 📍 ${candidate.location}<br/>🔗 ${candidate.links}
-            </div>
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Professional Summary</div>
-            <div style="font-size: 12.8px; color: #334155; line-height: 1.55;">${candidate.summary}</div>
-            ${candidate.motto ? `<div style="margin-top: 6px; padding: 6px 12px; background: #f8fafc; border-left: 3px solid #3b82f6; font-style: italic; color: #475569; font-size: 12px; border-radius: 0 4px 4px 0;">"${candidate.motto}"</div>` : ''}
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Education & Academic Background</div>
-            ${eduHtml}
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Industrial Training & Experience</div>
-            ${expHtml}
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Key Projects</div>
-            ${projHtml}
-          </div>
-
-          <div style="margin-bottom: 16px;">
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Technical Skillset</div>
-            ${skillsHtml}
-          </div>
-
-          <div>
-            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Hackathons & Accomplishments</div>
-            <div style="font-size: 12.8px; color: #334155; white-space: pre-line; line-height: 1.55;">${candidate.accomplishments}</div>
-          </div>
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Key Projects</div>
+          ${projHtml}
         </div>
-      `
-      setResumeHtml(fallback)
-    }
+
+        <div style="margin-bottom: 16px;">
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Technical Skillset</div>
+          ${skillsHtml}
+        </div>
+
+        <div>
+          <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 4px; letter-spacing: 0.8px;">Hackathons & Accomplishments</div>
+          <div style="font-size: 12.8px; color: #334155; white-space: pre-line; line-height: 1.55;">${cand.accomplishments}</div>
+        </div>
+      </div>
+    `
+  }
+
+  function renderLiveResume() {
+    const html = buildCleanResumeHtml(candidate)
+    setResumeHtml(html)
   }
 
   // Handle PDF Download
@@ -720,7 +718,7 @@ ${candidate.links}`
     return matchQuery && matchLocation
   })
 
-  // Theme Class Mappings
+  // Theme Class Mappings (Full width edge-to-edge)
   const themeBg = isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
   const headerBg = isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white/95 border-slate-200 shadow-sm'
   const cardBg = isDark ? 'bg-slate-900/90 border-slate-800 shadow-xl' : 'bg-white border-slate-200/80 shadow-sm'
@@ -739,9 +737,9 @@ ${candidate.links}`
         </div>
       )}
 
-      {/* FULL WIDTH TOP HEADER */}
+      {/* 100% FULL-WIDTH TOP HEADER (Zero wasted margins) */}
       <header className={`sticky top-0 z-40 w-full ${headerBg} backdrop-blur-xl border-b`}>
-        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
             {/* Logo */}
@@ -828,7 +826,7 @@ ${candidate.links}`
             </div>
           </div>
 
-          {/* HORIZONTAL NAVIGATION TABS */}
+          {/* HORIZONTAL NAVIGATION TABS (Edge-to-edge flow) */}
           <nav className={`flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none border-t ${isDark ? 'border-slate-800/80' : 'border-slate-100'} mt-1`}>
             {[
               { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
@@ -855,18 +853,18 @@ ${candidate.links}`
         </div>
       </header>
 
-      {/* FULL WIDTH EXPANSIVE MAIN CONTAINER (No wasted side gaps) */}
-      <main className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-10 mt-8">
+      {/* 100% TRUE FULL-WIDTH MAIN LAYOUT (Zero dead side margins) */}
+      <main className="w-full px-4 sm:px-6 lg:px-8 mt-6">
 
         {/* ============================================================ */}
         {/* VIEW 1: DASHBOARD */}
         {/* ============================================================ */}
         {activeTab === 'dashboard' && (
-          <div className="space-y-8">
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-10 border relative overflow-hidden`}>
-              <div className="max-w-4xl">
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-10 border relative overflow-hidden w-full`}>
+              <div className="max-w-5xl">
                 <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold mb-3 ${isDark ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
-                  <Zap className="w-3.5 h-3.5" /> All-in-One Global Career Platform
+                  <Zap className="w-3.5 h-3.5" /> Full-Width Global Student Career Platform
                 </div>
                 <h2 className={`text-2xl sm:text-4xl font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'} leading-tight`}>
                   {t.dashboard.welcome}
@@ -901,7 +899,7 @@ ${candidate.links}`
             </div>
 
             {/* Metrics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
               <div 
                 onClick={() => setActiveTab('resume')}
                 className={`${cardBg} rounded-3xl p-6 border cursor-pointer hover:border-indigo-500/50 transition group`}
@@ -963,13 +961,13 @@ ${candidate.links}`
         )}
 
         {/* ============================================================ */}
-        {/* VIEW 2: MULTI-SECTION ATS RESUME BUILDER */}
+        {/* VIEW 2: MULTI-SECTION ATS RESUME BUILDER (FULL-WIDTH 50-50) */}
         {/* ============================================================ */}
         {activeTab === 'resume' && (
-          <div className="space-y-8">
+          <div className="space-y-6 w-full">
             
             {/* Toolbar Banner */}
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-7 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full`}>
               <div>
                 <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                   <FileText className="w-6 h-6 text-indigo-600" />
@@ -999,12 +997,12 @@ ${candidate.links}`
               </div>
             </div>
 
-            {/* Split Screen Form & Live Document (Spacious Grid) */}
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+            {/* True 50-50 Split Screen Form & Live Document */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start w-full">
               
               {/* Left Column: Form Builder with 7 Sub-tabs */}
-              <div className="xl:col-span-6 space-y-6">
-                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6`}>
+              <div className="w-full space-y-6">
+                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6 w-full`}>
                   
                   {/* Step Sub-tabs */}
                   <div className={`flex items-center gap-1.5 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'} pb-3.5 overflow-x-auto scrollbar-none`}>
@@ -1342,7 +1340,7 @@ ${candidate.links}`
                 </div>
 
                 {/* Real-time ATS Checklist */}
-                <div className={`${cardBg} rounded-3xl p-6 border space-y-3`}>
+                <div className={`${cardBg} rounded-3xl p-6 border space-y-3 w-full`}>
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-500" />
@@ -1370,8 +1368,8 @@ ${candidate.links}`
               </div>
 
               {/* Right Column: Live A4 White Document Preview */}
-              <div className="xl:col-span-6 space-y-6">
-                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col h-full`}>
+              <div className="w-full space-y-6">
+                <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col h-full w-full`}>
                   <div className={`flex items-center justify-between mb-4 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                     <span className="font-bold text-xs flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -1395,8 +1393,8 @@ ${candidate.links}`
         {/* VIEW 3: COLD EMAIL GENERATOR */}
         {/* ============================================================ */}
         {activeTab === 'coverLetter' && (
-          <div className="space-y-8">
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full`}>
               <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                 <Mail className="w-6 h-6 text-indigo-600" />
                 {t.emailTool.title}
@@ -1406,7 +1404,7 @@ ${candidate.links}`
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
               <div className={`lg:col-span-5 ${cardBg} rounded-3xl p-6 sm:p-8 border space-y-4`}>
                 <div>
                   <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.companyName}</label>
@@ -1493,8 +1491,8 @@ ${candidate.links}`
         {/* VIEW 4: INTERNSHIPS & JOBS RADAR */}
         {/* ============================================================ */}
         {activeTab === 'jobs' && (
-          <div className="space-y-8">
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full`}>
               <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                 <Briefcase className="w-6 h-6 text-indigo-600" />
                 {t.jobs.title}
@@ -1540,7 +1538,7 @@ ${candidate.links}`
             </div>
 
             {/* Jobs Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {filteredJobs.map((job) => {
                 const isSaved = savedJobIds.includes(job.id)
 
@@ -1614,8 +1612,8 @@ ${candidate.links}`
         {/* VIEW 5: FREELANCE HUB */}
         {/* ============================================================ */}
         {activeTab === 'freelance' && (
-          <div className="space-y-8">
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full`}>
               <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                 <DollarSign className="w-6 h-6 text-emerald-500" />
                 {t.freelance.title}
@@ -1625,7 +1623,7 @@ ${candidate.links}`
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
               <div className={`lg:col-span-6 ${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6`}>
                 <h4 className="text-base font-bold flex items-center gap-2">
                   <Sliders className="w-4 h-4 text-indigo-600" />
@@ -1721,8 +1719,8 @@ ${candidate.links}`
         {/* VIEW 6: ROADMAPS & FLASHCARDS */}
         {/* ============================================================ */}
         {activeTab === 'roadmaps' && (
-          <div className="space-y-8">
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border`}>
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full`}>
               <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                 <Rocket className="w-6 h-6 text-indigo-600" />
                 {t.roadmaps.title}
@@ -1732,13 +1730,13 @@ ${candidate.links}`
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 w-full">
               <h4 className="text-base font-bold flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-indigo-600" />
                 {t.roadmaps.interviewPrepTitle}
               </h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                 {INTERVIEW_QUESTIONS.map((item, idx) => {
                   const isShown = revealedAnswers[idx]
 
