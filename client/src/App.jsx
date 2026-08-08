@@ -30,15 +30,9 @@ import {
   BookmarkCheck,
   Mail,
   Sliders,
-  SlidersHorizontal,
   LayoutDashboard,
   Sun,
-  Moon,
-  Send,
-  User,
-  Phone,
-  MapPin,
-  Link as LinkIcon
+  Moon
 } from 'lucide-react'
 
 // Multilingual Dictionary (Default English)
@@ -152,7 +146,7 @@ const TRANSLATIONS = {
     },
     dashboard: {
       welcome: 'VynkAI CareerForge मध्ये आपले स्वागत आहे',
-      desc: 'विद्यार्थ्यांसाठी एक सुटसुटीत आणि वेगवान प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
+      desc: 'विद्यार्थ्यांसाठी एक सुटसुटीत आणि प्रशस्त प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
       atsCardTitle: 'ATS रिझ्युमे दर्जा',
       atsCardDesc: 'ऑटोमेटेड सिस्टममध्ये पास होणारा स्कोअर',
       savedJobsTitle: 'सेव्ह केलेल्या नोकऱ्या',
@@ -327,7 +321,7 @@ const TRANSLATIONS = {
   }
 }
 
-// Clean Default Candidate (Structured format matching reference)
+// Clean Default Candidate (Matching reference layout structure)
 const DEFAULT_CANDIDATE = {
   name: 'Alex Morgan',
   role: 'Artificial Intelligence & Data Science Student | Software Engineer',
@@ -434,7 +428,7 @@ const MOCK_JOBS = [
     company: 'CloudScale Global Technologies',
     location: 'Remote (Worldwide / US / India)',
     stipend: '$1,200 - $2,200 / month (₹45,000 - ₹85,000)',
-    tags: ['React.js', 'Python', 'Node.js', 'Remote', 'Mentorship'],
+    tags: ['React.js', 'Python', 'Node.js', 'Remote'],
     description: 'Work with senior AI engineers building interactive dashboards, LLM integrations, and responsive React applications. Direct pre-placement job offer (PPO) pathway.',
     url: 'https://www.linkedin.com/jobs'
   },
@@ -461,13 +455,13 @@ const MOCK_JOBS = [
 ]
 
 export default function App() {
-  // 1. Dark Theme Toggle state (Defaults to clean dark/light)
-  const [isDark, setIsDark] = useState(true) // Sleek Dark Theme + Clean Light Switcher
+  // 1. Dark Theme State (Default: Dark Mode for sleek contrast)
+  const [isDark, setIsDark] = useState(true)
 
-  // 2. Language state (Defaults to English)
+  // 2. Language State (Default: English)
   const [lang, setLang] = useState('en')
   const [currency, setCurrency] = useState('USD')
-  const [activeTab, setActiveTab] = useState('dashboard')
+  const [activeTab, setActiveTab] = useState('resume')
   const [resumeSubTab, setResumeSubTab] = useState('personal')
   const [toastMsg, setToastMsg] = useState('')
 
@@ -549,17 +543,18 @@ ${candidate.links}`
   }
   const atsScore = calculateAtsScore()
 
-  // Generate Live Resume HTML
+  // Generate Live Resume HTML (Clean and free of unparsed tags)
   async function renderLiveResume() {
     try {
       const res = await axios.post('http://localhost:4000/api/resume/generate', candidate)
       setResumeHtml(res.data)
     } catch (err) {
+      // Fallback clean renderer with 100% substituted values
       const skillsHtml = Object.entries(candidate.skillsCategorized).map(([cat, items]) => `
         <div style="margin-bottom: 8px;">
-          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 4px;">${cat}</div>
+          <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 4px;">${cat}</div>
           <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-            ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">${s.trim()}</span>`).join('')}
+            ${items.split(',').map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 2.5px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600;">${s.trim()}</span>`).join('')}
           </div>
         </div>
       `).join('')
@@ -570,8 +565,8 @@ ${candidate.links}`
             <span>${ed.degree}</span>
             <span style="color: #64748b; font-weight: 500;">${ed.year}</span>
           </div>
-          <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 1px;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
-          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12px; color: #334155; line-height: 1.5;">
+          <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${ed.institution} ${ed.score ? `• ${ed.score}` : ''}</div>
+          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
             ${ed.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
           </ul>
         </div>
@@ -583,8 +578,8 @@ ${candidate.links}`
             <span>${exp.title}</span>
             <span style="color: #64748b; font-weight: 500;">${exp.period}</span>
           </div>
-          <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-top: 1px;">${exp.company}</div>
-          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12px; color: #334155; line-height: 1.5;">
+          <div style="font-size: 12.5px; color: #2563eb; font-weight: 600; margin-top: 1px;">${exp.company}</div>
+          <ul style="margin-left: 18px; margin-top: 4px; font-size: 12.5px; color: #334155; line-height: 1.55;">
             ${exp.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}
           </ul>
         </div>
@@ -594,51 +589,51 @@ ${candidate.links}`
         <div style="margin-bottom: 10px;">
           <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #0f172a;">
             <span>${p.title}</span>
-            <span style="color: #2563eb; font-size: 11px; font-weight: 600;">${p.domain}</span>
+            <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">${p.domain}</span>
           </div>
-          <div style="color: #334155; font-size: 12.5px; margin-top: 2px; line-height: 1.5;">${p.desc}</div>
+          <div style="color: #334155; font-size: 12.5px; margin-top: 2px; line-height: 1.55;">${p.desc}</div>
         </div>
       `).join('')
 
       const fallback = `
-        <div style="font-family: 'Plus Jakarta Sans', Inter, sans-serif; padding: 32px 36px; color: #0f172a; line-height: 1.55; font-size: 12.8px;">
+        <div style="font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif; padding: 32px 38px; color: #0f172a; line-height: 1.55; font-size: 13px;">
           <div style="border-bottom: 2.5px solid #2563eb; padding-bottom: 14px; margin-bottom: 16px;">
-            <div style="font-size: 24px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${candidate.name}</div>
-            <div style="font-size: 13.5px; font-weight: 700; color: #2563eb; margin-top: 2px;">${candidate.role}</div>
-            <div style="margin-top: 6px; font-size: 11.5px; color: #475569; line-height: 1.6;">
+            <div style="font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${candidate.name}</div>
+            <div style="font-size: 14px; font-weight: 700; color: #2563eb; margin-top: 3px;">${candidate.role}</div>
+            <div style="margin-top: 8px; font-size: 12px; color: #475569; line-height: 1.6;">
               📧 ${candidate.email} • 📱 ${candidate.phone} • 📍 ${candidate.location}<br/>🔗 ${candidate.links}
             </div>
           </div>
 
-          <div style="margin-bottom: 14px;">
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 6px; letter-spacing: 0.5px;">Professional Summary</div>
-            <div style="font-size: 12.5px; color: #334155; line-height: 1.55;">${candidate.summary}</div>
-            ${candidate.motto ? `<div style="margin-top: 6px; padding: 6px 12px; background: #f8fafc; border-left: 3px solid #3b82f6; font-style: italic; color: #475569; font-size: 11.8px;">"${candidate.motto}"</div>` : ''}
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Professional Summary</div>
+            <div style="font-size: 12.8px; color: #334155; line-height: 1.55;">${candidate.summary}</div>
+            ${candidate.motto ? `<div style="margin-top: 6px; padding: 6px 12px; background: #f8fafc; border-left: 3px solid #3b82f6; font-style: italic; color: #475569; font-size: 12px; border-radius: 0 4px 4px 0;">"${candidate.motto}"</div>` : ''}
           </div>
 
-          <div style="margin-bottom: 14px;">
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Education</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Education & Academic Background</div>
             ${eduHtml}
           </div>
 
-          <div style="margin-bottom: 14px;">
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Industrial Training & Experience</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Industrial Training & Experience</div>
             ${expHtml}
           </div>
 
-          <div style="margin-bottom: 14px;">
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Key Projects</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Key Projects</div>
             ${projHtml}
           </div>
 
-          <div style="margin-bottom: 14px;">
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 8px; letter-spacing: 0.5px;">Technical Skillset</div>
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Technical Skillset</div>
             ${skillsHtml}
           </div>
 
           <div>
-            <div style="font-size: 12.5px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 2px; margin-bottom: 4px; letter-spacing: 0.5px;">Hackathons & Accomplishments</div>
-            <div style="font-size: 12.5px; color: #334155; white-space: pre-line; line-height: 1.55;">${candidate.accomplishments}</div>
+            <div style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0f172a; border-bottom: 1.5px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 8px; letter-spacing: 0.8px;">Hackathons & Accomplishments</div>
+            <div style="font-size: 12.8px; color: #334155; white-space: pre-line; line-height: 1.55;">${candidate.accomplishments}</div>
           </div>
         </div>
       `
@@ -734,7 +729,7 @@ ${candidate.links}`
   const navInactive = isDark ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
 
   return (
-    <div className={`min-h-screen ${themeBg} transition-colors duration-200 font-sans pb-24`}>
+    <div className={`min-h-screen w-full ${themeBg} transition-colors duration-200 font-sans pb-24`}>
       
       {/* Toast Notification */}
       {toastMsg && (
@@ -744,9 +739,9 @@ ${candidate.links}`
         </div>
       )}
 
-      {/* TOP HEADER */}
-      <header className={`sticky top-0 z-40 ${headerBg} backdrop-blur-xl border-b`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* FULL WIDTH TOP HEADER */}
+      <header className={`sticky top-0 z-40 w-full ${headerBg} backdrop-blur-xl border-b`}>
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex items-center justify-between h-20">
             
             {/* Logo */}
@@ -833,7 +828,7 @@ ${candidate.links}`
             </div>
           </div>
 
-          {/* HORIZONTAL NAVIGATION TABS (Spacious & Touch-Friendly) */}
+          {/* HORIZONTAL NAVIGATION TABS */}
           <nav className={`flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none border-t ${isDark ? 'border-slate-800/80' : 'border-slate-100'} mt-1`}>
             {[
               { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
@@ -860,8 +855,8 @@ ${candidate.links}`
         </div>
       </header>
 
-      {/* MAIN CONTENT AREA */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      {/* FULL WIDTH EXPANSIVE MAIN CONTAINER (No wasted side gaps) */}
+      <main className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-10 mt-8">
 
         {/* ============================================================ */}
         {/* VIEW 1: DASHBOARD */}
@@ -869,7 +864,7 @@ ${candidate.links}`
         {activeTab === 'dashboard' && (
           <div className="space-y-8">
             <div className={`${cardBg} rounded-3xl p-6 sm:p-10 border relative overflow-hidden`}>
-              <div className="max-w-3xl">
+              <div className="max-w-4xl">
                 <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-extrabold mb-3 ${isDark ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border border-indigo-200'}`}>
                   <Zap className="w-3.5 h-3.5" /> All-in-One Global Career Platform
                 </div>
@@ -973,8 +968,8 @@ ${candidate.links}`
         {activeTab === 'resume' && (
           <div className="space-y-8">
             
-            {/* Toolbar */}
-            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4`}>
+            {/* Toolbar Banner */}
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
               <div>
                 <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
                   <FileText className="w-6 h-6 text-indigo-600" />
@@ -989,14 +984,14 @@ ${candidate.links}`
                 <button
                   onClick={handleDownloadPdf}
                   disabled={isGeneratingPdf}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 transition flex items-center gap-2 disabled:opacity-50"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-bold px-5 py-3 rounded-xl shadow-lg shadow-indigo-600/20 transition flex items-center gap-2 disabled:opacity-50"
                 >
                   <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
-                  <span>{isGeneratingPdf ? 'Compiling...' : t.resume.btnDownload}</span>
+                  <span>{isGeneratingPdf ? 'Compiling PDF...' : t.resume.btnDownload}</span>
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className={`text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl border transition flex items-center gap-1.5 ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'}`}
+                  className={`text-xs sm:text-sm font-bold px-4 py-3 rounded-xl border transition flex items-center gap-1.5 ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'}`}
                 >
                   <Printer className="w-4 h-4" />
                   <span>{t.resume.btnPrint}</span>
@@ -1004,11 +999,11 @@ ${candidate.links}`
               </div>
             </div>
 
-            {/* Split Screen Form & Live Document */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Split Screen Form & Live Document (Spacious Grid) */}
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
               
               {/* Left Column: Form Builder with 7 Sub-tabs */}
-              <div className="lg:col-span-6 space-y-6">
+              <div className="xl:col-span-6 space-y-6">
                 <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border space-y-6`}>
                   
                   {/* Step Sub-tabs */}
@@ -1025,7 +1020,7 @@ ${candidate.links}`
                       <button
                         key={key}
                         onClick={() => setResumeSubTab(key)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                        className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                           resumeSubTab === key
                             ? 'bg-indigo-600 text-white shadow-xs'
                             : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -1043,7 +1038,7 @@ ${candidate.links}`
                         <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.fullName}</label>
                         <input
                           type="text"
-                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                           value={candidate.name}
                           onChange={(e) => setCandidate({ ...candidate, name: e.target.value })}
                         />
@@ -1052,7 +1047,7 @@ ${candidate.links}`
                         <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.targetRole}</label>
                         <input
                           type="text"
-                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                           value={candidate.role}
                           onChange={(e) => setCandidate({ ...candidate, role: e.target.value })}
                         />
@@ -1062,7 +1057,7 @@ ${candidate.links}`
                           <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.email}</label>
                           <input
                             type="email"
-                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                             value={candidate.email}
                             onChange={(e) => setCandidate({ ...candidate, email: e.target.value })}
                           />
@@ -1071,7 +1066,7 @@ ${candidate.links}`
                           <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.phone}</label>
                           <input
                             type="text"
-                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                             value={candidate.phone}
                             onChange={(e) => setCandidate({ ...candidate, phone: e.target.value })}
                           />
@@ -1082,7 +1077,7 @@ ${candidate.links}`
                           <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.location}</label>
                           <input
                             type="text"
-                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                             value={candidate.location}
                             onChange={(e) => setCandidate({ ...candidate, location: e.target.value })}
                           />
@@ -1091,7 +1086,7 @@ ${candidate.links}`
                           <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.links}</label>
                           <input
                             type="text"
-                            className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none`}
+                            className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none`}
                             value={candidate.links}
                             onChange={(e) => setCandidate({ ...candidate, links: e.target.value })}
                           />
@@ -1117,7 +1112,7 @@ ${candidate.links}`
                         </div>
                         <textarea
                           rows={4}
-                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none leading-relaxed`}
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none leading-relaxed`}
                           value={candidate.summary}
                           onChange={(e) => setCandidate({ ...candidate, summary: e.target.value })}
                         />
@@ -1126,7 +1121,7 @@ ${candidate.links}`
                         <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.resume.mottoLabel}</label>
                         <input
                           type="text"
-                          className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm transition outline-none italic`}
+                          className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm transition outline-none italic`}
                           value={candidate.motto}
                           onChange={(e) => setCandidate({ ...candidate, motto: e.target.value })}
                         />
@@ -1375,7 +1370,7 @@ ${candidate.links}`
               </div>
 
               {/* Right Column: Live A4 White Document Preview */}
-              <div className="lg:col-span-6 space-y-6">
+              <div className="xl:col-span-6 space-y-6">
                 <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border flex flex-col h-full`}>
                   <div className={`flex items-center justify-between mb-4 pb-3 border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                     <span className="font-bold text-xs flex items-center gap-2">
@@ -1385,7 +1380,8 @@ ${candidate.links}`
                     <span className={`text-xs ${textMuted} font-medium`}>Standard A4 Format</span>
                   </div>
 
-                  <div className="flex-1 min-h-[600px] bg-white text-slate-950 rounded-2xl p-6 sm:p-8 shadow-inner overflow-y-auto border border-slate-300">
+                  {/* Clean A4 Canvas */}
+                  <div className="flex-1 min-h-[620px] bg-white text-slate-950 rounded-2xl p-6 sm:p-8 shadow-inner overflow-y-auto border border-slate-300">
                     <div dangerouslySetInnerHTML={{ __html: resumeHtml }} />
                   </div>
                 </div>
@@ -1416,7 +1412,7 @@ ${candidate.links}`
                   <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.companyName}</label>
                   <input
                     type="text"
-                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm outline-none`}
                     value={emailCompany}
                     onChange={(e) => {
                       setEmailCompany(e.target.value)
@@ -1428,7 +1424,7 @@ ${candidate.links}`
                   <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.targetPosition}</label>
                   <input
                     type="text"
-                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm outline-none`}
                     value={emailTargetRole}
                     onChange={(e) => {
                       setEmailTargetRole(e.target.value)
@@ -1440,7 +1436,7 @@ ${candidate.links}`
                   <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.recipientRole}</label>
                   <input
                     type="text"
-                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm outline-none`}
                     value={emailRecipient}
                     onChange={(e) => {
                       setEmailRecipient(e.target.value)
@@ -1452,7 +1448,7 @@ ${candidate.links}`
                   <label className={`block text-xs font-bold uppercase tracking-wider ${textMuted} mb-1.5`}>{t.emailTool.myStrongSkill}</label>
                   <input
                     type="text"
-                    className={`w-full ${inputBg} border rounded-xl px-4 py-2.5 text-sm outline-none`}
+                    className={`w-full ${inputBg} border rounded-xl px-4 py-3 text-sm outline-none`}
                     value={emailStrongSkill}
                     onChange={(e) => {
                       setEmailStrongSkill(e.target.value)
@@ -1462,7 +1458,7 @@ ${candidate.links}`
                 </div>
                 <button
                   onClick={generateColdEmail}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 text-sm"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 text-sm"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>{t.emailTool.btnGenerate}</span>
