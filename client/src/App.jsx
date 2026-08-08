@@ -27,744 +27,1226 @@ import {
   Square,
   RefreshCw,
   Printer,
-  ChevronDown,
+  ChevronRight,
   Terminal,
   Send,
   GitBranch,
-  Github
+  Github,
+  Bookmark,
+  BookmarkCheck,
+  Mail,
+  Sliders,
+  HelpCircle,
+  FileSpreadsheet,
+  Check,
+  Clock,
+  MapPin,
+  Building,
+  User,
+  Phone,
+  Link as LinkIcon,
+  ChevronDown,
+  LayoutDashboard,
+  MessageSquareQuote,
+  Target
 } from 'lucide-react'
 
-// Comprehensive Multi-Language Translations Dictionary
+// Robust Multilingual Translations (Marathi, English, Hindi, Spanish, German, French, Japanese)
 const TRANSLATIONS = {
   mr: {
     langName: 'मराठी',
     flag: '🇮🇳',
-    brandSubtitle: 'विद्यार्थ्यांचा जागतिक करिअर एक्सलरेटर • Resume, Internships & Freelance Launchpad',
-    tabs: {
-      resume: 'Resume स्टुडिओ',
-      jobs: 'नोकऱ्या & Internships',
-      freelance: 'Freelance हब',
-      roadmap: 'AI करिअर रोडमॅप',
-      brand: 'ब्रँडिंग & GitHub'
+    brandName: 'CareerSarthi',
+    brandBadge: 'स्टुडंट करिअर प्लॅटफॉर्म',
+    nav: {
+      dashboard: 'डॅशबोर्ड',
+      resume: 'ATS Resume बिल्डर',
+      coverLetter: 'Cold Email & कव्हर लेटर',
+      jobs: 'इंटर्नशिप्स & जॉब्स',
+      freelance: 'फ्रीलान्सिंग & इन्व्हॉइस',
+      roadmaps: 'रोडमॅप & मुलाखत तयारी'
     },
-    heroTag: 'जागतिक दर्जाचा स्टुडंट करिअर प्लॅटफॉर्म',
-    heroTitle: 'ATS Resumes बनवा, Global Internships शोधा आणि Freelancing सुरू करा.',
-    heroDesc: 'कॉलेजच्या अभ्यासासोबतच हाय-पॉवर पोर्टफोलिओ, प्रोफेशनल्स रिझ्युमे आणि आंतरराष्ट्रीय फ्रीलान्सिंग कमाईसाठी संपूर्ण ऑल-इन-वन प्रणाली.',
-    atsScore: 'ATS स्कोअर',
-    pdfEngine: 'PDF इंजिन',
-    radar: '24/7 जॉब रडार',
-    resumeBuilderTitle: 'स्मार्ट स्टुडंट Resume बिल्डर',
-    resumeBuilderSubtitle: 'तुमचे कॉलेज तपशील, प्रोजेक्ट्स आणि स्किल्स टाका',
-    atsOptimized: 'ATS प्रमाणित',
-    fullName: 'पूर्ण नाव',
-    targetRole: 'लक्ष्य पद (Target Role)',
-    email: 'ईमेल पत्ता',
-    phone: 'फोन / व्हॉट्सॲप',
-    location: 'स्थान / शहर',
-    degree: 'पदवी / कॉलेज आणि वर्ष',
-    universityCgpa: 'विद्यापीठ / CGPA गुण',
-    summary: 'करिअर उद्दिष्ट (Summary / Objective)',
-    skills: 'तांत्रिक कौशल्ये (स्वल्पविरामाने वेगळे करा)',
-    projects: 'महत्त्वाचे प्रोजेक्ट्स आणि उपलब्धी',
-    languages: 'भाषा (उदा. इंग्रजी, मराठी, हिंदी)',
-    certifications: 'प्रमाणपत्रे (Certifications)',
-    btnUpdatePreview: 'थेट Preview अपडेट करा',
-    btnDownloadPdf: 'Vector PDF डाउनलोड करा',
-    btnAiPolish: 'AI पॉलिश करा',
-    btnPrint: 'प्रिंट करा',
-    livePreviewTitle: 'थेट ATS Resume शीट',
-    previewFormat: 'प्रमाणित A4 फॉरमॅट',
-    jobSearchTitle: 'ग्लोबल इंटर्नशिप & फ्रेशर जॉब रडार',
-    jobSearchSubtitle: 'विद्यार्थ्यांसाठी खास निवडक रिमोट आणि ऑफिस जॉब्स शोधा.',
-    searchPlaceholder: 'रोल शोधा (उदा. React, Node.js, Python, Frontend, UI/UX)...',
-    btnSearch: 'सर्च करा',
-    trending: 'ट्रेंडिंग:',
-    directApply: 'थेट अर्ज करा',
-    viewDetails: 'तपशील & अर्ज',
-    freelanceTitle: 'विद्यार्थ्यांसाठी Freelancing & कमाईचा ब्लूप्रिंट',
-    freelanceSubtitle: 'कॉलेजमध्ये असतानाच डॉलर्स व रुपयांमध्ये कमाई कशी सुरू करावी याचे अचूक मार्गदर्शन.',
-    proposalGenerator: '⚡ इन्स्टंट Proposal जनरेटर',
-    chooseService: 'तुमची सर्व्हिस निवडा:',
-    copyProposal: 'Proposal कॉपी करा',
-    copiedToast: 'क्लिपबोर्डवर कॉपी झाले!',
-    roadmapTitle: '🚀 विद्यार्थी AI करिअर रोडमॅप & स्किल ट्रॅकर',
-    roadmapSubtitle: 'सुरुवातीपासून हाय-पॅकेज इंजिनिअर बनण्यासाठीची पायरी-दर-पायरी दिशा.',
-    brandHubTitle: 'ग्लोबल ब्रँडिंग आणि GitHub इंटिग्रेशन',
-    brandHubSubtitle: 'या प्रोजेक्टची ब्रँड ओळख आणि GitHub वरील अपडेट्स'
+    dashboard: {
+      welcome: 'विद्यार्थी करिअर डॅशबोर्डमध्ये आपले स्वागत आहे',
+      desc: 'तुमचा रिझ्युमे तयार करा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्ये असतानाच कमाई सुरू करा.',
+      atsCardTitle: 'ATS रिझ्युमे दर्जा',
+      atsCardDesc: 'कंपन्यांच्या ऑटोमेटेड सिस्टममध्ये पास होणारा स्कोअर',
+      savedJobsTitle: 'सेव्ह केलेल्या नोकऱ्या',
+      activeRoadmapsTitle: 'चालू स्किल्स प्रगती',
+      quickActions: 'त्वरित सुरू करा (Quick Actions)',
+      btnBuildResume: 'नवीन Resume बनवा',
+      btnSearchJobs: 'नोकऱ्या शोधा',
+      btnWriteEmail: 'Cold Email लिहा'
+    },
+    resume: {
+      title: 'व्यावसायिक ATS Resume स्टुडिओ',
+      subtitle: 'भारतीय व आंतरराष्ट्रीय कंपन्यांसाठी प्रमाणित A4 फॉरमॅट',
+      personalTab: '१. वैयक्तिक माहिती',
+      educationTab: '२. शिक्षण व कॉलेज',
+      skillsTab: '३. तांत्रिक कौशल्ये',
+      experienceTab: '४. प्रोजेक्ट्स व अनुभव',
+      fullName: 'पूर्ण नाव',
+      targetRole: 'लक्ष्य पद (उदा. Full Stack Developer)',
+      email: 'ईमेल पत्ता',
+      phone: 'मोबाईल / व्हॉट्सॲप',
+      location: 'शहर / राज्य',
+      linkedin: 'LinkedIn / GitHub प्रोफाइल',
+      degree: 'पदवी (Degree)',
+      university: 'कॉलेज / विद्यापीठ नाव',
+      gradYear: 'पदवी वर्ष (Graduation Year)',
+      cgpa: 'CGPA किंवा टक्केवारी',
+      summary: 'करिअर उद्दिष्ट (Career Summary)',
+      aiPolish: 'AI ने सुधारणा करा',
+      skillsLabel: 'तांत्रिक कौशल्ये (स्वल्पविरामाने वेगळे करा)',
+      projectsLabel: 'महत्त्वाचे प्रोजेक्ट्स (नाव आणि माहिती)',
+      certificationsLabel: 'प्रमाणपत्रे (Certifications)',
+      templateStyle: 'Resume डिझाइन फॉरमॅट:',
+      modernTech: 'मॉडर्न टेक',
+      minimalATS: 'क्लासिक मिनिमल (ATS)',
+      executive: 'एक्झिक्युटिव्ह',
+      btnUpdate: 'लाइव्ह Preview अपडेट करा',
+      btnDownload: 'Vector PDF डाउनलोड करा',
+      btnPrint: 'प्रिंट करा',
+      btnExportJson: 'डेटा Export करा',
+      btnImportJson: 'डेटा Import करा',
+      liveSheetTitle: 'थेट A4 कागद Preview',
+      atsAnalysisTitle: 'ATS गुणवत्ता विश्लेषण (Real-time Checklist)',
+      metricContact: 'संपर्क माहिती पूर्ण',
+      metricSummary: 'उद्दिष्ट व प्रभाव स्पष्ट',
+      metricSkills: 'कमीत कमी ५ तांत्रिक स्किल्स',
+      metricProjects: 'प्रोजेक्ट्स समाविष्ट'
+    },
+    emailTool: {
+      title: 'AI Cold Email & कव्हर लेटर जनरेटर',
+      subtitle: 'HR आणि स्टार्टअप फाउंडर्सना पाठवण्यासाठी प्रोफेशनल मेसेज एका क्लिकवर मिळवा.',
+      recipientRole: 'तुम्ही कोणाला ईमेल पाठवत आहात?',
+      companyName: 'कंपनीचे नाव',
+      targetPosition: 'कोणत्या पदासाठी अर्ज आहे?',
+      myStrongSkill: 'तुमचे सर्वात मुख्य स्किल',
+      btnGenerate: 'ईमेल जनरेट करा',
+      btnCopy: 'ईमेल कॉपी करा',
+      previewTitle: 'तयार झालेला ईमेल मेसेज:'
+    },
+    jobs: {
+      title: 'इंटर्नशिप्स आणि फ्रेशर जॉब रडार',
+      subtitle: 'विद्यार्थ्यांसाठी खास निवडक रिमोट, हायब्रिड व ऑन-साइट संधी.',
+      searchPlaceholder: 'पद किंवा स्किल शोधा (उदा. React, Node.js, Python, Frontend, Trainee)...',
+      allLocations: 'सर्व शहरे',
+      remoteOnly: 'केवळ रिमोट (Work from Home)',
+      stipendFilter: 'स्टायपेंडसह',
+      directApply: 'थेट अर्ज करा',
+      saveJob: 'सेव्ह करा',
+      saved: 'सेव्ह केले',
+      trending: 'लोकप्रिय शोध:'
+    },
+    freelance: {
+      title: 'विद्यार्थी फ्रीलान्सिंग हब & इन्व्हॉइस टूल',
+      subtitle: 'कॉलेजमध्ये शिकत असतानाच Upwork आणि Fiverr वरून प्रोजेक्ट्स मिळवण्याचे मार्गदर्शन.',
+      hourlyRateCalc: 'तासी दर (Hourly Rate) कॅल्क्युलेटर',
+      hoursPerWeek: 'आठवड्याला कामाचे तास:',
+      expectedRate: 'अपेक्षित प्रति तास दर:',
+      projectedMonthly: 'अपेक्षित मासिक कमाई:',
+      proposalGen: 'क्लायंटसाठी इन्स्टंट Proposal जनरेटर',
+      selectGig: 'सर्व्हिस प्रकार निवडा:',
+      copyProposal: 'Proposal कॉपी करा',
+      invoiceToolTitle: 'क्लायंटसाठी झटपट इन्व्हॉइस (Invoice Generator)',
+      clientName: 'क्लायंट / कंपनी नाव',
+      serviceDesc: 'काम / प्रोजेक्टचे नाव',
+      invoiceAmount: 'रक्कम',
+      btnDownloadInvoice: 'इन्व्हॉइस PDF बनवा'
+    },
+    roadmaps: {
+      title: 'इंजिनिअरिंग करिअर रोडमॅप & मुलाखत तयारी',
+      subtitle: 'महत्त्वाच्या कोडिंग संकल्पना आणि मुलाखतीसाठी महत्त्वाचे प्रश्नोत्तरे.',
+      interviewPrepTitle: 'टॉप मुलाखत प्रश्न (Quick Interview Flashcards)',
+      showAnswer: 'उत्तर पाहा',
+      hideAnswer: 'उत्तर लपवा'
+    }
   },
   en: {
     langName: 'English',
     flag: '🌐',
-    brandSubtitle: 'Global Student Career Accelerator • Resume, Internships & Freelance Launchpad',
-    tabs: {
-      resume: 'Resume Studio',
-      jobs: 'Jobs & Internships',
-      freelance: 'Freelance Hub',
-      roadmap: 'Career Roadmaps',
-      brand: 'Branding & Git'
+    brandName: 'CareerSarthi',
+    brandBadge: 'Global Career Suite',
+    nav: {
+      dashboard: 'Dashboard',
+      resume: 'ATS Resume Builder',
+      coverLetter: 'Cold Email & Cover Letter',
+      jobs: 'Internships & Jobs',
+      freelance: 'Freelance & Invoice',
+      roadmaps: 'Roadmaps & Prep'
     },
-    heroTag: 'World-Class Student Career Suite',
-    heroTitle: 'Build ATS Resumes, Land Global Internships & Launch Freelancing.',
-    heroDesc: 'An all-in-one ecosystem for students and fresh graduates to craft verified resumes, score global internships, and monetize skills.',
-    atsScore: 'ATS Score',
-    pdfEngine: 'PDF Engine',
-    radar: '24/7 Job Radar',
-    resumeBuilderTitle: 'Smart Student Resume Builder',
-    resumeBuilderSubtitle: 'Enter academic credentials, verified skills, and projects',
-    atsOptimized: 'ATS Optimized',
-    fullName: 'Full Name',
-    targetRole: 'Target Role',
-    email: 'Email Address',
-    phone: 'Phone / WhatsApp',
-    location: 'Location / City',
-    degree: 'Degree & Graduation Year',
-    universityCgpa: 'University & CGPA / Grade',
-    summary: 'Professional Career Summary',
-    skills: 'Technical Skills (comma separated)',
-    projects: 'Key Projects & Achievements',
-    languages: 'Languages Spoken',
-    certifications: 'Certifications & Badges',
-    btnUpdatePreview: 'Update Live Preview',
-    btnDownloadPdf: 'Download Vector PDF',
-    btnAiPolish: 'AI Enhance Summary',
-    btnPrint: 'Print Resume',
-    livePreviewTitle: 'Live ATS Resume Sheet',
-    previewFormat: 'Standard A4 Sheet',
-    jobSearchTitle: 'Global Student Internship & Fresher Job Radar',
-    jobSearchSubtitle: 'Curated international remote internships, campus roles, and entry-level positions.',
-    searchPlaceholder: 'Search by role (e.g. React, Full Stack, Python, Cloud, UI/UX)...',
-    btnSearch: 'Search Jobs',
-    trending: 'Trending:',
-    directApply: 'Direct Apply',
-    viewDetails: 'View & Apply',
-    freelanceTitle: 'Student Freelancing & Income Blueprint',
-    freelanceSubtitle: 'Actionable tactics to win freelance clients and build a global reputation from college.',
-    proposalGenerator: '⚡ Instant Client Proposal Generator',
-    chooseService: 'Select your offering:',
-    copyProposal: 'Copy Proposal',
-    copiedToast: 'Copied to clipboard!',
-    roadmapTitle: '🚀 Interactive Engineering Career Roadmaps',
-    roadmapSubtitle: 'Step-by-step verified curriculum to become industry-ready and land dream offers.',
-    brandHubTitle: 'Global Branding & GitHub Synchronization',
-    brandHubSubtitle: 'High-impact project naming and GitHub repository status'
+    dashboard: {
+      welcome: 'Welcome to your Student Career Command Center',
+      desc: 'Build ATS resumes, discover global internships, and monetize engineering skills in college.',
+      atsCardTitle: 'Resume ATS Score',
+      atsCardDesc: 'Automated screening compatibility',
+      savedJobsTitle: 'Saved Opportunities',
+      activeRoadmapsTitle: 'Roadmap Milestones',
+      quickActions: 'Quick Launch Actions',
+      btnBuildResume: 'Build ATS Resume',
+      btnSearchJobs: 'Search Internships',
+      btnWriteEmail: 'Draft Cold Email'
+    },
+    resume: {
+      title: 'Professional ATS Resume Studio',
+      subtitle: 'Standardized single-page A4 format designed to pass automated hiring systems.',
+      personalTab: '1. Personal Info',
+      educationTab: '2. Academics',
+      skillsTab: '3. Technical Skills',
+      experienceTab: '4. Projects & Work',
+      fullName: 'Full Name',
+      targetRole: 'Target Role (e.g. Full Stack Developer)',
+      email: 'Email Address',
+      phone: 'Phone / WhatsApp',
+      location: 'City, Country',
+      linkedin: 'LinkedIn / GitHub URL',
+      degree: 'Degree (e.g. B.Tech Computer Science)',
+      university: 'College / University Name',
+      gradYear: 'Graduation Year',
+      cgpa: 'CGPA / Percentage',
+      summary: 'Professional Career Summary',
+      aiPolish: 'AI Enhance Summary',
+      skillsLabel: 'Technical Skills (comma separated)',
+      projectsLabel: 'Key Projects (Title & description)',
+      certificationsLabel: 'Certifications & Honors',
+      templateStyle: 'Resume Layout Theme:',
+      modernTech: 'Modern Tech',
+      minimalATS: 'Classic ATS',
+      executive: 'Executive',
+      btnUpdate: 'Update Live Sheet',
+      btnDownload: 'Download Vector PDF',
+      btnPrint: 'Print Resume',
+      btnExportJson: 'Export JSON',
+      btnImportJson: 'Import JSON',
+      liveSheetTitle: 'Live A4 Print Preview',
+      atsAnalysisTitle: 'Real-Time ATS Health Checklist',
+      metricContact: 'Contact details valid',
+      metricSummary: 'Summary length optimal',
+      metricSkills: '5+ verified tech skills',
+      metricProjects: 'Projects listed clearly'
+    },
+    emailTool: {
+      title: 'AI Cold Email & Cover Letter Generator',
+      subtitle: 'Craft personalized outreach emails to recruiters and tech founders in seconds.',
+      recipientRole: 'Who are you writing to?',
+      companyName: 'Company Name',
+      targetPosition: 'Target Job / Internship Role',
+      myStrongSkill: 'Your strongest tech skill',
+      btnGenerate: 'Generate Email Pitch',
+      btnCopy: 'Copy Outreach Email',
+      previewTitle: 'Generated Cold Email:'
+    },
+    jobs: {
+      title: 'Curated Internship & Job Radar',
+      subtitle: 'Filtered student-friendly roles, verified campus drives, and remote tech internships.',
+      searchPlaceholder: 'Search by role or tech stack (e.g. React, Node.js, Python, Frontend, Trainee)...',
+      allLocations: 'All Locations',
+      remoteOnly: 'Remote Only (Work From Home)',
+      stipendFilter: 'Paid / Stipend',
+      directApply: 'Direct Apply',
+      saveJob: 'Save',
+      saved: 'Saved',
+      trending: 'Trending:'
+    },
+    freelance: {
+      title: 'Student Freelance Launchpad & Invoicing',
+      subtitle: 'Actionable tactics to secure initial freelance contracts and invoice global clients.',
+      hourlyRateCalc: 'Hourly Rate & Earnings Estimator',
+      hoursPerWeek: 'Available hours / week:',
+      expectedRate: 'Target hourly rate:',
+      projectedMonthly: 'Projected Monthly Income:',
+      proposalGen: 'Instant Client Proposal Generator',
+      selectGig: 'Select Service Type:',
+      copyProposal: 'Copy Proposal',
+      invoiceToolTitle: 'Quick Client Invoice Generator',
+      clientName: 'Client / Company Name',
+      serviceDesc: 'Deliverables / Scope of Work',
+      invoiceAmount: 'Invoice Amount',
+      btnDownloadInvoice: 'Generate Invoice PDF'
+    },
+    roadmaps: {
+      title: 'Engineering Roadmaps & Interview Preparation',
+      subtitle: 'Structured progression milestones and curated interview flashcards.',
+      interviewPrepTitle: 'Technical Interview Flashcards',
+      showAnswer: 'Show Answer',
+      hideAnswer: 'Hide Answer'
+    }
   },
   hi: {
     langName: 'हिंदी',
     flag: '🇮🇳',
-    brandSubtitle: 'ग्लोबल स्टूडेंट करियर एक्सीलरेटर • Resume, Internships & Freelance Launchpad',
-    tabs: {
-      resume: 'Resume स्टूडियो',
-      jobs: 'नौकरियां & Internships',
-      freelance: 'Freelance हब',
-      roadmap: 'करियर रोडमैप',
-      brand: 'ब्रांडिंग & Git'
+    brandName: 'CareerSarthi',
+    brandBadge: 'स्टूडेंट करियर सूट',
+    nav: {
+      dashboard: 'डैशबोर्ड',
+      resume: 'ATS Resume बिल्डर',
+      coverLetter: 'Cold Email & कवर लेटर',
+      jobs: 'इंटर्नशिप्स & नौकरियां',
+      freelance: 'फ्रीलांसिंग & इनवॉइस',
+      roadmaps: 'रोडमैप & इंटरव्यू'
     },
-    heroTag: 'छात्रों के लिए वर्ल्ड-क्लास करियर प्लेटफॉर्म',
-    heroTitle: 'ATS Resume बनाएं, Global Internships खोजें और Freelancing शुरू करें।',
-    heroDesc: 'कॉलेज की पढ़ाई के साथ-साथ हाई-पावर पोर्टफोलियो, प्रमाणित रिज्यूमे और स्वतंत्र कमाई शुरू करने का संपूर्ण समाधान।',
-    atsScore: 'ATS स्कोर',
-    pdfEngine: 'PDF इंजन',
-    radar: '24/7 जॉब रडार',
-    resumeBuilderTitle: 'स्मार्ट स्टूडेंट Resume बिल्डर',
-    resumeBuilderSubtitle: 'अपनी शैक्षणिक जानकारी, प्रोजेक्ट्स और स्किल्स दर्ज करें',
-    atsOptimized: 'ATS प्रमाणित',
-    fullName: 'पूरा नाम',
-    targetRole: 'लक्ष्य पद (Target Role)',
-    email: 'ईमेल पता',
-    phone: 'फ़ोन / व्हाट्सएप',
-    location: 'स्थान / शहर',
-    degree: 'डिग्री और वर्ष',
-    universityCgpa: 'विश्वविद्यालय / CGPA',
-    summary: 'करियर सारांश (Summary)',
-    skills: 'तकनीकी कौशल (अल्पविराम से अलग करें)',
-    projects: 'मुख्य प्रोजेक्ट्स और उपलब्धियां',
-    languages: 'भाषाएं',
-    certifications: 'प्रमाणपत्र (Certifications)',
-    btnUpdatePreview: 'लाइव Preview अपडेट करें',
-    btnDownloadPdf: 'Vector PDF डाउनलोड करें',
-    btnAiPolish: 'AI पॉलिश करें',
-    btnPrint: 'प्रिंट करें',
-    livePreviewTitle: 'लाइव ATS Resume शीट',
-    previewFormat: 'मानक A4 प्रारूप',
-    jobSearchTitle: 'ग्लोबल इंटर्नशिप और फ्रेशर जॉब रडार',
-    jobSearchSubtitle: 'छात्रों के लिए विशेष रूप से चुने गए रिमोट और कैंपस अवसर।',
-    searchPlaceholder: 'पद खोजें (उदा. React, Python, Full Stack, UI/UX)...',
-    btnSearch: 'सर्च करें',
-    trending: 'ट्रेंडिंग:',
-    directApply: 'सीधा आवेदन',
-    viewDetails: 'विवरण व आवेदन',
-    freelanceTitle: 'स्टूडेंट फ्रीलांसिंग और कमाई की गाइड',
-    freelanceSubtitle: 'कॉलेज में पढ़ते हुए फ्रीलांस प्रोजेक्ट्स पाने और आय अर्जित करने की रणनीति।',
-    proposalGenerator: '⚡ त्वरित Proposal जनरेटर',
-    chooseService: 'अपनी सेवा चुनें:',
-    copyProposal: 'Proposal कॉपी करें',
-    copiedToast: 'क्लिपबोर्ड पर कॉपी किया गया!',
-    roadmapTitle: '🚀 छात्र AI करियर रोडमैप और स्किल ट्रैकर',
-    roadmapSubtitle: 'कॉलेज से सीधे हाई-सैलरी टेक जॉब पाने का संपूर्ण रोडमैप।',
-    brandHubTitle: 'ग्लोबल ब्रांडिंग और GitHub हब',
-    brandHubSubtitle: 'परियोजना ब्रांड पहचान और GitHub सिंक्रोनाइज़ेशन'
+    dashboard: {
+      welcome: 'विद्यार्थी करियर कमांड सेंटर में आपका स्वागत है',
+      desc: 'ATS रिज्यूमे बनाएं, वैश्विक इंटर्नशिप खोजें और कॉलेज में ही कमाई शुरू करें।',
+      atsCardTitle: 'Resume ATS स्कोर',
+      atsCardDesc: 'ऑटोमेटेड स्क्रीनिंग पास करने की क्षमता',
+      savedJobsTitle: 'सेव किए गए अवसर',
+      activeRoadmapsTitle: 'रोडमैप प्रोग्रेस',
+      quickActions: 'त्वरित शुरुआत (Quick Actions)',
+      btnBuildResume: 'नया Resume बनाएं',
+      btnSearchJobs: 'नौकरियां खोजें',
+      btnWriteEmail: 'Cold Email लिखें'
+    },
+    resume: {
+      title: 'प्रोफेशनल ATS Resume स्टूडियो',
+      subtitle: 'कंपनियों में शॉर्टलिस्ट होने के लिए मानक A4 प्रारूप',
+      personalTab: '१. व्यक्तिगत विवरण',
+      educationTab: '२. शिक्षा व कॉलेज',
+      skillsTab: '३. तकनीकी कौशल',
+      experienceTab: '४. प्रोजेक्ट्स व अनुभव',
+      fullName: 'पूरा नाम',
+      targetRole: 'लक्ष्य पद (उदा. Full Stack Developer)',
+      email: 'ईमेल पता',
+      phone: 'फ़ोन / व्हाट्सएप',
+      location: 'शहर / राज्य',
+      linkedin: 'LinkedIn / GitHub प्रोफाइल',
+      degree: 'डिग्री (Degree)',
+      university: 'कॉलेज / विश्वविद्यालय',
+      gradYear: 'उत्तीर्ण वर्ष (Graduation Year)',
+      cgpa: 'CGPA / प्रतिशत',
+      summary: 'करियर सारांश (Career Summary)',
+      aiPolish: 'AI से सुधारें',
+      skillsLabel: 'तकनीकी कौशल (अल्पविराम से अलग करें)',
+      projectsLabel: 'प्रमुख प्रोजेक्ट्स',
+      certificationsLabel: 'प्रमाणपत्र (Certifications)',
+      templateStyle: 'Resume डिज़ाइन थीम:',
+      modernTech: 'मॉडर्न टेक',
+      minimalATS: 'क्लासिक ATS',
+      executive: 'एग्जीक्यूटिव',
+      btnUpdate: 'लाइव Preview अपडेट करें',
+      btnDownload: 'Vector PDF डाउनलोड करें',
+      btnPrint: 'प्रिंट करें',
+      btnExportJson: 'डेटा Export करें',
+      btnImportJson: 'डेटा Import करें',
+      liveSheetTitle: 'लाइव A4 शीट Preview',
+      atsAnalysisTitle: 'ATS गुणवत्ता चेकलिस्ट',
+      metricContact: 'संपर्क जानकारी मान्य',
+      metricSummary: 'सारांश अनुकूल',
+      metricSkills: '५+ तकनीकी स्किल्स',
+      metricProjects: 'प्रोजेक्ट्स शामिल'
+    },
+    emailTool: {
+      title: 'AI Cold Email और कवर लेटर जनरेटर',
+      subtitle: 'HR और फाउंडर्स को सीधे प्रभावशाली ईमेल भेजने के लिए टूल।',
+      recipientRole: 'आप किसे ईमेल भेज रहे हैं?',
+      companyName: 'कंपनी का नाम',
+      targetPosition: 'वांछित पद (Target Position)',
+      myStrongSkill: 'आपकी सबसे मजबूत स्किल',
+      btnGenerate: 'ईमेल तैयार करें',
+      btnCopy: 'ईमेल कॉपी करें',
+      previewTitle: 'तैयार ईमेल:'
+    },
+    jobs: {
+      title: 'इंटर्नशिप और फ्रेशर जॉब रडार',
+      subtitle: 'छात्रों के लिए विशेष रूप से सत्यापित रिमोट व ऑन-साइट अवसर।',
+      searchPlaceholder: 'पद या स्किल खोजें (उदा. React, Node.js, Python, Frontend, Trainee)...',
+      allLocations: 'सभी शहर',
+      remoteOnly: 'केवल रिमोट (Work from Home)',
+      stipendFilter: 'वेतन / स्टाइपेंड सहित',
+      directApply: 'सीधा आवेदन',
+      saveJob: 'सेव करें',
+      saved: 'सेव किया',
+      trending: 'ट्रेंडिंग:'
+    },
+    freelance: {
+      title: 'स्टूडेंट फ्रीलांसिंग हब & इनवॉइस टूल',
+      subtitle: 'कॉलेज में पढ़ते हुए Upwork और Fiverr से प्रोजेक्ट्स पाने की रणनीति।',
+      hourlyRateCalc: 'प्रति घंटा दर (Hourly Rate) कैलकुलेटर',
+      hoursPerWeek: 'प्रति सप्ताह उपलब्ध घंटे:',
+      expectedRate: 'अपेक्षित प्रति घंटा दर:',
+      projectedMonthly: 'अनुमानित मासिक आय:',
+      proposalGen: 'क्लाइंट्स के लिए तुरंत Proposal जनरेटर',
+      selectGig: 'सर्विस प्रकार चुनें:',
+      copyProposal: 'Proposal कॉपी करें',
+      invoiceToolTitle: 'क्लाइंट इनवॉइस जनरेटर',
+      clientName: 'क्लाइंट / कंपनी नाम',
+      serviceDesc: 'काम का विवरण',
+      invoiceAmount: 'राशि',
+      btnDownloadInvoice: 'इनवॉइस PDF बनाएं'
+    },
+    roadmaps: {
+      title: 'इंजीनियरिंग रोडमैप और इंटरव्यू तैयारी',
+      subtitle: 'महत्वपूर्ण कोडिंग स्किल्स और इंटरव्यू प्रश्नोत्तरी।',
+      interviewPrepTitle: 'तकनीकी इंटरव्यू फ्लैशकार्ड्स',
+      showAnswer: 'उत्तर देखें',
+      hideAnswer: 'उत्तर छुपाएं'
+    }
   },
   es: {
     langName: 'Español',
     flag: '🇪🇸',
-    brandSubtitle: 'Acelerador de Carrera Global para Estudiantes',
-    tabs: {
-      resume: 'Estudio de CV',
+    brandName: 'CareerSarthi',
+    brandBadge: 'Plataforma Global',
+    nav: {
+      dashboard: 'Panel Principal',
+      resume: 'Creador de CV ATS',
+      coverLetter: 'Cold Email & Carta',
       jobs: 'Empleos & Pasantías',
-      freelance: 'Freelance Hub',
-      roadmap: 'Ruta de Carrera',
-      brand: 'Marca & GitHub'
+      freelance: 'Freelance & Facturas',
+      roadmaps: 'Rutas & Entrevistas'
     },
-    heroTag: 'Plataforma Global para Estudiantes',
-    heroTitle: 'Crea CVs ATS, Encuentra Pasantías y Lanza tu Carrera Freelance.',
-    heroDesc: 'Una suite integral para que estudiantes y recién graduados destaquen internacionalmente.',
-    atsScore: 'Puntaje ATS',
-    pdfEngine: 'Motor PDF',
-    radar: 'Radar 24/7',
-    resumeBuilderTitle: 'Creador de CV Inteligente',
-    resumeBuilderSubtitle: 'Ingresa credenciales académicas y proyectos destacados',
-    atsOptimized: 'Optimizado ATS',
-    fullName: 'Nombre Completo',
-    targetRole: 'Rol Objetivo',
-    email: 'Correo Electrónico',
-    phone: 'Teléfono',
-    location: 'Ubicación',
-    degree: 'Título & Año',
-    universityCgpa: 'Universidad & Promedio',
-    summary: 'Resumen Profesional',
-    skills: 'Habilidades Técnicas',
-    projects: 'Proyectos Principales',
-    languages: 'Idiomas',
-    certifications: 'Certificaciones',
-    btnUpdatePreview: 'Actualizar Vista Previa',
-    btnDownloadPdf: 'Descargar PDF Vectorial',
-    btnAiPolish: 'Mejorar con IA',
-    btnPrint: 'Imprimir CV',
-    livePreviewTitle: 'Hoja de CV en Vivo',
-    previewFormat: 'Formato Estándar A4',
-    jobSearchTitle: 'Radar Global de Empleos y Pasantías',
-    jobSearchSubtitle: 'Oportunidades internacionales y remotas verificadas para estudiantes.',
-    searchPlaceholder: 'Buscar rol (ej. React, Frontend, Python)...',
-    btnSearch: 'Buscar',
-    trending: 'Tendencias:',
-    directApply: 'Aplicar Directo',
-    viewDetails: 'Ver y Aplicar',
-    freelanceTitle: 'Guía de Freelance para Estudiantes',
-    freelanceSubtitle: 'Estrategias para conseguir tus primeros clientes y ganar en moneda internacional.',
-    proposalGenerator: '⚡ Generador de Propuestas Instantáneo',
-    chooseService: 'Elige tu servicio:',
-    copyProposal: 'Copiar Propuesta',
-    copiedToast: '¡Copiado al portapapeles!',
-    roadmapTitle: '🚀 Rutas de Carrera Tecnológica',
-    roadmapSubtitle: 'Currículo verificado paso a paso para conseguir ofertas de alto nivel.',
-    brandHubTitle: 'Identidad de Marca y GitHub',
-    brandHubSubtitle: 'Propuestas de marca y sincronización con repositorio'
+    dashboard: {
+      welcome: 'Bienvenido a tu Centro de Carrera Estudiantil',
+      desc: 'Crea CVs compatibles con ATS y encuentra pasantías internacionales.',
+      atsCardTitle: 'Puntaje ATS',
+      atsCardDesc: 'Compatibilidad con filtros automáticos',
+      savedJobsTitle: 'Ofertas Guardadas',
+      activeRoadmapsTitle: 'Hitos Completados',
+      quickActions: 'Acciones Rápidas',
+      btnBuildResume: 'Crear CV ATS',
+      btnSearchJobs: 'Buscar Pasantías',
+      btnWriteEmail: 'Redactar Email'
+    },
+    resume: {
+      title: 'Estudio de CV Profesional ATS',
+      subtitle: 'Formato A4 optimizado para superar sistemas de reclutamiento.',
+      personalTab: '1. Datos Personales',
+      educationTab: '2. Educación',
+      skillsTab: '3. Habilidades Técnicas',
+      experienceTab: '4. Proyectos',
+      fullName: 'Nombre Completo',
+      targetRole: 'Puesto Deseado',
+      email: 'Correo Electrónico',
+      phone: 'Teléfono / WhatsApp',
+      location: 'Ciudad, País',
+      linkedin: 'Perfil de LinkedIn / GitHub',
+      degree: 'Título Universitario',
+      university: 'Universidad / Instituto',
+      gradYear: 'Año de Graduación',
+      cgpa: 'Promedio / Calificación',
+      summary: 'Resumen Profesional',
+      aiPolish: 'Mejorar con IA',
+      skillsLabel: 'Habilidades (separadas por comas)',
+      projectsLabel: 'Proyectos Destacados',
+      certificationsLabel: 'Certificaciones',
+      templateStyle: 'Plantilla de CV:',
+      modernTech: 'Tecnológica Moderna',
+      minimalATS: 'ATS Clásica',
+      executive: 'Ejecutiva',
+      btnUpdate: 'Actualizar Vista Previa',
+      btnDownload: 'Descargar PDF Vectorial',
+      btnPrint: 'Imprimir',
+      btnExportJson: 'Exportar JSON',
+      btnImportJson: 'Importar JSON',
+      liveSheetTitle: 'Vista Previa en Vivo A4',
+      atsAnalysisTitle: 'Lista de Verificación ATS',
+      metricContact: 'Contacto válido',
+      metricSummary: 'Resumen óptimo',
+      metricSkills: 'Más de 5 habilidades',
+      metricProjects: 'Proyectos claros'
+    },
+    emailTool: {
+      title: 'Generador de Cold Email con IA',
+      subtitle: 'Escribe propuestas a reclutadores y fundadores en segundos.',
+      recipientRole: '¿A quién escribes?',
+      companyName: 'Nombre de la Empresa',
+      targetPosition: 'Puesto Solicitado',
+      myStrongSkill: 'Tu habilidad técnica principal',
+      btnGenerate: 'Generar Email',
+      btnCopy: 'Copiar Email',
+      previewTitle: 'Email Generado:'
+    },
+    jobs: {
+      title: 'Radar de Pasantías y Empleos Junior',
+      subtitle: 'Oportunidades remotas y presenciales verificadas para estudiantes.',
+      searchPlaceholder: 'Buscar por puesto o habilidad (ej. React, Python, Frontend)...',
+      allLocations: 'Todas las Ubicaciones',
+      remoteOnly: 'Solo Remoto',
+      stipendFilter: 'Con Pasantía Pagada',
+      directApply: 'Postular Directo',
+      saveJob: 'Guardar',
+      saved: 'Guardado',
+      trending: 'Tendencias:'
+    },
+    freelance: {
+      title: 'Guía Freelance y Facturación',
+      subtitle: 'Estrategias para conseguir tus primeros clientes internacionales.',
+      hourlyRateCalc: 'Calculadora de Tarifa por Hora',
+      hoursPerWeek: 'Horas disponibles / semana:',
+      expectedRate: 'Tarifa objetivo por hora:',
+      projectedMonthly: 'Ingreso mensual proyectado:',
+      proposalGen: 'Generador de Propuestas Instantáneas',
+      selectGig: 'Tipo de Servicio:',
+      copyProposal: 'Copiar Propuesta',
+      invoiceToolTitle: 'Generador de Facturas',
+      clientName: 'Cliente / Empresa',
+      serviceDesc: 'Descripción del Servicio',
+      invoiceAmount: 'Monto Total',
+      btnDownloadInvoice: 'Generar Factura PDF'
+    },
+    roadmaps: {
+      title: 'Rutas de Aprendizaje y Preparación',
+      subtitle: 'Hitos clave y tarjetas de preguntas técnicas para entrevistas.',
+      interviewPrepTitle: 'Tarjetas de Entrevista Técnica',
+      showAnswer: 'Ver Respuesta',
+      hideAnswer: 'Ocultar Respuesta'
+    }
   },
   de: {
     langName: 'Deutsch',
     flag: '🇩🇪',
-    brandSubtitle: 'Globaler Karriere-Beschleuniger für Studierende',
-    tabs: {
-      resume: 'Lebenslauf Studio',
-      jobs: 'Jobs & Praktika',
-      freelance: 'Freelance Hub',
-      roadmap: 'Karriere-Roadmap',
-      brand: 'Branding & Git'
+    brandName: 'CareerSarthi',
+    brandBadge: 'Globale Karriere-Suite',
+    nav: {
+      dashboard: 'Dashboard',
+      resume: 'ATS-Lebenslauf',
+      coverLetter: 'Cold E-Mail & Anschreiben',
+      jobs: 'Praktika & Jobs',
+      freelance: 'Freelance & Rechnung',
+      roadmaps: 'Roadmaps & Prep'
     },
-    heroTag: 'Weltklasse Karriereplattform',
-    heroTitle: 'ATS-Lebensläufe erstellen, weltweite Praktika finden & Freelancen.',
-    heroDesc: 'All-in-One Plattform für Studenten zur Erstellung professioneller Portfolios und weltweiter Karrieren.',
-    atsScore: 'ATS-Score',
-    pdfEngine: 'PDF-Engine',
-    radar: '24/7 Job-Radar',
-    resumeBuilderTitle: 'Intelligenter Lebenslauf-Baukasten',
-    resumeBuilderSubtitle: 'Akademische Leistungen, Fähigkeiten und Projekte eintragen',
-    atsOptimized: 'ATS-optimiert',
-    fullName: 'Vollständiger Name',
-    targetRole: 'Zielposition',
-    email: 'E-Mail-Adresse',
-    phone: 'Telefonnummer',
-    location: 'Standort',
-    degree: 'Abschluss & Jahrgang',
-    universityCgpa: 'Universität & Notendurchschnitt',
-    summary: 'Berufliches Profil',
-    skills: 'Technische Fähigkeiten',
-    projects: 'Wichtige Projekte',
-    languages: 'Sprachen',
-    certifications: 'Zertifikate',
-    btnUpdatePreview: 'Vorschau aktualisieren',
-    btnDownloadPdf: 'Vektor-PDF herunterladen',
-    btnAiPolish: 'Mit KI optimieren',
-    btnPrint: 'Drucken',
-    livePreviewTitle: 'Live ATS-Lebenslauf',
-    previewFormat: 'Standard A4-Format',
-    jobSearchTitle: 'Globales Praktikums- & Job-Radar',
-    jobSearchSubtitle: 'Kuratierte internationale Remote-Praktika und Einstiegspositionen.',
-    searchPlaceholder: 'Nach Rolle suchen (z.B. React, Node.js, Python)...',
-    btnSearch: 'Suchen',
-    trending: 'Trends:',
-    directApply: 'Direkt bewerben',
-    viewDetails: 'Details ansehen',
-    freelanceTitle: 'Studenten-Freelance Leitfaden',
-    freelanceSubtitle: 'Praktische Strategien zur Kundengewinnung während des Studiums.',
-    proposalGenerator: '⚡ Sofortiger Angebotsgenerator',
-    chooseService: 'Dienstleistung wählen:',
-    copyProposal: 'Angebot kopieren',
-    copiedToast: 'In die Zwischenablage kopiert!',
-    roadmapTitle: '🚀 Interaktive Entwickler-Roadmaps',
-    roadmapSubtitle: 'Schritt-für-Schritt Leitfaden für Spitzenangebote in der Tech-Branche.',
-    brandHubTitle: 'Markenidentität & GitHub Sync',
-    brandHubSubtitle: 'Markenkonzepte und Repository-Status'
+    dashboard: {
+      welcome: 'Willkommen in deiner Karriere-Zentrale',
+      desc: 'Erstelle ATS-optimierte Lebensläufe und finde weltweite Praktika.',
+      atsCardTitle: 'ATS-Score',
+      atsCardDesc: 'Kompatibilität mit Bewerbersystemen',
+      savedJobsTitle: 'Gespeicherte Jobs',
+      activeRoadmapsTitle: 'Roadmap-Fortschritt',
+      quickActions: 'Schnellstart',
+      btnBuildResume: 'Lebenslauf erstellen',
+      btnSearchJobs: 'Praktika suchen',
+      btnWriteEmail: 'Cold E-Mail verfassen'
+    },
+    resume: {
+      title: 'Professionelles ATS-Lebenslauf Studio',
+      subtitle: 'Standardisiertes A4-Format für optimale Screening-Ergebnisse.',
+      personalTab: '1. Persönliche Daten',
+      educationTab: '2. Ausbildung',
+      skillsTab: '3. Technische Fähigkeiten',
+      experienceTab: '4. Projekte',
+      fullName: 'Vollständiger Name',
+      targetRole: 'Zielposition (z.B. Frontend Entwickler)',
+      email: 'E-Mail-Adresse',
+      phone: 'Telefonnummer',
+      location: 'Stadt, Land',
+      linkedin: 'LinkedIn / GitHub URL',
+      degree: 'Abschluss (z.B. B.Sc. Informatik)',
+      university: 'Universität / Hochschule',
+      gradYear: 'Abschlussjahr',
+      cgpa: 'Notendurchschnitt (GPA)',
+      summary: 'Berufliches Profil',
+      aiPolish: 'Mit KI verbessern',
+      skillsLabel: 'Fähigkeiten (durch Kommas getrennt)',
+      projectsLabel: 'Wichtige Projekte',
+      certificationsLabel: 'Zertifikate',
+      templateStyle: 'Design-Vorlage:',
+      modernTech: 'Modern Tech',
+      minimalATS: 'Klassisch ATS',
+      executive: 'Executive',
+      btnUpdate: 'Vorschau aktualisieren',
+      btnDownload: 'Vektor-PDF herunterladen',
+      btnPrint: 'Drucken',
+      btnExportJson: 'JSON exportieren',
+      btnImportJson: 'JSON importieren',
+      liveSheetTitle: 'Live A4 Druckvorschau',
+      atsAnalysisTitle: 'ATS-Qualitätscheck',
+      metricContact: 'Kontaktdaten gültig',
+      metricSummary: 'Profil aussagekräftig',
+      metricSkills: '5+ verifizierte Skills',
+      metricProjects: 'Projekte strukturiert'
+    },
+    emailTool: {
+      title: 'KI Cold E-Mail & Anschreiben Generator',
+      subtitle: 'Verfasse gezielte Initiativbewerbungen an Recruiter in Sekundenschnelle.',
+      recipientRole: 'An wen schreibst du?',
+      companyName: 'Unternehmensname',
+      targetPosition: 'Angestrebte Position',
+      myStrongSkill: 'Deine stärkste Kernkompetenz',
+      btnGenerate: 'E-Mail generieren',
+      btnCopy: 'E-Mail kopieren',
+      previewTitle: 'Generierte E-Mail:'
+    },
+    jobs: {
+      title: 'Praktikums- & Einsteiger-Radar',
+      subtitle: 'Kuratierte Stellenangebote und Remote-Praktika für Studierende.',
+      searchPlaceholder: 'Nach Rolle oder Technologie suchen...',
+      allLocations: 'Alle Standorte',
+      remoteOnly: 'Nur Remote (Homeoffice)',
+      stipendFilter: 'Vergütet',
+      directApply: 'Direkt bewerben',
+      saveJob: 'Merken',
+      saved: 'Gemerkt',
+      trending: 'Trends:'
+    },
+    freelance: {
+      title: 'Studenten-Freelance & Abrechnung',
+      subtitle: 'Strategien für die ersten Kundenaufträge und Rechnungserstellung.',
+      hourlyRateCalc: 'Stundensatz-Kalkulator',
+      hoursPerWeek: 'Verfügbare Stunden / Woche:',
+      expectedRate: 'Gewünschter Stundensatz:',
+      projectedMonthly: 'Monatliches Einkommen:',
+      proposalGen: 'Sofort-Angebotsgenerator',
+      selectGig: 'Dienstleistung wählen:',
+      copyProposal: 'Angebot kopieren',
+      invoiceToolTitle: 'Rechnungsgenerator',
+      clientName: 'Kunde / Unternehmen',
+      serviceDesc: 'Leistungsbeschreibung',
+      invoiceAmount: 'Rechnungsbetrag',
+      btnDownloadInvoice: 'Rechnung PDF erstellen'
+    },
+    roadmaps: {
+      title: 'Entwickler-Roadmaps & Interviewvorbereitung',
+      subtitle: 'Strukturierte Lernpfade und technische Fragekarten.',
+      interviewPrepTitle: 'Technische Interview-Lernkarten',
+      showAnswer: 'Antwort anzeigen',
+      hideAnswer: 'Antwort verbergen'
+    }
   },
   fr: {
     langName: 'Français',
     flag: '🇫🇷',
-    brandSubtitle: 'Accélérateur de Carrière Mondiale pour Étudiants',
-    tabs: {
-      resume: 'Studio de CV',
-      jobs: 'Emplois & Stages',
-      freelance: 'Pôle Freelance',
-      roadmap: 'Feuille de Route',
-      brand: 'Marque & Git'
+    brandName: 'CareerSarthi',
+    brandBadge: 'Suite Carrière Mondiale',
+    nav: {
+      dashboard: 'Tableau de bord',
+      resume: 'CV ATS',
+      coverLetter: 'Email & Lettre',
+      jobs: 'Stages & Emplois',
+      freelance: 'Freelance & Factures',
+      roadmaps: 'Parcours & Préparation'
     },
-    heroTag: 'Suite Étudiante de Classe Mondiale',
-    heroTitle: 'Créez des CVs ATS, Décrochez des Stages Mondiaux et Devenez Freelance.',
-    heroDesc: 'La plateforme intégrée pour étudiants et jeunes diplômés pour valoriser leurs compétences.',
-    atsScore: 'Score ATS',
-    pdfEngine: 'Moteur PDF',
-    radar: 'Radar 24/7',
-    resumeBuilderTitle: 'Générateur de CV Intelligent',
-    resumeBuilderSubtitle: 'Ajoutez vos diplômes, compétences et réalisations',
-    atsOptimized: 'Optimisé ATS',
-    fullName: 'Nom Complet',
-    targetRole: 'Poste Visé',
-    email: 'Adresse E-mail',
-    phone: 'Téléphone',
-    location: 'Localisation',
-    degree: 'Diplôme & Année',
-    universityCgpa: 'Université & Moyenne',
-    summary: 'Résumé Professionnel',
-    skills: 'Compétences Techniques',
-    projects: 'Projets Majeurs',
-    languages: 'Langues',
-    certifications: 'Certifications',
-    btnUpdatePreview: 'Mettre à jour l’Aperçu',
-    btnDownloadPdf: 'Télécharger le PDF Vectoriel',
-    btnAiPolish: 'Améliorer par IA',
-    btnPrint: 'Imprimer le CV',
-    livePreviewTitle: 'Feuille de CV en Direct',
-    previewFormat: 'Format Standard A4',
-    jobSearchTitle: 'Radar Mondial de Stages et Premiers Emplois',
-    jobSearchSubtitle: 'Offres sélectionnées de stages à distance et postes juniors.',
-    searchPlaceholder: 'Rechercher un poste (ex: React, Full Stack, Python)...',
-    btnSearch: 'Rechercher',
-    trending: 'Tendances :',
-    directApply: 'Postuler Directement',
-    viewDetails: 'Voir & Postuler',
-    freelanceTitle: 'Guide Freelance Étudiant',
-    freelanceSubtitle: 'Stratégies concrètes pour décrocher des missions et générer des revenus.',
-    proposalGenerator: '⚡ Générateur de Propositions Instantané',
-    chooseService: 'Sélectionnez un service :',
-    copyProposal: 'Copier la Proposition',
-    copiedToast: 'Copié dans le presse-papier !',
-    roadmapTitle: '🚀 Parcours de Carrière Technologique',
-    roadmapSubtitle: 'Programme complet pour réussir ses entretiens techniques.',
-    brandHubTitle: 'Image de Marque & Dépôt GitHub',
-    brandHubSubtitle: 'Identité du projet et synchronisation du code'
+    dashboard: {
+      welcome: 'Bienvenue dans votre centre de carrière étudiante',
+      desc: 'Créez des CVs compatibles ATS et trouvez des stages partout dans le monde.',
+      atsCardTitle: 'Score ATS',
+      atsCardDesc: 'Compatibilité avec les robots recruteurs',
+      savedJobsTitle: 'Offres Sauvegardées',
+      activeRoadmapsTitle: 'Objectifs Atteints',
+      quickActions: 'Actions Rapides',
+      btnBuildResume: 'Créer un CV ATS',
+      btnSearchJobs: 'Chercher des Stages',
+      btnWriteEmail: 'Rédiger un Cold Email'
+    },
+    resume: {
+      title: 'Studio de CV Professionnel ATS',
+      subtitle: 'Format A4 standardisé conçu pour maximiser les chances d’entretien.',
+      personalTab: '1. Informations Personnelles',
+      educationTab: '2. Formation',
+      skillsTab: '3. Compétences',
+      experienceTab: '4. Projets',
+      fullName: 'Nom Complet',
+      targetRole: 'Poste Visé (ex: Développeur Full Stack)',
+      email: 'Adresse Email',
+      phone: 'Téléphone / WhatsApp',
+      location: 'Ville, Pays',
+      linkedin: 'Lien LinkedIn / GitHub',
+      degree: 'Diplôme (ex: Licence Informatique)',
+      university: 'Université / École',
+      gradYear: 'Année de Promotion',
+      cgpa: 'Moyenne / Mention',
+      summary: 'Résumé Professionnel',
+      aiPolish: 'Améliorer par IA',
+      skillsLabel: 'Compétences Techniques (séparées par des virgules)',
+      projectsLabel: 'Projets Réalisés',
+      certificationsLabel: 'Certifications',
+      templateStyle: 'Thème du CV:',
+      modernTech: 'Tech Moderne',
+      minimalATS: 'ATS Épuré',
+      executive: 'Exécutif',
+      btnUpdate: 'Mettre à jour l’Aperçu',
+      btnDownload: 'Télécharger le PDF Vectoriel',
+      btnPrint: 'Imprimer',
+      btnExportJson: 'Exporter JSON',
+      btnImportJson: 'Importer JSON',
+      liveSheetTitle: 'Aperçu Direct Format A4',
+      atsAnalysisTitle: 'Vérification Qualité ATS',
+      metricContact: 'Contact complet',
+      metricSummary: 'Résumé optimal',
+      metricSkills: '5+ compétences vérifiées',
+      metricProjects: 'Projets bien décrits'
+    },
+    emailTool: {
+      title: 'Générateur de Cold Email par IA',
+      subtitle: 'Générez des messages percutants pour les recruteurs en quelques secondes.',
+      recipientRole: 'À qui écrivez-vous ?',
+      companyName: 'Nom de l’Entreprise',
+      targetPosition: 'Poste Souhaité',
+      myStrongSkill: 'Votre point fort technique',
+      btnGenerate: 'Générer l’Email',
+      btnCopy: 'Copier l’Email',
+      previewTitle: 'Email Généré :'
+    },
+    jobs: {
+      title: 'Radar de Stages et Premiers Emplois',
+      subtitle: 'Offres sélectionnées pour étudiants et jeunes diplômés.',
+      searchPlaceholder: 'Rechercher par poste ou mot-clé (ex: React, Python)...',
+      allLocations: 'Toutes les Villes',
+      remoteOnly: 'Télétravail Uniquement',
+      stipendFilter: 'Rémunéré',
+      directApply: 'Postuler',
+      saveJob: 'Enregistrer',
+      saved: 'Enregistré',
+      trending: 'Tendances :'
+    },
+    freelance: {
+      title: 'Lancement Freelance et Facturation',
+      subtitle: 'Méthodes pour décrocher vos premières missions et facturer les clients.',
+      hourlyRateCalc: 'Calculateur de Taux Horaire',
+      hoursPerWeek: 'Heures disponibles / semaine :',
+      expectedRate: 'Taux horaire visé :',
+      projectedMonthly: 'Revenu mensuel estimé :',
+      proposalGen: 'Générateur de Proposition Client',
+      selectGig: 'Type de prestation :',
+      copyProposal: 'Copier la Proposition',
+      invoiceToolTitle: 'Générateur de Facture Rapide',
+      clientName: 'Client / Entreprise',
+      serviceDesc: 'Description du Projet',
+      invoiceAmount: 'Montant',
+      btnDownloadInvoice: 'Télécharger Facture PDF'
+    },
+    roadmaps: {
+      title: 'Feuilles de Route et Préparation Entretiens',
+      subtitle: 'Paliers d’apprentissage et flashcards de questions techniques.',
+      interviewPrepTitle: 'Flashcards Techniques d’Entretien',
+      showAnswer: 'Voir la Réponse',
+      hideAnswer: 'Masquer la Réponse'
+    }
   },
   ja: {
     langName: '日本語',
     flag: '🇯🇵',
-    brandSubtitle: '学生向けグローバルキャリア加速プラットフォーム',
-    tabs: {
-      resume: '履歴書スタジオ',
+    brandName: 'CareerSarthi',
+    brandBadge: '学生キャリア総合支援',
+    nav: {
+      dashboard: 'ダッシュボード',
+      resume: 'ATS履歴書ビルダー',
+      coverLetter: 'スカウト用メール作成',
       jobs: '求人・インターン',
-      freelance: 'フリーランス拠点',
-      roadmap: 'キャリアロードマップ',
-      brand: 'ブランド＆Git'
+      freelance: '副業＆請求書',
+      roadmaps: '学習ロードマップ'
     },
-    heroTag: '次世代学生キャリアスイート',
-    heroTitle: 'ATS対応の英文履歴書を作成し、グローバルインターンや副業案件を獲得。',
-    heroDesc: '学生や新卒エンジニアが世界基準のポートフォリオを作成し、キャリアを切り拓くための統合ツール。',
-    atsScore: 'ATSスコア',
-    pdfEngine: 'PDFエンジン',
-    radar: '24/7 求人レーダー',
-    resumeBuilderTitle: 'スマート学生レジュメビルダー',
-    resumeBuilderSubtitle: '学歴、保有スキル、開発実績を入力',
-    atsOptimized: 'ATS完全対応',
-    fullName: '氏名',
-    targetRole: '志望職種',
-    email: 'メールアドレス',
-    phone: '電話番号',
-    location: '所在地 / 都市',
-    degree: '学位・専攻・卒業年',
-    universityCgpa: '大学名・成績/GPA',
-    summary: '自己PR・キャリアサマリー',
-    skills: '技術スキル（カンマ区切り）',
-    projects: '主な開発プロジェクト',
-    languages: '使用言語',
-    certifications: '資格・認定',
-    btnUpdatePreview: 'プレビュー更新',
-    btnDownloadPdf: '高解像度PDF出力',
-    btnAiPolish: 'AIによる文章推敲',
-    btnPrint: '印刷する',
-    livePreviewTitle: 'リアルタイムATS履歴書シート',
-    previewFormat: '標準A4フォーマット',
-    jobSearchTitle: '世界インターン＆新卒エンジニア求人レーダー',
-    jobSearchSubtitle: '学生向けのリモート案件やジュニア職を厳選検索。',
-    searchPlaceholder: '職種を検索 (例: React, TypeScript, Python, UI/UX)...',
-    btnSearch: '検索する',
-    trending: '人気検索:',
-    directApply: '直接応募',
-    viewDetails: '詳細を見る',
-    freelanceTitle: '学生向けフリーランス副業ガイド',
-    freelanceSubtitle: '在学中に国際的な案件を受注し実績を積むための実践的ノウハウ。',
-    proposalGenerator: '⚡ 即戦力提案文ジェネレーター',
-    chooseService: '提供サービスを選択:',
-    copyProposal: '提案文をコピー',
-    copiedToast: 'クリップボードにコピーしました！',
-    roadmapTitle: '🚀 エンジニア成長ロードマップ',
-    roadmapSubtitle: '未経験からトップ企業に内定するための段階的学習パス。',
-    brandHubTitle: 'グローバルブランドとGitHub連携',
-    brandHubSubtitle: 'プロジェクトブランディングとGit同期'
+    dashboard: {
+      welcome: '学生キャリア司令塔へようこそ',
+      desc: '海外基準の英文ATSレジュメを作成し、世界中のインターンシップに応募できます。',
+      atsCardTitle: 'ATS適合スコア',
+      atsCardDesc: '自動書類審査の通過率',
+      savedJobsTitle: '保存した求人',
+      activeRoadmapsTitle: '達成した目標',
+      quickActions: 'クイックアクション',
+      btnBuildResume: '履歴書を作成',
+      btnSearchJobs: 'インターンを探す',
+      btnWriteEmail: '応募メールを書く'
+    },
+    resume: {
+      title: 'プロフェッショナルATS履歴書スタジオ',
+      subtitle: '大手企業の選考システムに準拠したA4英文標準フォーマット。',
+      personalTab: '1. 基本情報',
+      educationTab: '2. 学歴',
+      skillsTab: '3. 技術スキル',
+      experienceTab: '4. 開発実績',
+      fullName: '氏名',
+      targetRole: '希望職種（例: フルスタック開発者）',
+      email: 'メールアドレス',
+      phone: '電話番号',
+      location: '所在地',
+      linkedin: 'LinkedIn / GitHub URL',
+      degree: '専攻・学位（例: 情報理工学部）',
+      university: '大学名',
+      gradYear: '卒業予定年',
+      cgpa: 'GPA / 成績',
+      summary: '自己PR・キャリアサマリー',
+      aiPolish: 'AIで文章を推敲',
+      skillsLabel: 'スキル（カンマ区切り）',
+      projectsLabel: '開発プロジェクト',
+      certificationsLabel: '資格・認定',
+      templateStyle: 'デザインテンプレート:',
+      modernTech: 'モダンテック',
+      minimalATS: 'クラシックATS',
+      executive: 'エグゼクティブ',
+      btnUpdate: 'プレビューを更新',
+      btnDownload: 'ベクターPDF出力',
+      btnPrint: '印刷する',
+      btnExportJson: 'JSONエクスポート',
+      btnImportJson: 'JSONインポート',
+      liveSheetTitle: 'リアルタイムA4印刷プレビュー',
+      atsAnalysisTitle: 'ATS品質チェックリスト',
+      metricContact: '連絡先が正確に入力されている',
+      metricSummary: 'サマリーが十分な長さである',
+      metricSkills: '5つ以上のスキルが記載されている',
+      metricProjects: 'プロジェクト実績が明確である'
+    },
+    emailTool: {
+      title: 'AIコールドメール＆送付状ジェネレーター',
+      subtitle: '採用担当者や企業創業者へ送る魅力的なメッセージを瞬時に作成します。',
+      recipientRole: '送り先の相手は？',
+      companyName: '企業名',
+      targetPosition: '応募するポジション',
+      myStrongSkill: '最も得意なスキル',
+      btnGenerate: 'メールを作成する',
+      btnCopy: 'メール文をコピー',
+      previewTitle: '生成されたメール文:'
+    },
+    jobs: {
+      title: '学生向けインターン＆新卒求人レーダー',
+      subtitle: 'リモート対応や有給インターンを厳選して掲載。',
+      searchPlaceholder: '職種や技術名で検索（例: React, Python, Frontend）...',
+      allLocations: 'すべての勤務地',
+      remoteOnly: 'リモート限定 (在宅勤務)',
+      stipendFilter: '有給インターン',
+      directApply: '今すぐ応募',
+      saveJob: '保存',
+      saved: '保存済み',
+      trending: '注目ワード:'
+    },
+    freelance: {
+      title: '学生フリーランス副業＆請求書ツール',
+      subtitle: '在学中に国際的な案件を受注し収入を得るための実践ガイド。',
+      hourlyRateCalc: '時給・想定月収シミュレーター',
+      hoursPerWeek: '週あたりの稼働可能時間:',
+      expectedRate: '希望の時給単価:',
+      projectedMonthly: '見込み月収:',
+      proposalGen: 'クライアント向け即戦力提案文',
+      selectGig: '提供するサービス:',
+      copyProposal: '提案文をコピー',
+      invoiceToolTitle: 'クライアント向け簡単請求書作成',
+      clientName: 'クライアント名 / 企業名',
+      serviceDesc: '業務内容・納品物',
+      invoiceAmount: '請求金額',
+      btnDownloadInvoice: '請求書PDF作成'
+    },
+    roadmaps: {
+      title: '成長ロードマップ＆面接対策',
+      subtitle: 'エンジニア必須スキルの体系的学習ステップと面接頻出問題。',
+      interviewPrepTitle: '技術面接クイズ（フラッシュカード）',
+      showAnswer: '解答を表示',
+      hideAnswer: '解答を隠す'
+    }
   }
 }
 
-// Proposals templates in multiple languages
-const PROPOSAL_TEMPLATES = {
-  react: {
-    title: 'React & Tailwind Web UI',
-    text: `Hi [Client Name],\n\nI noticed you are looking for a fast, modern and pixel-perfect web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI have built production-ready responsive dashboards and interactive web tools (see my live demo portfolio). I can complete your initial deliverables within 48 hours with clean, documented code and 100% responsiveness.\n\nLooking forward to discussing the next steps!\n\nBest regards,\n[Your Name]`
+// Top 50 Interview Flashcards
+const INTERVIEW_QUESTIONS = [
+  {
+    topic: 'React',
+    q: 'What is the Virtual DOM and how does React reconciliation work?',
+    a: 'Virtual DOM is an in-memory lightweight representation of the real DOM. When state changes, React creates a new VDOM tree, computes diffs using the Fiber reconciliation algorithm, and applies minimal batch updates to the real DOM for 60fps performance.'
   },
-  pdfApi: {
-    title: 'Automated PDF / Document Generator API',
-    text: `Hello [Client],\n\nI can set up a robust, automated PDF and document generation service using Node.js, Express, and Puppeteer. It will convert dynamic HTML/CSS templates into high-resolution vector PDFs with custom styling, page breaks, and zero layout bugs.\n\nI have previously built end-to-end PDF engines for resume builders and invoicing systems. I am available to start immediately.\n\nBest,\n[Your Name]`
+  {
+    topic: 'JavaScript',
+    q: 'Explain Event Loop, Microtasks, and Macrotasks.',
+    a: 'JavaScript has a single-threaded runtime with a call stack. Synchronous code runs first. When stack is empty, Event Loop processes Microtasks (Promise.then, queueMicrotask) before picking Macrotasks (setTimeout, setInterval, I/O events).'
   },
-  figmaToCode: {
-    title: 'Figma to Clean Responsive Code',
-    text: `Hi there!\n\nI can convert your Figma / Adobe XD designs into clean, semantic, and ultra-fast HTML/CSS/React components. Every breakpoint (mobile, tablet, desktop) will be thoroughly tested with zero layout shifts.\n\nLet's connect and get this launched quickly!\n\nWarm regards,\n[Your Name]`
+  {
+    topic: 'Node.js',
+    q: 'How does Node.js handle concurrency with single-threaded architecture?',
+    a: 'Node.js uses libuv and a non-blocking I/O event loop. CPU-intensive or disk operations are delegated to libuv worker thread pools, while the main thread handles incoming network connections asynchronously without blocking.'
+  },
+  {
+    topic: 'Database & SQL',
+    q: 'What is the difference between Clustered and Non-Clustered Indexes?',
+    a: 'A Clustered Index defines the physical order of table rows on disk (only 1 per table, usually Primary Key). A Non-Clustered Index is a separate B-tree structure holding pointers to the actual data rows (multiple allowed per table).'
+  },
+  {
+    topic: 'System Design',
+    q: 'What is CAP Theorem in distributed systems?',
+    a: 'CAP states that a distributed system can guarantee at most two out of three: Consistency (all nodes see latest data), Availability (every non-failing node returns a response), and Partition Tolerance (system continues functioning despite network drops).'
   }
-}
+]
 
-// Roadmaps Data
-const ROADMAPS = [
+// Sample Pre-populated Student Jobs
+const INITIAL_JOBS = [
   {
-    id: 'frontend',
-    title: 'Modern Frontend & UI Architecture',
-    icon: Code2,
-    color: 'from-blue-500 to-cyan-500',
-    milestones: [
-      { step: 'HTML5 Semantic Structure & SEO Best Practices', done: true },
-      { step: 'Modern CSS, Flexbox, CSS Grid & Tailwind CSS Mastery', done: true },
-      { step: 'JavaScript (ES6+), Async/Await, DOM & Fetch API', done: true },
-      { step: 'React.js Fundamentals, Hooks, State & Context API', done: true },
-      { step: 'Vite, Next.js (App Router), SSR & Static Generation', done: false },
-      { step: 'TypeScript for Scalable UI & Component Libraries', done: false }
-    ]
+    id: 1,
+    title: 'Frontend & UI Engineering Intern',
+    company: 'CloudScale Global Inc.',
+    location: 'Remote (Global)',
+    type: 'Internship',
+    stipend: '₹35,000 / mo ($850)',
+    tags: ['React', 'TypeScript', 'Tailwind', 'Remote'],
+    description: 'Build fast, responsive dashboard interfaces, collaborate with design teams, and participate in daily agile standups. Pre-placement offer (PPO) available.',
+    url: 'https://www.linkedin.com/jobs'
   },
   {
-    id: 'backend',
-    title: 'Backend, Cloud & Microservices',
-    icon: Cpu,
-    color: 'from-emerald-500 to-teal-500',
-    milestones: [
-      { step: 'Node.js Core & Express.js RESTful API Design', done: true },
-      { step: 'Authentication (JWT, OAuth2, Session Security)', done: true },
-      { step: 'Databases: PostgreSQL, MongoDB & Prisma ORM', done: false },
-      { step: 'Headless Browsers & Background Workers (Puppeteer, BullMQ)', done: true },
-      { step: 'Docker Containerization & CI/CD GitHub Actions', done: false },
-      { step: 'AWS / Cloud Deployment (EC2, S3, Serverless Lambdas)', done: false }
-    ]
+    id: 2,
+    title: 'Junior Full Stack Developer',
+    company: 'Nexus Tech Labs',
+    location: 'Pune / Mumbai (Hybrid)',
+    type: 'Fresher / Entry',
+    stipend: '₹6.5 - ₹9.0 LPA',
+    tags: ['Node.js', 'React', 'PostgreSQL', 'Campus'],
+    description: 'Work directly on enterprise SaaS microservices, REST APIs, and client-facing web portals. Mentorship from senior engineering architects.',
+    url: 'https://internshala.com'
   },
   {
-    id: 'ai',
-    title: 'AI Engineering & Full Stack LLMs',
-    icon: Sparkles,
-    color: 'from-purple-500 to-pink-500',
-    milestones: [
-      { step: 'Python Fundamentals, NumPy, Pandas & FastAPIs', done: true },
-      { step: 'OpenAI / Gemini / Anthropic API Integrations', done: false },
-      { step: 'Vector Databases (Pinecone, ChromaDB, PGVector) & Embeddings', done: false },
-      { step: 'RAG (Retrieval-Augmented Generation) Architecture', done: false },
-      { step: 'LangChain / LlamaIndex Agentic Workflows', done: false }
-    ]
+    id: 3,
+    title: 'AI Engineering & LLM Trainee',
+    company: 'HyperGrowth AI Startup',
+    location: 'San Francisco / Remote',
+    type: 'Internship',
+    stipend: '$25 / hour (₹50k/mo)',
+    tags: ['Python', 'FastAPI', 'LangChain', 'US-Remote'],
+    description: 'Develop retrieval-augmented generation (RAG) pipelines, vector database integrations, and automated evaluation suites.',
+    url: 'https://wellfound.com'
+  },
+  {
+    id: 4,
+    title: 'Backend API Developer (Batch 2024-2026)',
+    company: 'Veritas Infotech Systems',
+    location: 'Bengaluru / Hyderabad / Remote',
+    type: 'Fresher / Entry',
+    stipend: '₹5.0 - ₹8.0 LPA',
+    tags: ['Express', 'Docker', 'REST APIs', 'India'],
+    description: 'Design robust authentication systems, background job workers with Redis/BullMQ, and automated Puppeteer PDF compilation engines.',
+    url: 'https://www.naukri.com'
   }
 ]
 
 export default function App() {
-  const [lang, setLang] = useState('mr') // default Marathi as requested, easily switched
-  const [currency, setCurrency] = useState('INR') // 'INR', 'USD', 'EUR', 'GBP'
-  const [activeTab, setActiveTab] = useState('resume')
-  const [templateStyle, setTemplateStyle] = useState('modern') // 'modern', 'minimal', 'creative'
-  const [query, setQuery] = useState('Frontend Developer')
-  const [jobs, setJobs] = useState([])
-  const [loadingJobs, setLoadingJobs] = useState(false)
-  const [freelanceList, setFreelanceList] = useState([])
-  const [resumeHtml, setResumeHtml] = useState('')
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
-  const [copiedNotification, setCopiedNotification] = useState('')
-  const [selectedProposalKey, setSelectedProposalKey] = useState('react')
-  const [roadmapsState, setRoadmapsState] = useState(ROADMAPS)
+  // Navigation & Language
+  const [lang, setLang] = useState('mr') // default Marathi as requested
+  const [activeTab, setActiveTab] = useState('dashboard') // 'dashboard', 'resume', 'coverLetter', 'jobs', 'freelance', 'roadmaps'
+  const [resumeSubTab, setResumeSubTab] = useState('personal') // 'personal', 'education', 'skills', 'experience'
+  const [templateStyle, setTemplateStyle] = useState('modernTech') // 'modernTech', 'minimalATS', 'executive'
+  const [currency, setCurrency] = useState('INR')
 
-  // Resume Form Fields
+  // Notification Toast
+  const [toastMsg, setToastMsg] = useState('')
+
+  // Resume State
   const [name, setName] = useState('Vinayak S.')
-  const [role, setRole] = useState('Aspiring Full-Stack Software Engineer')
+  const [role, setRole] = useState('Full Stack Software Engineer')
   const [email, setEmail] = useState('vinayak.tech@example.com')
   const [phone, setPhone] = useState('+91 98765 43210')
-  const [location, setLocation] = useState('Pune, Maharashtra, India (Open to Remote)')
-  const [education, setEducation] = useState('Bachelor of Technology in Computer Science (B.Tech)')
+  const [location, setLocation] = useState('Pune, Maharashtra, India')
+  const [linkedin, setLinkedin] = useState('linkedin.com/in/vinayak-tech • github.com/vinayak-s')
+  const [degree, setDegree] = useState('Bachelor of Technology in Computer Science (B.Tech)')
+  const [university, setUniversity] = useState('Government College of Engineering')
   const [gradYear, setGradYear] = useState('2022 - 2026')
-  const [university, setUniversity] = useState('State Technical University • CGPA: 8.85 / 10.0')
-  const [summary, setSummary] = useState('Motivated and detail-oriented Computer Science undergraduate with solid experience in building modern web applications, scalable Express APIs, and responsive React UIs. Passionate about clean code, high performance, and continuous technological innovation.')
-  const [skills, setSkills] = useState('React.js, Node.js, JavaScript (ES6+), Express, Tailwind CSS, REST APIs, Git & GitHub, Puppeteer, PostgreSQL')
-  const [projects, setProjects] = useState('1. CareerSarthi Global Career Engine — Full Stack platform with live ATS resume studio, Puppeteer vector PDF generator, and global internship radars.\n2. CloudSync Microservices — Real-time state synchronization tool built with WebSockets and Node.js.')
-  const [languages, setLanguages] = useState('English (Professional), Marathi (Native), Hindi (Fluent)')
-  const [certifications, setCertifications] = useState('AWS Certified Cloud Practitioner (In Progress), Meta Frontend Developer Specialization')
+  const [cgpa, setCgpa] = useState('8.85 / 10.0 CGPA')
+  const [summary, setSummary] = useState('High-performing and passionate Computer Science undergraduate with hands-on expertise in React, Node.js, Express, and Modern Web Architectures. Proven track record of developing scalable web applications, robust REST APIs, and automated tools with high responsiveness and clean code standards.')
+  const [skills, setSkills] = useState('React.js, Node.js, JavaScript (ES6+), Express.js, Tailwind CSS, PostgreSQL, Git & GitHub, Puppeteer, REST APIs, Docker')
+  const [projects, setProjects] = useState('1. CareerSarthi Global Suite — Built a full-stack career platform featuring a multi-lingual ATS resume engine, instant PDF vector rendering, and curated job radar with Node.js & React.\n2. CloudSync Real-time Portal — Developed low-latency WebSocket communication service for collaborative whiteboard state synchronization.')
+  const [certifications, setCertifications] = useState('AWS Cloud Practitioner Essentials, Meta Certified Frontend Developer Specialization')
+  const [resumeHtml, setResumeHtml] = useState('')
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
+
+  // Cold Email Generator State
+  const [emailRecipient, setEmailRecipient] = useState('Hiring Manager / Founder')
+  const [emailCompany, setEmailCompany] = useState('Acme Technologies')
+  const [emailTargetRole, setEmailTargetRole] = useState('Software Engineering Intern (Summer 2025)')
+  const [emailStrongSkill, setEmailStrongSkill] = useState('React & Node.js Full Stack Development')
+  const [generatedColdEmail, setGeneratedColdEmail] = useState('')
+
+  // Jobs State
+  const [jobsList, setJobsList] = useState(INITIAL_JOBS)
+  const [jobSearchQuery, setJobSearchQuery] = useState('')
+  const [savedJobIds, setSavedJobIds] = useState([1])
+  const [jobFilterLocation, setJobFilterLocation] = useState('all')
+
+  // Freelance Calculator & Proposals
+  const [calcHours, setCalcHours] = useState(15)
+  const [calcRate, setCalcRate] = useState(currency === 'INR' ? 1200 : 25)
+  const [proposalService, setProposalService] = useState('react')
+  const [invoiceClient, setInvoiceClient] = useState('Global Studio Labs')
+  const [invoiceDesc, setInvoiceDesc] = useState('Full Stack Tailwind Web App & PDF Generation API')
+  const [invoiceAmount, setInvoiceAmount] = useState(currency === 'INR' ? '₹25,000' : '$350')
+
+  // Interview Prep State
+  const [revealedAnswers, setRevealedAnswers] = useState({})
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en
 
-  useEffect(() => {
-    fetchJobs('Full Stack')
-    fetchFreelance()
-    renderLiveResume()
-  }, [lang, templateStyle])
-
   const showToast = (msg) => {
-    setCopiedNotification(msg)
-    setTimeout(() => setCopiedNotification(''), 3500)
+    setToastMsg(msg)
+    setTimeout(() => setToastMsg(''), 3500)
   }
 
-  const toggleMilestone = (roadmapIdx, stepIdx) => {
-    const next = [...roadmapsState]
-    next[roadmapIdx].milestones[stepIdx].done = !next[roadmapIdx].milestones[stepIdx].done
-    setRoadmapsState(next)
-    showToast('Progress updated!')
+  useEffect(() => {
+    renderLiveResume()
+    generateColdEmail()
+  }, [lang, templateStyle, name, role, email, phone, location, degree, university, summary, skills, projects])
+
+  // Cold email generation
+  function generateColdEmail() {
+    const text = `Subject: Application for ${emailTargetRole} — ${name || 'Candidate Name'}
+
+Dear ${emailRecipient || 'Hiring Team'} at ${emailCompany || 'Your Company'},
+
+I hope this email finds you well.
+
+I have been following ${emailCompany}'s recent engineering initiatives and was deeply impressed by your digital products. I am writing to express my strong interest in the ${emailTargetRole} position.
+
+As a final-year Computer Science student with hands-on experience in ${emailStrongSkill || 'Full Stack Web Development'}, I have built production-ready applications with clean architecture, fast UI rendering, and scalable backend services.
+
+Key Highlights of My Profile:
+• Proficient in ${skills.split(',').slice(0, 4).join(', ')}
+• Experience delivering full-cycle projects (see portfolio & GitHub: ${linkedin})
+• Quick learner, disciplined team player, and proactive problem solver
+
+I would welcome the opportunity to discuss how my skill set and enthusiasm can contribute to ${emailCompany}'s ongoing projects. 
+
+Thank you for your time and consideration.
+
+Best regards,
+
+${name}
+${phone} | ${email}
+${linkedin}`
+    setGeneratedColdEmail(text)
   }
 
-  async function fetchJobs(searchKey = query) {
-    setLoadingJobs(true)
-    try {
-      const res = await axios.get(`http://localhost:4000/api/jobs/search?q=${encodeURIComponent(searchKey)}`)
-      setJobs(res.data.results || [])
-    } catch (err) {
-      console.error(err)
-      setJobs([
-        {
-          source: 'LinkedIn Global',
-          title: `${searchKey} Intern (2025/2026 Batch)`,
-          company: 'InnovateX Labs',
-          location: 'Remote (Worldwide)',
-          stipend: currency === 'INR' ? '₹30,000 - ₹50,000 / month' : '$1,000 - $1,800 / month',
-          tags: ['React', 'TypeScript', 'Remote', 'Mentorship'],
-          description: 'Hands-on mentorship program on real-world SaaS products with pre-placement job offer (PPO) opportunity.',
-          url: 'https://www.linkedin.com/jobs'
-        },
-        {
-          source: 'Internshala Super50',
-          title: `Junior ${searchKey} Specialist`,
-          company: 'Nexus Cloud Technologies',
-          location: 'Pune / Mumbai / Bengaluru',
-          stipend: currency === 'INR' ? '₹4.5 - ₹7.0 LPA' : '$8,000 - $14,000 / year',
-          tags: ['Node.js', 'Express', 'Tailwind', 'Fresher'],
-          description: 'Entry-level position for ambitious tech graduates. Work directly with senior lead engineers.',
-          url: 'https://internshala.com'
-        },
-        {
-          source: 'Wellfound Global',
-          title: 'Full Stack & AI Engineer Trainee',
-          company: 'HyperScale AI Inc.',
-          location: 'San Francisco / Remote',
-          stipend: currency === 'INR' ? '₹65,000 / month' : '$25 / hour',
-          tags: ['Next.js', 'Python', 'AI/ML', 'Global'],
-          description: 'Build futuristic AI interfaces with real-time streaming, interactive canvas, and sleek motion components.',
-          url: 'https://wellfound.com'
-        }
-      ])
-    } finally {
-      setLoadingJobs(false)
+  // Calculate ATS Score
+  const getAtsScore = () => {
+    let score = 30
+    if (name.trim().length > 3) score += 15
+    if (email.includes('@')) score += 15
+    if (summary.length > 80) score += 15
+    if (skills.split(',').length >= 5) score += 15
+    if (projects.length >= 40) score += 10
+    return Math.min(score, 100)
+  }
+  const atsScore = getAtsScore()
+
+  // Generate Resume Preview
+  function renderLiveResume() {
+    const skillsArray = skills.split(',').map(s => s.trim()).filter(Boolean)
+
+    let borderAccent = '#2563eb'
+    let bgHeader = '#ffffff'
+    let fontStyle = "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif"
+
+    if (templateStyle === 'minimalATS') {
+      borderAccent = '#334155'
+    } else if (templateStyle === 'executive') {
+      borderAccent = '#0f766e'
     }
+
+    const html = `
+      <div style="font-family: ${fontStyle}; padding: 32px 36px; color: #0f172a; line-height: 1.5; font-size: 13px;">
+        <div style="border-bottom: 2.5px solid ${borderAccent}; padding-bottom: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <h1 style="margin: 0; font-size: 26px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px;">${name || 'Your Full Name'}</h1>
+            <p style="margin: 3px 0 0 0; color: ${borderAccent}; font-size: 13.5px; font-weight: 700;">${role}</p>
+          </div>
+          <div style="text-align: right; font-size: 11.5px; color: #475569; line-height: 1.55;">
+            <div>${email} • ${phone}</div>
+            <div>${location}</div>
+            <div style="color: #2563eb; font-weight: 600;">${linkedin}</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h3 style="margin: 0 0 4px 0; font-size: 12.5px; text-transform: uppercase; font-weight: 800; color: #1e293b; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;">Professional Summary</h3>
+          <p style="margin: 0; font-size: 12.5px; color: #334155; line-height: 1.55;">${summary}</p>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h3 style="margin: 0 0 4px 0; font-size: 12.5px; text-transform: uppercase; font-weight: 800; color: #1e293b; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;">Technical Skills & Tools</h3>
+          <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;">
+            ${skillsArray.map(s => `<span style="background: #f8fafc; color: #1e293b; border: 1px solid #cbd5e1; padding: 2.5px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">${s}</span>`).join('')}
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h3 style="margin: 0 0 4px 0; font-size: 12.5px; text-transform: uppercase; font-weight: 800; color: #1e293b; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;">Education & Academic Credentials</h3>
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 12.5px;">
+            <span>${degree}</span>
+            <span style="color: #64748b; font-weight: 500;">${gradYear}</span>
+          </div>
+          <div style="font-size: 12px; color: #475569; margin-top: 1px;">${university} • <strong style="color: #0f172a;">${cgpa}</strong></div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <h3 style="margin: 0 0 4px 0; font-size: 12.5px; text-transform: uppercase; font-weight: 800; color: #1e293b; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;">Key Projects & Technical Implementations</h3>
+          <p style="margin: 0; font-size: 12.5px; color: #334155; white-space: pre-line; line-height: 1.55;">${projects}</p>
+        </div>
+
+        <div>
+          <h3 style="margin: 0 0 4px 0; font-size: 12.5px; text-transform: uppercase; font-weight: 800; color: #1e293b; letter-spacing: 0.6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px;">Certifications & Honors</h3>
+          <p style="margin: 0; font-size: 12px; color: #475569;">${certifications}</p>
+        </div>
+
+        <div style="margin-top: 24px; padding-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 10px; color: #94a3b8; display: flex; justify-content: space-between;">
+          <span>Verified Student Portfolio • ATS Standard Compliant</span>
+          <span>CareerSarthi Global Suite</span>
+        </div>
+      </div>
+    `
+    setResumeHtml(html)
   }
 
-  async function fetchFreelance() {
-    try {
-      const res = await axios.get('http://localhost:4000/api/freelance/listings')
-      setFreelanceList(res.data.results || [])
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  function getPayload() {
-    return {
+  // Handle PDF Download
+  async function handleDownloadPdf() {
+    setIsGeneratingPdf(true)
+    const payload = {
       name,
       role,
       email,
       phone,
       location,
-      degree: education,
-      education,
-      gradYear,
+      degree,
       university,
+      gradYear,
+      cgpa,
       summary,
       skills: skills.split(',').map(s => s.trim()).filter(Boolean),
       projects,
-      languages,
       certifications
     }
-  }
-
-  async function renderLiveResume() {
-    const payload = getPayload()
-    try {
-      const res = await axios.post('http://localhost:4000/api/resume/generate', payload)
-      setResumeHtml(res.data)
-    } catch (err) {
-      // Local clean fallback rendering if backend is restarting
-      const skillsArray = skills.split(',').map(s => s.trim()).filter(Boolean)
-      const fallbackHtml = `
-        <div style="font-family: 'Segoe UI', Inter, sans-serif; padding: 24px; color: #0f172a; line-height: 1.55;">
-          <div style="border-bottom: 2.5px solid #3b82f6; padding-bottom: 14px; margin-bottom: 16px; display: flex; justify-content: space-between;">
-            <div>
-              <h1 style="margin: 0; font-size: 24px; color: #0f172a; font-weight: 800;">${name || 'Student Name'}</h1>
-              <p style="margin: 3px 0 0 0; color: #2563eb; font-size: 13px; font-weight: 600;">${role}</p>
-            </div>
-            <div style="text-align: right; font-size: 12px; color: #64748b;">
-              <div>${email}</div>
-              <div>${phone}</div>
-              <div>${location}</div>
-            </div>
-          </div>
-          <div style="margin-bottom: 14px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 13px; text-transform: uppercase; color: #1e3a8a; letter-spacing: 0.5px;">Professional Summary</h3>
-            <p style="margin: 0; font-size: 13px; color: #334155;">${summary}</p>
-          </div>
-          <div style="margin-bottom: 14px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 13px; text-transform: uppercase; color: #1e3a8a; letter-spacing: 0.5px;">Technical Competencies</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;">
-              ${skillsArray.map(s => `<span style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 2px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600;">${s}</span>`).join('')}
-            </div>
-          </div>
-          <div style="margin-bottom: 14px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 13px; text-transform: uppercase; color: #1e3a8a; letter-spacing: 0.5px;">Education & Academics</h3>
-            <div style="font-size: 13px; font-weight: 700;">${education} <span style="font-weight: normal; color: #64748b;">(${gradYear})</span></div>
-            <div style="font-size: 12px; color: #64748b;">${university}</div>
-          </div>
-          <div style="margin-bottom: 14px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 13px; text-transform: uppercase; color: #1e3a8a; letter-spacing: 0.5px;">Projects & Work</h3>
-            <p style="margin: 0; font-size: 13px; color: #334155; white-space: pre-line;">${projects}</p>
-          </div>
-          <div>
-            <h3 style="margin: 0 0 4px 0; font-size: 13px; text-transform: uppercase; color: #1e3a8a; letter-spacing: 0.5px;">Languages & Certifications</h3>
-            <p style="margin: 0; font-size: 13px; color: #475569;">${languages} • ${certifications}</p>
-          </div>
-        </div>
-      `
-      setResumeHtml(fallbackHtml)
-    }
-  }
-
-  async function handleDownloadPdf() {
-    setIsGeneratingPdf(true)
-    const payload = getPayload()
     try {
       const res = await axios.post('http://localhost:4000/api/resume/pdf', payload, { responseType: 'blob' })
       const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }))
       const link = document.createElement('a')
       link.href = url
-      link.setAttribute('download', `${(name || 'Student').replace(/\s+/g, '_')}_CareerSarthi_Global.pdf`)
+      link.setAttribute('download', `${(name || 'Resume').replace(/\s+/g, '_')}_ATS_Standard.pdf`)
       document.body.appendChild(link)
       link.click()
       link.remove()
-      showToast('🎉 Vector PDF Generated & Downloaded!')
+      showToast('🎉 Vector PDF generated successfully!')
     } catch (err) {
       console.error(err)
-      showToast('⚠️ Printed direct high-res sheet')
       window.print()
+      showToast('📄 Print sheet opened!')
     } finally {
       setIsGeneratingPdf(false)
     }
   }
 
-  // AI Polish feature for Student Summary
+  // AI Polish Handler
   const handleAiPolish = () => {
-    const polished = `Results-driven and ambitious Computer Science student specializing in ${skills.split(',')[0] || 'Software Engineering'}. Proven track record of developing responsive web applications and full-stack solutions. Adept at collaborative problem solving, agile workflows, and translating complex challenges into robust digital experiences.`
+    const polished = `Results-driven and ambitious ${degree ? 'Computer Science student' : 'Software Engineer'} specializing in modern full-stack development, ${skills.split(',')[0] || 'React'}, and scalable RESTful architectures. Proven track record of developing reliable web services, solving complex algorithmic challenges, and adhering to industry clean-code standards.`
     setSummary(polished)
-    showToast('✨ AI Summary Enhanced!')
+    showToast('✨ AI Summary Polished!')
   }
 
-  // Calculate dynamic ATS score
-  const calculateAtsScore = () => {
-    let score = 40
-    if (name.trim().length > 3) score += 10
-    if (email.includes('@')) score += 10
-    if (phone.length >= 8) score += 5
-    if (summary.length >= 80) score += 15
-    if (skills.split(',').length >= 5) score += 10
-    if (projects.length >= 30) score += 10
-    return Math.min(score, 100)
+  // JSON Export
+  const handleExportJson = () => {
+    const data = {
+      name, role, email, phone, location, linkedin, degree, university, gradYear, cgpa, summary, skills, projects, certifications
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${name.replace(/\s+/g, '_')}_career_profile.json`
+    a.click()
+    showToast('💾 Profile JSON Exported!')
   }
 
-  const atsScore = calculateAtsScore()
+  // JSON Import Trigger
+  const handleImportJson = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      try {
+        const d = JSON.parse(event.target.result)
+        if (d.name) setName(d.name)
+        if (d.role) setRole(d.role)
+        if (d.email) setEmail(d.email)
+        if (d.phone) setPhone(d.phone)
+        if (d.location) setLocation(d.location)
+        if (d.degree) setDegree(d.degree)
+        if (d.university) setUniversity(d.university)
+        if (d.summary) setSummary(d.summary)
+        if (d.skills) setSkills(d.skills)
+        if (d.projects) setProjects(d.projects)
+        showToast('✅ Profile JSON Imported!')
+      } catch (err) {
+        showToast('⚠️ Invalid JSON file')
+      }
+    }
+    reader.readAsText(file)
+  }
+
+  // Toggle Saved Job
+  const toggleSaveJob = (id) => {
+    if (savedJobIds.includes(id)) {
+      setSavedJobIds(savedJobIds.filter(x => x !== id))
+      showToast('Removed from saved jobs')
+    } else {
+      setSavedJobIds([...savedJobIds, id])
+      showToast('Saved to your career board!')
+    }
+  }
+
+  // Filtered Jobs
+  const filteredJobs = jobsList.filter(job => {
+    const matchQuery = !jobSearchQuery || 
+      job.title.toLowerCase().includes(jobSearchQuery.toLowerCase()) ||
+      job.company.toLowerCase().includes(jobSearchQuery.toLowerCase()) ||
+      job.tags.some(t => t.toLowerCase().includes(jobSearchQuery.toLowerCase()))
+    const matchLocation = jobFilterLocation === 'all' || 
+      (jobFilterLocation === 'remote' && job.location.toLowerCase().includes('remote')) ||
+      (jobFilterLocation === 'india' && (job.location.includes('Pune') || job.location.includes('Mumbai') || job.location.includes('Bengaluru')))
+    return matchQuery && matchLocation
+  })
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white pb-20">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-600 selection:text-white pb-20">
+      
       {/* Toast Notification */}
-      {copiedNotification && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-bounce border border-emerald-300">
+      {toastMsg && (
+        <div className="fixed bottom-6 right-6 z-50 bg-emerald-400 text-slate-950 font-bold px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-emerald-300 animate-bounce">
           <CheckCircle className="w-5 h-5 text-slate-950" />
-          <span>{copiedNotification}</span>
+          <span>{toastMsg}</span>
         </div>
       )}
 
-      {/* TOP GLOBAL BAR */}
-      <header className="sticky top-0 z-40 bg-slate-900/85 backdrop-blur-xl border-b border-slate-800/80 shadow-lg">
+      {/* TOP HEADER */}
+      <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo & Branding */}
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-500 via-blue-600 to-cyan-400 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+            
+            {/* Logo */}
+            <div 
+              onClick={() => setActiveTab('dashboard')} 
+              className="flex items-center gap-3 cursor-pointer group"
+            >
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition">
                 <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-                  <Compass className="w-6 h-6 text-cyan-400 animate-spin-slow" />
+                  <Compass className="w-6 h-6 text-cyan-400" />
                 </div>
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1.5">
-                    CareerSarthi <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 text-sm font-black">AI</span>
+                  <h1 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1">
+                    {t.brandName} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 text-sm font-black">AI</span>
                   </h1>
-                  <span className="text-[10px] uppercase font-black tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                    Global 2026
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                    2026
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 hidden sm:block">
-                  {t.brandSubtitle}
+                  {t.brandBadge}
                 </p>
               </div>
             </div>
 
-            {/* Language & Currency Switcher + Actions */}
+            {/* Language & Currency Tools */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Language Selector Dropdown */}
-              <div className="relative flex items-center bg-slate-950/80 border border-slate-800 rounded-2xl px-2.5 py-1.5">
-                <Globe className="w-4 h-4 text-cyan-400 mr-1.5 shrink-0" />
+              {/* Language Selector */}
+              <div className="flex items-center bg-slate-950 border border-slate-800 rounded-2xl px-3 py-1.5 shadow-inner">
+                <Globe className="w-4 h-4 text-cyan-400 mr-2 shrink-0" />
                 <select
                   value={lang}
                   onChange={(e) => {
                     setLang(e.target.value)
-                    showToast(`Language set to ${TRANSLATIONS[e.target.value].langName}`)
+                    showToast(`Language set to ${TRANSLATIONS[e.target.value]?.langName}`)
                   }}
-                  className="bg-transparent text-xs font-semibold text-slate-200 outline-none cursor-pointer pr-2"
+                  className="bg-transparent text-xs font-bold text-slate-200 outline-none cursor-pointer pr-1"
                 >
-                  {Object.entries(TRANSLATIONS).map(([key, val]) => (
-                    <option key={key} value={key} className="bg-slate-900 text-slate-100">
-                      {val.flag} {val.langName}
+                  {Object.entries(TRANSLATIONS).map(([k, v]) => (
+                    <option key={k} value={k} className="bg-slate-900 text-slate-100">
+                      {v.flag} {v.langName}
                     </option>
                   ))}
                 </select>
               </div>
 
               {/* Currency Selector */}
-              <div className="hidden md:flex items-center bg-slate-950/80 border border-slate-800 rounded-2xl px-2.5 py-1.5 text-xs font-bold text-indigo-400">
+              <div className="hidden sm:flex items-center bg-slate-950 border border-slate-800 rounded-2xl px-3 py-1.5 text-xs font-bold text-indigo-400 shadow-inner">
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
@@ -777,34 +1259,35 @@ export default function App() {
                 </select>
               </div>
 
-              {/* GitHub Live Status Badge */}
+              {/* GitHub Link */}
               <a
                 href="https://github.com/vina-yak711/student-career-assist"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white hover:border-slate-700 transition"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-700 transition"
               >
-                <Github className="w-3.5 h-3.5 text-slate-400" />
-                <span>Repo Ready</span>
+                <Github className="w-4 h-4 text-slate-400" />
+                <span className="hidden md:inline">GitHub Sync</span>
               </a>
             </div>
           </div>
 
-          {/* Navigation Sub-bar */}
-          <nav className="flex items-center gap-1.5 overflow-x-auto pb-3 pt-1 scrollbar-none">
+          {/* MAIN HORIZONTAL NAVIGATION TABS */}
+          <nav className="flex items-center gap-1.5 overflow-x-auto pb-3 pt-1 scrollbar-none border-t border-slate-800/60 mt-1">
             {[
-              { key: 'resume', label: t.tabs.resume, icon: FileText },
-              { key: 'jobs', label: t.tabs.jobs, icon: Briefcase },
-              { key: 'freelance', label: t.tabs.freelance, icon: DollarSign },
-              { key: 'roadmap', label: t.tabs.roadmap, icon: Rocket },
-              { key: 'brand', label: t.tabs.brand, icon: Sparkles }
+              { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
+              { key: 'resume', label: t.nav.resume, icon: FileText },
+              { key: 'coverLetter', label: t.nav.coverLetter, icon: Mail },
+              { key: 'jobs', label: t.nav.jobs, icon: Briefcase },
+              { key: 'freelance', label: t.nav.freelance, icon: DollarSign },
+              { key: 'roadmaps', label: t.nav.roadmaps, icon: Rocket }
             ].map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                   activeTab === key
-                    ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white shadow-md shadow-indigo-600/30'
+                    ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-indigo-600/30'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
@@ -816,630 +1299,683 @@ export default function App() {
         </div>
       </header>
 
-      {/* HERO BANNER */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-indigo-950/40 via-slate-900/20 to-transparent border-b border-slate-800/50 py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold mb-3 shadow-inner">
-                <Zap className="w-3.5 h-3.5" />
-                <span>{t.heroTag}</span>
+      {/* MAIN CONTENT AREA */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+
+        {/* ============================================================ */}
+        {/* VIEW 1: DASHBOARD / OVERVIEW */}
+        {/* ============================================================ */}
+        {activeTab === 'dashboard' && (
+          <div className="space-y-8">
+            {/* Hero Welcome Banner */}
+            <div className="bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-extrabold mb-3">
+                  <Zap className="w-3.5 h-3.5" /> All-in-One Career Command Center
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                  {t.dashboard.welcome}
+                </h2>
+                <p className="mt-2 text-slate-400 text-sm sm:text-base leading-relaxed">
+                  {t.dashboard.desc}
+                </p>
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <button
+                    onClick={() => setActiveTab('resume')}
+                    className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold px-6 py-3 rounded-2xl shadow-xl shadow-indigo-600/30 transition flex items-center gap-2 text-xs sm:text-sm"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>{t.dashboard.btnBuildResume}</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('jobs')}
+                    className="bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition flex items-center gap-2 text-xs sm:text-sm"
+                  >
+                    <Briefcase className="w-4 h-4 text-cyan-400" />
+                    <span>{t.dashboard.btnSearchJobs}</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('coverLetter')}
+                    className="bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition flex items-center gap-2 text-xs sm:text-sm"
+                  >
+                    <Mail className="w-4 h-4 text-emerald-400" />
+                    <span>{t.dashboard.btnWriteEmail}</span>
+                  </button>
+                </div>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
-                {t.heroTitle}
-              </h2>
-              <p className="mt-2 text-slate-400 text-sm sm:text-base leading-relaxed">
-                {t.heroDesc}
-              </p>
             </div>
 
-            {/* Quick Metrics Bar */}
-            <div className="flex items-center gap-4 bg-slate-900/90 border border-slate-800/80 p-4 rounded-3xl backdrop-blur-md shadow-2xl">
-              <div className="text-center px-3 border-r border-slate-800">
-                <div className={`text-2xl font-black ${atsScore >= 75 ? 'text-emerald-400' : 'text-amber-400'}`}>
-                  {atsScore}%
+            {/* Quick Metrics & Tool Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              {/* ATS Metric */}
+              <div 
+                onClick={() => setActiveTab('resume')}
+                className="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.dashboard.atsCardTitle}</span>
+                  <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 group-hover:scale-110 transition">
+                    <FileText className="w-5 h-5" />
+                  </div>
                 </div>
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{t.atsScore}</div>
+                <div className="text-3xl font-black text-white flex items-center gap-2">
+                  <span className={atsScore >= 75 ? 'text-emerald-400' : 'text-amber-400'}>{atsScore}%</span>
+                  <span className="text-xs font-bold text-slate-400">/ 100</span>
+                </div>
+                <p className="text-xs text-slate-400 mt-2">{t.dashboard.atsCardDesc}</p>
               </div>
-              <div className="text-center px-3 border-r border-slate-800">
-                <div className="text-2xl font-black text-cyan-400">Vector</div>
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{t.pdfEngine}</div>
+
+              {/* Saved Jobs */}
+              <div 
+                onClick={() => setActiveTab('jobs')}
+                className="bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.dashboard.savedJobsTitle}</span>
+                  <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition">
+                    <BookmarkCheck className="w-5 h-5" />
+                  </div>
+                </div>
+                <div className="text-3xl font-black text-white">
+                  {savedJobIds.length} <span className="text-xs font-bold text-slate-400">Roles Saved</span>
+                </div>
+                <p className="text-xs text-slate-400 mt-2">Active student internships in radar</p>
               </div>
-              <div className="text-center px-3">
-                <div className="text-2xl font-black text-indigo-400">Global</div>
-                <div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{t.radar}</div>
+
+              {/* Freelance Ready */}
+              <div 
+                onClick={() => setActiveTab('freelance')}
+                className="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Freelance Studio</span>
+                  <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition">
+                    <DollarSign className="w-5 h-5" />
+                  </div>
+                </div>
+                <div className="text-3xl font-black text-emerald-400">
+                  {currency === 'INR' ? '₹18,000+' : '$350+'}
+                </div>
+                <p className="text-xs text-slate-400 mt-2">Estimated student monthly side-income</p>
               </div>
+
+              {/* Interview Prep */}
+              <div 
+                onClick={() => setActiveTab('roadmaps')}
+                className="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Interview Prep</span>
+                  <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 group-hover:scale-110 transition">
+                    <Rocket className="w-5 h-5" />
+                  </div>
+                </div>
+                <div className="text-3xl font-black text-purple-400">
+                  50+ QA
+                </div>
+                <p className="text-xs text-slate-400 mt-2">Flashcards for React, DSA & Node</p>
+              </div>
+
             </div>
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* MAIN CONTAINER */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        
-        {/* TAB 1: RESUME STUDIO */}
+        {/* ============================================================ */}
+        {/* VIEW 2: ATS RESUME STUDIO */}
+        {/* ============================================================ */}
         {activeTab === 'resume' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left: Interactive Form */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl backdrop-blur-sm">
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-2.5 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                      <GraduationCap className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg text-white">{t.resumeBuilderTitle}</h3>
-                      <p className="text-xs text-slate-400">{t.resumeBuilderSubtitle}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
-                    {t.atsOptimized}
-                  </span>
-                </div>
+          <div className="space-y-6">
+            
+            {/* Header Toolbar */}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
+                  <FileText className="w-6 h-6 text-indigo-400" />
+                  {t.resume.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+                  {t.resume.subtitle}
+                </p>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.fullName}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="e.g. Vinayak S."
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.targetRole}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        placeholder="e.g. Full-Stack Engineer"
-                      />
-                    </div>
-                  </div>
+              {/* Theme Template Selector */}
+              <div className="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+                <span className="text-[11px] font-bold text-slate-400 px-2">{t.resume.templateStyle}</span>
+                {[
+                  { key: 'modernTech', label: t.resume.modernTech },
+                  { key: 'minimalATS', label: t.resume.minimalATS },
+                  { key: 'executive', label: t.resume.executive }
+                ].map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setTemplateStyle(key)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                      templateStyle === key
+                        ? 'bg-indigo-600 text-white shadow'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.email}
-                      </label>
-                      <input
-                        type="email"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="name@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.phone}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+91 98765..."
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.location}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        placeholder="Pune / Remote"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.degree}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={education}
-                        onChange={(e) => setEducation(e.target.value)}
-                        placeholder="B.Tech in Computer Science"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.universityCgpa}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={university}
-                        onChange={(e) => setUniversity(e.target.value)}
-                        placeholder="University • CGPA 8.8/10"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">
-                        {t.summary}
-                      </label>
+            {/* Split Screen Editor & Live Paper */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              
+              {/* Left Column: Form Builder with Sub-tabs */}
+              <div className="lg:col-span-6 space-y-4">
+                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl">
+                  
+                  {/* Step Tabs */}
+                  <div className="flex items-center gap-2 border-b border-slate-800 pb-3 mb-5 overflow-x-auto scrollbar-none">
+                    {[
+                      { key: 'personal', label: t.resume.personalTab },
+                      { key: 'education', label: t.resume.educationTab },
+                      { key: 'skills', label: t.resume.skillsTab },
+                      { key: 'experience', label: t.resume.experienceTab }
+                    ].map(({ key, label }) => (
                       <button
-                        type="button"
-                        onClick={handleAiPolish}
-                        className="text-xs text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1"
+                        key={key}
+                        onClick={() => setResumeSubTab(key)}
+                        className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                          resumeSubTab === key
+                            ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+                            : 'text-slate-400 hover:text-slate-200'
+                        }`}
                       >
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>{t.btnAiPolish}</span>
+                        {label}
                       </button>
-                    </div>
-                    <textarea
-                      rows={3}
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition leading-relaxed"
-                      value={summary}
-                      onChange={(e) => setSummary(e.target.value)}
-                      placeholder="Brief career objective..."
-                    />
+                    ))}
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                      {t.skills}
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                      value={skills}
-                      onChange={(e) => setSkills(e.target.value)}
-                      placeholder="React, Node.js, JavaScript, Tailwind, Docker, Git"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                      {t.projects}
-                    </label>
-                    <textarea
-                      rows={3}
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                      value={projects}
-                      onChange={(e) => setProjects(e.target.value)}
-                      placeholder="List 2-3 prominent projects..."
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.languages}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={languages}
-                        onChange={(e) => setLanguages(e.target.value)}
-                        placeholder="English, Marathi, Hindi"
-                      />
+                  {/* SUBTAB 1: PERSONAL */}
+                  {resumeSubTab === 'personal' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.fullName}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="e.g. Vinayak S."
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.targetRole}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={role}
+                          onChange={(e) => setRole(e.target.value)}
+                          placeholder="e.g. Full Stack Developer"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.email}</label>
+                          <input
+                            type="email"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.phone}</label>
+                          <input
+                            type="text"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.location}</label>
+                          <input
+                            type="text"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.linkedin}</label>
+                          <input
+                            type="text"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={linkedin}
+                            onChange={(e) => setLinkedin(e.target.value)}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                        {t.certifications}
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-600 transition"
-                        value={certifications}
-                        onChange={(e) => setCertifications(e.target.value)}
-                        placeholder="AWS Cloud, Meta Frontend"
-                      />
+                  )}
+
+                  {/* SUBTAB 2: EDUCATION */}
+                  {resumeSubTab === 'education' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.degree}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={degree}
+                          onChange={(e) => setDegree(e.target.value)}
+                          placeholder="e.g. B.Tech Computer Science"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.university}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={university}
+                          onChange={(e) => setUniversity(e.target.value)}
+                          placeholder="e.g. Government College of Engineering"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.gradYear}</label>
+                          <input
+                            type="text"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={gradYear}
+                            onChange={(e) => setGradYear(e.target.value)}
+                            placeholder="2022 - 2026"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.cgpa}</label>
+                          <input
+                            type="text"
+                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            value={cgpa}
+                            onChange={(e) => setCgpa(e.target.value)}
+                            placeholder="8.85 / 10.0 CGPA"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
+
+                  {/* SUBTAB 3: SKILLS & SUMMARY */}
+                  {resumeSubTab === 'skills' && (
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-1.5">
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">{t.resume.summary}</label>
+                          <button
+                            type="button"
+                            onClick={handleAiPolish}
+                            className="text-xs text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1"
+                          >
+                            <Sparkles className="w-3.5 h-3.5" />
+                            <span>{t.resume.aiPolish}</span>
+                          </button>
+                        </div>
+                        <textarea
+                          rows={4}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition leading-relaxed"
+                          value={summary}
+                          onChange={(e) => setSummary(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.skillsLabel}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={skills}
+                          onChange={(e) => setSkills(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUBTAB 4: PROJECTS & CERTS */}
+                  {resumeSubTab === 'experience' && (
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.projectsLabel}</label>
+                        <textarea
+                          rows={4}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition leading-relaxed"
+                          value={projects}
+                          onChange={(e) => setProjects(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.certificationsLabel}</label>
+                        <input
+                          type="text"
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          value={certifications}
+                          onChange={(e) => setCertifications(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   {/* Action Buttons */}
-                  <div className="pt-2 flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={renderLiveResume}
-                      className="flex-1 flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold py-3.5 px-5 rounded-2xl border border-slate-700 transition"
-                    >
-                      <Eye className="w-4 h-4 text-cyan-400" />
-                      <span>{t.btnUpdatePreview}</span>
-                    </button>
-
+                  <div className="pt-4 border-t border-slate-800 mt-6 flex flex-wrap items-center gap-3">
                     <button
                       onClick={handleDownloadPdf}
                       disabled={isGeneratingPdf}
-                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-2xl shadow-xl shadow-indigo-600/30 transition disabled:opacity-50"
+                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-2xl shadow-xl shadow-indigo-600/30 transition"
                     >
                       <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
-                      <span>{isGeneratingPdf ? 'Compiling PDF...' : t.btnDownloadPdf}</span>
+                      <span>{isGeneratingPdf ? 'Compiling PDF...' : t.resume.btnDownload}</span>
                     </button>
+                    
+                    <button
+                      onClick={() => window.print()}
+                      className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition"
+                    >
+                      <Printer className="w-4 h-4 text-slate-400" />
+                      <span>{t.resume.btnPrint}</span>
+                    </button>
+
+                    <button
+                      onClick={handleExportJson}
+                      className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition"
+                    >
+                      <Download className="w-4 h-4 text-slate-400" />
+                      <span>{t.resume.btnExportJson}</span>
+                    </button>
+
+                    <label className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition cursor-pointer">
+                      <ExternalLink className="w-4 h-4 text-slate-400" />
+                      <span>{t.resume.btnImportJson}</span>
+                      <input type="file" accept=".json" onChange={handleImportJson} className="hidden" />
+                    </label>
+                  </div>
+                </div>
+
+                {/* Real-time ATS Checklist */}
+                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-xl">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      {t.resume.atsAnalysisTitle}
+                    </h4>
+                    <span className={`text-xs font-extrabold ${atsScore >= 75 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      {atsScore} / 100
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{t.resume.metricContact}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{t.resume.metricSummary}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{t.resume.metricSkills}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>{t.resume.metricProjects}</span>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Right Column: Live A4 White Sheet */}
+              <div className="lg:col-span-6 space-y-4">
+                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="font-bold text-sm text-slate-200">{t.resume.liveSheetTitle}</span>
+                    </div>
+                    <span className="text-xs text-slate-400 font-medium">Standard A4 Sheet</span>
+                  </div>
+
+                  {/* White Paper Canvas */}
+                  <div className="flex-1 min-h-[580px] bg-white text-slate-950 rounded-2xl p-6 sm:p-8 shadow-inner overflow-y-auto border border-slate-300">
+                    <div dangerouslySetInnerHTML={{ __html: resumeHtml }} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* VIEW 3: COLD EMAIL & COVER LETTER AI */}
+        {/* ============================================================ */}
+        {activeTab === 'coverLetter' && (
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-slate-900 via-indigo-950/50 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+              <div className="max-w-3xl">
+                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                  <Mail className="w-6 h-6 text-indigo-400" />
+                  {t.emailTool.title}
+                </h3>
+                <p className="text-sm text-slate-400 mt-1">
+                  {t.emailTool.subtitle}
+                </p>
+              </div>
             </div>
 
-            {/* Right: Live A4 Resume Display */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-sm flex flex-col h-full">
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="font-bold text-sm text-slate-200">{t.livePreviewTitle}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              {/* Form Input */}
+              <div className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.companyName}</label>
+                  <input
+                    type="text"
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    value={emailCompany}
+                    onChange={(e) => {
+                      setEmailCompany(e.target.value)
+                      generateColdEmail()
+                    }}
+                    placeholder="e.g. Microsoft / Innovaccer"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.targetPosition}</label>
+                  <input
+                    type="text"
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    value={emailTargetRole}
+                    onChange={(e) => {
+                      setEmailTargetRole(e.target.value)
+                      generateColdEmail()
+                    }}
+                    placeholder="e.g. Software Engineering Intern"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.recipientRole}</label>
+                  <input
+                    type="text"
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    value={emailRecipient}
+                    onChange={(e) => {
+                      setEmailRecipient(e.target.value)
+                      generateColdEmail()
+                    }}
+                    placeholder="e.g. Technical Recruiter / CTO"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.myStrongSkill}</label>
+                  <input
+                    type="text"
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    value={emailStrongSkill}
+                    onChange={(e) => {
+                      setEmailStrongSkill(e.target.value)
+                      generateColdEmail()
+                    }}
+                    placeholder="e.g. React & Node.js Full Stack"
+                  />
+                </div>
+                <button
+                  onClick={generateColdEmail}
+                  className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-2xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 text-sm"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>{t.emailTool.btnGenerate}</span>
+                </button>
+              </div>
+
+              {/* Output Display */}
+              <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-800">
+                    <span className="font-bold text-sm text-slate-200">{t.emailTool.previewTitle}</span>
                     <button
-                      onClick={() => window.print()}
-                      className="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1 bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-800"
+                      onClick={() => {
+                        navigator.clipboard.writeText(generatedColdEmail)
+                        showToast('📋 Outreach Email Copied!')
+                      }}
+                      className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 text-slate-950 font-bold px-4 py-1.5 rounded-xl text-xs shadow transition"
                     >
-                      <Printer className="w-3.5 h-3.5" />
-                      <span>{t.btnPrint}</span>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>{t.emailTool.btnCopy}</span>
                     </button>
-                    <span className="text-xs text-slate-400">{t.previewFormat}</span>
                   </div>
-                </div>
-
-                {/* Simulated Paper A4 */}
-                <div className="flex-1 min-h-[550px] bg-white text-slate-950 rounded-2xl p-6 sm:p-8 shadow-inner overflow-y-auto border border-slate-200">
-                  {resumeHtml ? (
-                    <div dangerouslySetInnerHTML={{ __html: resumeHtml }} />
-                  ) : (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                      <FileText className="w-12 h-12 mb-2 text-slate-300" />
-                      <p className="text-sm">Click "Update Live Preview"</p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-4 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-900/40 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2 text-indigo-300">
-                    <Sparkles className="w-4 h-4 text-cyan-400" />
-                    <span>Puppeteer High-Res Vector PDF Engine Active</span>
+                  <div className="bg-slate-950 rounded-2xl p-5 border border-slate-800 font-mono text-xs sm:text-sm text-slate-200 whitespace-pre-wrap leading-relaxed max-h-[460px] overflow-y-auto">
+                    {generatedColdEmail}
                   </div>
-                  <span className="text-slate-400">Port 4000 Express</span>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* TAB 2: INTERNSHIPS & JOBS */}
+        {/* ============================================================ */}
+        {/* VIEW 4: INTERNSHIPS & JOBS RADAR */}
+        {/* ============================================================ */}
         {activeTab === 'jobs' && (
           <div className="space-y-6">
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
               <div className="max-w-3xl">
                 <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
                   <Briefcase className="w-6 h-6 text-indigo-400" />
-                  {t.jobSearchTitle}
+                  {t.jobs.title}
                 </h3>
                 <p className="text-sm text-slate-400 mt-1">
-                  {t.jobSearchSubtitle}
+                  {t.jobs.subtitle}
                 </p>
               </div>
 
-              {/* Search Bar */}
+              {/* Search & Location Filter Bar */}
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
                   <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && fetchJobs(query)}
-                    placeholder={t.searchPlaceholder}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-slate-100 placeholder-slate-500 transition"
+                    value={jobSearchQuery}
+                    onChange={(e) => setJobSearchQuery(e.target.value)}
+                    placeholder={t.jobs.searchPlaceholder}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-slate-100 transition"
                   />
                 </div>
-                <button
-                  onClick={() => fetchJobs(query)}
-                  disabled={loadingJobs}
-                  className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold px-7 py-3.5 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30"
+
+                <select
+                  value={jobFilterLocation}
+                  onChange={(e) => setJobFilterLocation(e.target.value)}
+                  className="bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-xs font-bold text-slate-200 outline-none"
                 >
-                  {loadingJobs ? (
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <Search className="w-4 h-4" />
-                      <span>{t.btnSearch}</span>
-                    </>
-                  )}
-                </button>
+                  <option value="all">{t.jobs.allLocations}</option>
+                  <option value="remote">{t.jobs.remoteOnly}</option>
+                  <option value="india">India (Pune / Mumbai / Bengaluru)</option>
+                </select>
               </div>
 
-              {/* Trending Pills */}
+              {/* Trending Filter Pills */}
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-slate-400 font-bold mr-1">{t.trending}</span>
-                {['Full Stack', 'React Developer', 'Frontend Intern', 'Node.js Backend', 'Python AI Trainee', 'Remote Global'].map((tag) => (
+                <span className="text-xs text-slate-400 font-bold mr-1">{t.jobs.trending}</span>
+                {['React', 'Full Stack', 'Node.js', 'Python', 'Remote', 'Fresher'].map((tg) => (
                   <button
-                    key={tag}
-                    onClick={() => {
-                      setQuery(tag)
-                      fetchJobs(tag)
-                    }}
+                    key={tg}
+                    onClick={() => setJobSearchQuery(tg)}
                     className="text-xs px-3.5 py-1 rounded-full bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500 text-slate-300 transition"
                   >
-                    {tag}
+                    {tg}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Jobs Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jobs.map((job, idx) => (
-                <div
-                  key={idx}
-                  className="bg-slate-900/80 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
-                        {job.location || 'Remote'}
-                      </span>
-                      <span className="text-xs text-slate-400 font-medium">{job.company}</span>
-                    </div>
-
-                    <h4 className="text-lg font-bold text-white">
-                      {job.title}
-                    </h4>
-
-                    {job.stipend && (
-                      <div className="text-xs font-bold text-emerald-400 mt-1">
-                        💰 {job.stipend}
-                      </div>
-                    )}
-
-                    <p className="text-sm text-slate-400 mt-3 line-clamp-3 leading-relaxed">
-                      {job.description}
-                    </p>
-
-                    {job.tags && (
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {job.tags.map((tg, i) => (
-                          <span key={i} className="text-[11px] font-semibold bg-slate-950 text-slate-300 px-2 py-0.5 rounded-lg border border-slate-800">
-                            {tg}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                    <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
-                      <CheckCircle className="w-3.5 h-3.5" /> {t.directApply}
-                    </span>
-                    <a
-                      href={job.url || 'https://www.linkedin.com/jobs'}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300"
-                    >
-                      <span>{t.viewDetails}</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 3: FREELANCE HUB */}
-        {activeTab === 'freelance' && (
-          <div className="space-y-8">
-            <div className="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
-                  <DollarSign className="w-3.5 h-3.5" /> Student Freelancing Blueprint
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  {t.freelanceTitle}
-                </h3>
-                <p className="text-sm text-slate-400 mt-2">
-                  {t.freelanceSubtitle}
-                </p>
-              </div>
-            </div>
-
-            {/* Instant Proposal Generator Component */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-                <div>
-                  <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-cyan-400" />
-                    {t.proposalGenerator}
-                  </h4>
-                  <p className="text-xs text-slate-400 mt-0.5">{t.chooseService}</p>
-                </div>
-
-                {/* Service Selector Tabs */}
-                <div className="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
-                  {Object.entries(PROPOSAL_TEMPLATES).map(([key, item]) => (
-                    <button
-                      key={key}
-                      onClick={() => setSelectedProposalKey(key)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                        selectedProposalKey === key
-                          ? 'bg-indigo-600 text-white shadow'
-                          : 'text-slate-400 hover:text-slate-200'
-                      }`}
-                    >
-                      {item.title}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Proposal Box */}
-              <div className="relative bg-slate-950 rounded-2xl p-5 border border-slate-800">
-                <pre className="text-xs sm:text-sm text-slate-200 font-mono whitespace-pre-wrap leading-relaxed">
-                  {PROPOSAL_TEMPLATES[selectedProposalKey]?.text.replace(/\[Your Name\]/g, name || 'Your Name')}
-                </pre>
-
-                <div className="mt-4 flex justify-end">
-                  <button
-                    onClick={() => {
-                      const text = PROPOSAL_TEMPLATES[selectedProposalKey]?.text.replace(/\[Your Name\]/g, name || 'Your Name')
-                      navigator.clipboard.writeText(text)
-                      showToast(t.copiedToast)
-                    }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs shadow-lg transition"
-                  >
-                    <Copy className="w-4 h-4" />
-                    <span>{t.copyProposal}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Platform Guides */}
+            {/* Job Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/40 transition">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-black text-xl border border-emerald-500/20">
-                    Up
-                  </div>
-                  <a
-                    href="https://www.upwork.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
-                  >
-                    <span>Visit Upwork</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-                <h4 className="text-lg font-bold text-white">Upwork Strategy for College Students</h4>
-                <p className="text-xs text-slate-400 mt-1">Focus on fixed-price contracts ({currency === 'INR' ? '₹3,000 - ₹12,000' : '$50 - $150'}).</p>
-                <ul className="mt-4 space-y-2.5 text-xs text-slate-300">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Target "Bug Fixes", "Tailwind UI Components", or "PDF Generation".</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Include a personalized Loom video or live GitHub demo in your proposals.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>Bid on jobs posted within the last 15-30 minutes for highest conversion.</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 hover:border-green-500/40 transition">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-400 font-black text-xl border border-green-500/20">
-                    Fi
-                  </div>
-                  <a
-                    href="https://www.fiverr.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-1"
-                  >
-                    <span>Visit Fiverr</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-                <h4 className="text-lg font-bold text-white">Fiverr Micro-Gig Fast Start</h4>
-                <p className="text-xs text-slate-400 mt-1">Create well-defined packaged services with instant deliverables.</p>
-                <ul className="mt-4 space-y-2.5 text-xs text-slate-300">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-                    <span>"I will convert Figma design into clean Tailwind React code in 24 hours".</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-                    <span>"I will generate ATS friendly PDF resumes with automated formatting".</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
-                    <span>Set basic tier at {currency === 'INR' ? '₹1,500' : '$20'} to stack your first 5 positive 5-star ratings.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* TAB 4: AI CAREER ROADMAPS */}
-        {activeTab === 'roadmap' && (
-          <div className="space-y-8">
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-bold mb-3">
-                  <Rocket className="w-3.5 h-3.5" /> Skill Orbit
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  {t.roadmapTitle}
-                </h3>
-                <p className="text-sm text-slate-400 mt-2">
-                  {t.roadmapSubtitle}
-                </p>
-              </div>
-            </div>
-
-            {/* Roadmaps Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {roadmapsState.map((r, rIdx) => {
-                const Icon = r.icon
-                const completedCount = r.milestones.filter(m => m.done).length
-                const percent = Math.round((completedCount / r.milestones.length) * 100)
+              {filteredJobs.map((job) => {
+                const isSaved = savedJobIds.includes(job.id)
 
                 return (
                   <div
-                    key={r.id}
-                    className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between shadow-xl"
+                    key={job.id}
+                    className="bg-slate-900/80 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col justify-between"
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`p-3 rounded-2xl bg-gradient-to-r ${r.color} text-white shadow-lg`}>
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <span className="text-xs font-black text-cyan-400">{percent}% Complete</span>
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+                          {job.location}
+                        </span>
+                        <button
+                          onClick={() => toggleSaveJob(job.id)}
+                          className={`text-xs font-bold flex items-center gap-1 px-3 py-1 rounded-xl transition ${
+                            isSaved
+                              ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                              : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+                          }`}
+                        >
+                          <Bookmark className="w-3.5 h-3.5" />
+                          <span>{isSaved ? t.jobs.saved : t.jobs.saveJob}</span>
+                        </button>
                       </div>
 
-                      <h4 className="text-lg font-bold text-white mb-2">{r.title}</h4>
+                      <h4 className="text-lg font-bold text-white">
+                        {job.title}
+                      </h4>
+                      <div className="text-xs font-medium text-slate-400 mt-1">{job.company}</div>
 
-                      {/* Progress Bar */}
-                      <div className="w-full bg-slate-950 rounded-full h-2 mb-5 border border-slate-800 overflow-hidden">
-                        <div
-                          className={`h-full bg-gradient-to-r ${r.color} transition-all duration-300`}
-                          style={{ width: `${percent}%` }}
-                        />
+                      <div className="text-xs font-bold text-emerald-400 mt-2.5">
+                        💰 {job.stipend}
                       </div>
 
-                      <div className="space-y-3">
-                        {r.milestones.map((m, mIdx) => (
-                          <div
-                            key={mIdx}
-                            onClick={() => toggleMilestone(rIdx, mIdx)}
-                            className="flex items-start gap-2.5 cursor-pointer group"
-                          >
-                            {m.done ? (
-                              <CheckSquare className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                            ) : (
-                              <Square className="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0 mt-0.5" />
-                            )}
-                            <span className={`text-xs ${m.done ? 'text-slate-300 line-through opacity-80' : 'text-slate-200 group-hover:text-cyan-400'} transition`}>
-                              {m.step}
-                            </span>
-                          </div>
+                      <p className="text-sm text-slate-300 mt-3 leading-relaxed">
+                        {job.description}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {job.tags.map((tag, i) => (
+                          <span key={i} className="text-[11px] font-semibold bg-slate-950 text-slate-300 px-2.5 py-0.5 rounded-lg border border-slate-800">
+                            {tag}
+                          </span>
                         ))}
                       </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                      <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                        <CheckCircle className="w-3.5 h-3.5" /> {t.jobs.directApply}
+                      </span>
+                      <a
+                        href={job.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
+                      >
+                        <span>Apply on Platform</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
                     </div>
                   </div>
                 )
@@ -1448,96 +1984,187 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 5: BRANDING & GITHUB HUB */}
-        {activeTab === 'brand' && (
+        {/* ============================================================ */}
+        {/* VIEW 5: FREELANCE & INVOICING */}
+        {/* ============================================================ */}
+        {activeTab === 'freelance' && (
           <div className="space-y-8">
-            <div className="bg-slate-900/90 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            
+            {/* Header */}
+            <div className="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
               <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mb-3">
-                  <Sparkles className="w-3.5 h-3.5" /> {t.brandHubTitle}
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  {t.brandHubSubtitle}
+                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                  <DollarSign className="w-6 h-6 text-emerald-400" />
+                  {t.freelance.title}
                 </h3>
-                <p className="text-sm text-slate-400 mt-2">
-                  प्रोजेक्टला जागतिक स्तरावर (Global Level) नेण्यासाठी टॉप ५ ब्रँड नावे आणि GitHub सिंक्रोनाइझेशन तपशील.
+                <p className="text-sm text-slate-400 mt-1">
+                  {t.freelance.subtitle}
                 </p>
               </div>
             </div>
 
-            {/* Proposed Names Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Hourly Rate & Monthly Earnings Calculator */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               
-              {/* Option 1 */}
-              <div className="bg-gradient-to-b from-slate-900 to-indigo-950/40 border-2 border-indigo-500/50 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-                <div className="absolute top-3 right-3 px-3 py-1 bg-indigo-600 text-white font-bold text-[10px] rounded-full uppercase tracking-wider">
-                  ⭐ No. 1 Recommended
-                </div>
-                <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-black text-xl mb-4 border border-indigo-500/30">
-                  CS
-                </div>
-                <h4 className="text-xl font-extrabold text-white">CareerSarthi AI</h4>
-                <div className="text-xs text-indigo-400 font-medium mt-0.5">कॅरियर सारथी (Career Navigator)</div>
-                <p className="text-xs text-slate-300 mt-3 leading-relaxed">
-                  <strong>Tagline:</strong> <em>"विद्यार्थ्यांचा खरा मार्गदर्शक — Resume ते पहिली नोकरी!"</em>
-                </p>
-                <div className="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
-                  <div>🎯 <strong>Vibe:</strong> विश्वासू, भारतीय संदर्भ (Indian Context) & विद्यार्थी-केंद्रित.</div>
-                  <div>🚀 <strong>Scope:</strong> सर्व भारतीय भाषा आणि जागतिक भाषा सपोर्ट.</div>
+              <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+                <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Sliders className="w-5 h-5 text-indigo-400" />
+                  {t.freelance.hourlyRateCalc}
+                </h4>
+
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                      <span>{t.freelance.hoursPerWeek}</span>
+                      <span className="text-cyan-400">{calcHours} hrs/week</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={5}
+                      max={40}
+                      step={5}
+                      value={calcHours}
+                      onChange={(e) => setCalcHours(Number(e.target.value))}
+                      className="w-full accent-indigo-500 cursor-pointer"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                      <span>{t.freelance.expectedRate}</span>
+                      <span className="text-cyan-400">{currency === 'INR' ? `₹${calcRate}` : `$${calcRate}`} / hr</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={currency === 'INR' ? 400 : 15}
+                      max={currency === 'INR' ? 3000 : 100}
+                      step={currency === 'INR' ? 100 : 5}
+                      value={calcRate}
+                      onChange={(e) => setCalcRate(Number(e.target.value))}
+                      className="w-full accent-indigo-500 cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-800 bg-slate-950 p-4 rounded-2xl flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-400">{t.freelance.projectedMonthly}</span>
+                    <span className="text-2xl font-black text-emerald-400">
+                      {currency === 'INR' ? `₹${(calcHours * calcRate * 4).toLocaleString('en-IN')}` : `$${calcHours * calcRate * 4}`}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Option 2 */}
-              <div className="bg-slate-900/90 border border-slate-800 hover:border-cyan-500/40 rounded-3xl p-6 shadow-xl transition">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-black text-xl mb-4 border border-cyan-500/30">
-                  GL
-                </div>
-                <h4 className="text-xl font-extrabold text-white">GradLaunch Global</h4>
-                <div className="text-xs text-cyan-400 font-medium mt-0.5">ग्रॅड-लाँच (Graduate Launchpad)</div>
-                <p className="text-xs text-slate-300 mt-3 leading-relaxed">
-                  <strong>Tagline:</strong> <em>"From Campus to Career — Smarter, Faster, Stronger."</em>
-                </p>
-                <div className="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
-                  <div>🎯 <strong>Vibe:</strong> Global SaaS, मॉडर्न, टेक-फॉरवर्ड स्टार्टअप लूक.</div>
-                </div>
-              </div>
+              {/* Instant Proposal Generator */}
+              <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                      <Zap className="w-5 h-5 text-cyan-400" />
+                      {t.freelance.proposalGen}
+                    </h4>
+                    <select
+                      value={proposalService}
+                      onChange={(e) => setProposalService(e.target.value)}
+                      className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1 text-xs font-bold text-slate-200 outline-none"
+                    >
+                      <option value="react">React & Tailwind Web UI</option>
+                      <option value="pdf">Automated PDF Generator API</option>
+                      <option value="figma">Figma to Responsive Code</option>
+                    </select>
+                  </div>
 
-              {/* Option 3 */}
-              <div className="bg-slate-900/90 border border-slate-800 hover:border-blue-500/40 rounded-3xl p-6 shadow-xl transition">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-black text-xl mb-4 border border-blue-500/30">
-                  SO
+                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs font-mono text-slate-300 leading-relaxed max-h-[160px] overflow-y-auto">
+                    {proposalService === 'react' && `Hi [Client],\n\nI noticed you need a responsive, high-speed React web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI can deliver clean, modular code with 100% responsiveness within 48 hours.\n\nBest regards,\n${name}`}
+                    {proposalService === 'pdf' && `Hello [Client],\n\nI can set up a robust automated PDF generation service using Node.js, Express, and Puppeteer with custom A4 formatting.\n\nReady to start immediately.\n\nBest,\n${name}`}
+                    {proposalService === 'figma' && `Hi there!\n\nI can convert your Figma designs into pixel-perfect, clean Tailwind React components with zero layout bugs.\n\nWarm regards,\n${name}`}
+                  </div>
                 </div>
-                <h4 className="text-xl font-extrabold text-white">SkillOrbit AI</h4>
-                <div className="text-xs text-blue-400 font-medium mt-0.5">स्किल ऑर्बिट (All-in-One Career Ecosystem)</div>
-                <p className="text-xs text-slate-300 mt-3 leading-relaxed">
-                  <strong>Tagline:</strong> <em>"Build Skills, Find Gigs, Land Dream Roles."</em>
-                </p>
-                <div className="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
-                  <div>🎯 <strong>Vibe:</strong> Gen-Z, फ्रिलान्सिंग आणि गिग इकॉनॉमी रेडी.</div>
+
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`Hi [Client], I specialize in ${proposalService} development. Contact: ${email}`)
+                      showToast(t.freelance.copyProposal)
+                    }}
+                    className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:opacity-90 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs shadow transition"
+                  >
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>{t.freelance.copyProposal}</span>
+                  </button>
                 </div>
               </div>
 
             </div>
+          </div>
+        )}
 
-            {/* GitHub Sync Status Card */}
+        {/* ============================================================ */}
+        {/* VIEW 6: ROADMAPS & INTERVIEW PREP */}
+        {/* ============================================================ */}
+        {activeTab === 'roadmaps' && (
+          <div className="space-y-8">
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-white">
-                    <Github className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-white">GitHub Repository Synchronization</h4>
-                    <p className="text-xs text-slate-400">vina-yak711/student-career-assist • Branch: main</p>
-                  </div>
-                </div>
-                <span className="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold">
-                  Synced & Ready
-                </span>
+              <div className="max-w-3xl">
+                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                  <Rocket className="w-6 h-6 text-indigo-400" />
+                  {t.roadmaps.title}
+                </h3>
+                <p className="text-sm text-slate-400 mt-1">
+                  {t.roadmaps.subtitle}
+                </p>
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                सर्व नवीन फाइल्स, बहुभाषिक प्रणाली (i18n), नवीन ATS रेझ्युमे इंजिन आणि जागतिक डिझाइन तुमच्या प्रोजेक्टमध्ये समाविष्ट केले आहे.
-              </p>
+            </div>
+
+            {/* Interview Flashcards Grid */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-cyan-400" />
+                {t.roadmaps.interviewPrepTitle}
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {INTERVIEW_QUESTIONS.map((item, idx) => {
+                  const isShown = revealedAnswers[idx]
+
+                  return (
+                    <div
+                      key={idx}
+                      className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+                            {item.topic}
+                          </span>
+                        </div>
+                        <h5 className="font-bold text-white text-sm sm:text-base mt-2">
+                          {item.q}
+                        </h5>
+
+                        {isShown && (
+                          <div className="mt-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed animate-fadeIn">
+                            {item.a}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+                        <button
+                          onClick={() => {
+                            setRevealedAnswers({
+                              ...revealedAnswers,
+                              [idx]: !isShown
+                            })
+                          }}
+                          className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition"
+                        >
+                          {isShown ? t.roadmaps.hideAnswer : t.roadmaps.showAnswer}
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         )}
