@@ -49,11 +49,76 @@ import {
   LayoutDashboard,
   MessageSquareQuote,
   Target,
-  Plus,
-  Trash2
+  Sun,
+  Moon,
+  Palette
 } from 'lucide-react'
 
-// Multilingual Translations (Default: English)
+// Themes Definition
+const THEMES = {
+  obsidian: {
+    id: 'obsidian',
+    name: 'Midnight Obsidian',
+    icon: Moon,
+    bodyBg: 'bg-[#0a0e1a]',
+    textColor: 'text-slate-100',
+    cardBg: 'bg-[#111827]/90',
+    cardBorder: 'border-slate-800',
+    inputBg: 'bg-[#060913]',
+    inputBorder: 'border-slate-800',
+    headerBg: 'bg-[#0e1424]/90',
+    accentGrad: 'from-indigo-600 via-blue-600 to-cyan-500',
+    accentText: 'text-cyan-400',
+    badgeBg: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30'
+  },
+  lightPearl: {
+    id: 'lightPearl',
+    name: 'Clean Pearl Light',
+    icon: Sun,
+    bodyBg: 'bg-[#f8fafc]',
+    textColor: 'text-slate-900',
+    cardBg: 'bg-white',
+    cardBorder: 'border-slate-200/80 shadow-sm',
+    inputBg: 'bg-slate-50',
+    inputBorder: 'border-slate-200',
+    headerBg: 'bg-white/90',
+    accentGrad: 'from-blue-600 via-indigo-600 to-cyan-600',
+    accentText: 'text-blue-600',
+    badgeBg: 'bg-blue-50 text-blue-700 border-blue-200'
+  },
+  nebulaViolet: {
+    id: 'nebulaViolet',
+    name: 'Cyber Nebula',
+    icon: Sparkles,
+    bodyBg: 'bg-[#0d0a1e]',
+    textColor: 'text-slate-100',
+    cardBg: 'bg-[#161230]/90',
+    cardBorder: 'border-purple-900/50',
+    inputBg: 'bg-[#080514]',
+    inputBorder: 'border-purple-900/60',
+    headerBg: 'bg-[#130f2b]/90',
+    accentGrad: 'from-purple-600 via-fuchsia-600 to-indigo-500',
+    accentText: 'text-purple-400',
+    badgeBg: 'bg-purple-500/10 text-purple-300 border-purple-500/30'
+  },
+  oceanSapphire: {
+    id: 'oceanSapphire',
+    name: 'Ocean Sapphire',
+    icon: Palette,
+    bodyBg: 'bg-[#061224]',
+    textColor: 'text-slate-100',
+    cardBg: 'bg-[#0d1d36]/90',
+    cardBorder: 'border-cyan-900/50',
+    inputBg: 'bg-[#030914]',
+    inputBorder: 'border-cyan-900/60',
+    headerBg: 'bg-[#091830]/90',
+    accentGrad: 'from-cyan-500 via-blue-600 to-teal-500',
+    accentText: 'text-cyan-300',
+    badgeBg: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
+  }
+}
+
+// Multilingual Dictionary (Default English)
 const TRANSLATIONS = {
   en: {
     langName: 'English',
@@ -106,8 +171,8 @@ const TRANSLATIONS = {
       btnUpdate: 'Update Live Sheet',
       btnDownload: 'Download Vector PDF',
       btnPrint: 'Print Sheet',
-      btnExportJson: 'Export Profile JSON',
-      btnImportJson: 'Import Profile JSON',
+      btnExportJson: 'Export JSON',
+      btnImportJson: 'Import JSON',
       liveSheetTitle: 'Live A4 Print-Ready Document',
       atsAnalysisTitle: 'ATS Quality Health Check'
     },
@@ -223,7 +288,7 @@ const TRANSLATIONS = {
     jobs: {
       title: 'इंटर्नशिप्स आणि फ्रेशर जॉब रडार',
       subtitle: 'विद्यार्थ्यांसाठी खास निवडक रिमोट, हायब्रिड व ऑन-साइट संधी.',
-      searchPlaceholder: 'पद किंवा स्किल शोधा (उदा. React, Node.js, Python, Frontend)...',
+      searchPlaceholder: 'पद किंवा स्किल शोधा (उदा. React, Node.js, Python)...',
       allLocations: 'सर्व शहरे',
       remoteOnly: 'केवळ रिमोट',
       stipendFilter: 'स्टायपेंडसह',
@@ -235,17 +300,17 @@ const TRANSLATIONS = {
     freelance: {
       title: 'विद्यार्थी फ्रीलान्सिंग हब & इन्व्हॉइस',
       subtitle: 'कॉलेजमध्ये शिकत असतानाच Upwork आणि Fiverr वरून कमाईचे मार्गदर्शन.',
-      hourlyRateCalc: 'तासी दर (Hourly Rate) कॅल्क्युलेटर',
+      hourlyRateCalc: 'तासी दर कॅल्क्युलेटर',
       hoursPerWeek: 'आठवड्याला कामाचे तास:',
       expectedRate: 'अपेक्षित प्रति तास दर:',
       projectedMonthly: 'अपेक्षित मासिक कमाई:',
-      proposalGen: 'क्लायंटसाठी इन्स्टंट Proposal जनरेटर',
+      proposalGen: 'इन्स्टंट Proposal जनरेटर',
       selectGig: 'सर्व्हिस प्रकार निवडा:',
       copyProposal: 'Proposal कॉपी करा'
     },
     roadmaps: {
       title: 'इंजिनिअरिंग करिअर रोडमॅप & मुलाखत तयारी',
-      subtitle: 'महत्त्वाच्या कोडिंग संकल्पना आणि मुलाखतीसाठी महत्त्वाचे प्रश्नोत्तरे.',
+      subtitle: 'महत्त्वाच्या कोडिंग संकल्पना आणि मुलाखतीसाठी प्रश्नोत्तरे.',
       interviewPrepTitle: 'टॉप मुलाखत प्रश्न (Flashcards)',
       showAnswer: 'उत्तर पाहा',
       hideAnswer: 'उत्तर लपवा'
@@ -287,7 +352,7 @@ const TRANSLATIONS = {
       skillsTab: '६. तकनीकी कौशल',
       accomplishmentsTab: '७. उपलब्धियां',
       fullName: 'पूरा नाम',
-      targetRole: 'लक्ष्य पद (Role)',
+      targetRole: 'लक्ष्य पद',
       email: 'ईमेल पता',
       phone: 'फ़ोन / व्हाट्सएप',
       location: 'स्थान / शहर',
@@ -321,7 +386,7 @@ const TRANSLATIONS = {
     jobs: {
       title: 'इंटर्नशिप और फ्रेशर जॉब रडार',
       subtitle: 'छात्रों के लिए विशेष रूप से सत्यापित रिमोट व ऑन-साइट अवसर।',
-      searchPlaceholder: 'पद या स्किल खोजें (उदा. React, Python, Frontend)...',
+      searchPlaceholder: 'पद या स्किल खोजें...',
       allLocations: 'सभी शहर',
       remoteOnly: 'केवल रिमोट',
       stipendFilter: 'वेतन सहित',
@@ -332,12 +397,12 @@ const TRANSLATIONS = {
     },
     freelance: {
       title: 'स्टूडेंट फ्रीलांसिंग हब & इनवॉइस',
-      subtitle: 'कॉलेज में पढ़ते हुए Upwork और Fiverr से प्रोजेक्ट्स पाने की रणनीति।',
+      subtitle: 'कॉलेज में पढ़ते हुए प्रोजेक्ट्स पाने की रणनीति।',
       hourlyRateCalc: 'प्रति घंटा दर कैलकुलेटर',
       hoursPerWeek: 'प्रति सप्ताह उपलब्ध घंटे:',
       expectedRate: 'अपेक्षित प्रति घंटा दर:',
       projectedMonthly: 'अनुमानित मासिक आय:',
-      proposalGen: 'क्लाइंट्स के लिए तुरंत Proposal जनरेटर',
+      proposalGen: 'तुरंत Proposal जनरेटर',
       selectGig: 'सर्विस प्रकार चुनें:',
       copyProposal: 'Proposal कॉपी करें'
     },
@@ -348,108 +413,10 @@ const TRANSLATIONS = {
       showAnswer: 'उत्तर देखें',
       hideAnswer: 'उत्तर छुपाएं'
     }
-  },
-  es: {
-    langName: 'Español',
-    flag: '🇪🇸',
-    brandName: 'VynkAI CareerForge',
-    brandBadge: 'Suite Global',
-    nav: {
-      dashboard: 'Panel',
-      resume: 'Estudio de CV ATS',
-      coverLetter: 'Cold Email',
-      jobs: 'Pasantías & Empleos',
-      freelance: 'Freelance',
-      roadmaps: 'Rutas & Prep'
-    },
-    dashboard: {
-      welcome: 'Bienvenido a VynkAI CareerForge',
-      desc: 'Crea CVs compatibles con ATS y encuentra pasantías internacionales.',
-      atsCardTitle: 'Puntaje ATS',
-      atsCardDesc: 'Compatibilidad con filtros automáticos',
-      savedJobsTitle: 'Ofertas Guardadas',
-      activeRoadmapsTitle: 'Hitos Completados',
-      quickActions: 'Acciones Rápidas',
-      btnBuildResume: 'Crear CV ATS',
-      btnSearchJobs: 'Buscar Pasantías',
-      btnWriteEmail: 'Redactar Email'
-    },
-    resume: {
-      title: 'Estudio Profesional de CV ATS',
-      subtitle: 'Formato A4 estructurado según estándares de ingeniería global.',
-      personalTab: '1. Datos Personales',
-      summaryTab: '2. Resumen & Lema',
-      educationTab: '3. Educación',
-      experienceTab: '4. Experiencia',
-      projectsTab: '5. Proyectos',
-      skillsTab: '6. Habilidades',
-      accomplishmentsTab: '7. Logros',
-      fullName: 'Nombre Completo',
-      targetRole: 'Título Profesional',
-      email: 'Correo Electrónico',
-      phone: 'Teléfono',
-      location: 'Ubicación',
-      links: 'GitHub / LinkedIn',
-      summaryLabel: 'Resumen Profesional',
-      mottoLabel: 'Lema Profesional',
-      aiPolish: 'Mejorar con IA',
-      templateStyle: 'Tema de CV:',
-      modernTech: 'Tech Moderno',
-      minimalATS: 'ATS Clásico',
-      executive: 'Ejecutivo',
-      btnUpdate: 'Actualizar',
-      btnDownload: 'Descargar PDF Vectorial',
-      btnPrint: 'Imprimir',
-      btnExportJson: 'Exportar JSON',
-      btnImportJson: 'Importar JSON',
-      liveSheetTitle: 'Vista Previa A4 en Vivo',
-      atsAnalysisTitle: 'Lista de Control ATS'
-    },
-    emailTool: {
-      title: 'Generador de Cold Email con IA',
-      subtitle: 'Genera propuestas directas a reclutadores en segundos.',
-      recipientRole: 'Destinatario',
-      companyName: 'Empresa',
-      targetPosition: 'Puesto',
-      myStrongSkill: 'Habilidad Principal',
-      btnGenerate: 'Generar Email',
-      btnCopy: 'Copiar Email',
-      previewTitle: 'Email Generado:'
-    },
-    jobs: {
-      title: 'Radar de Pasantías y Empleos',
-      subtitle: 'Oportunidades remotas y presenciales verificadas para estudiantes.',
-      searchPlaceholder: 'Buscar rol (ej. React, Python, Full Stack)...',
-      allLocations: 'Todas las Ubicaciones',
-      remoteOnly: 'Solo Remoto',
-      stipendFilter: 'Con Pago',
-      directApply: 'Aplicar Directo',
-      saveJob: 'Guardar',
-      saved: 'Guardado',
-      trending: 'Tendencias:'
-    },
-    freelance: {
-      title: 'Guía Freelance y Facturación',
-      subtitle: 'Estrategias para conseguir tus primeros clientes internacionales.',
-      hourlyRateCalc: 'Calculadora de Tarifa por Hora',
-      hoursPerWeek: 'Horas / semana:',
-      expectedRate: 'Tarifa por hora:',
-      projectedMonthly: 'Ingreso mensual proyectado:',
-      proposalGen: 'Generador de Propuestas',
-      selectGig: 'Tipo de Servicio:',
-      copyProposal: 'Copiar Propuesta'
-    },
-    roadmaps: {
-      title: 'Rutas de Aprendizaje y Entrevistas',
-      subtitle: 'Hitos verificados y tarjetas de preguntas técnicas.',
-      interviewPrepTitle: 'Tarjetas de Entrevista Técnica',
-      showAnswer: 'Ver Respuesta',
-      hideAnswer: 'Ocultar Respuesta'
-    }
   }
 }
 
-// Clean Generic Example Candidate Data (Format structure matching the user's reference)
+// Clean Generic Example Candidate Data (Structure matching reference format)
 const DEFAULT_CANDIDATE = {
   name: 'Alex Morgan',
   role: 'Artificial Intelligence & Data Science Student | Software Engineer',
@@ -460,7 +427,6 @@ const DEFAULT_CANDIDATE = {
   summary: 'Passionate and technology-driven Artificial Intelligence & Data Science student with a solid foundation in Computer Engineering. Experienced in full-stack web engineering, native Android app development, machine learning algorithms, and system networking. Proven record of developing practical academic projects and completing industrial engineering trainings. Committed to building scalable software solutions that solve real-world problems.',
   motto: 'Technology is not just about writing code; it is about solving real-world problems, creating meaningful experiences, and continuously pushing the boundaries of innovation.',
   
-  // Education Multi-Entry
   educationList: [
     {
       degree: 'Bachelor of Engineering in Artificial Intelligence & Data Science (3rd Year)',
@@ -478,7 +444,6 @@ const DEFAULT_CANDIDATE = {
     }
   ],
 
-  // Industrial Training & Experience
   experienceList: [
     {
       title: 'Android Development Industrial Training Program',
@@ -494,7 +459,6 @@ const DEFAULT_CANDIDATE = {
     }
   ],
 
-  // Key Projects
   projectsList: [
     {
       title: 'AI-Based Health Monitoring System (AI & IoT)',
@@ -518,7 +482,6 @@ const DEFAULT_CANDIDATE = {
     }
   ],
 
-  // Categorized Technical Skillset
   skillsCategorized: {
     'Languages': 'Python, Java, Advanced Java, C, C++, Kotlin, C#, SQL, PL/SQL',
     'Web & Mobile': 'HTML5, CSS3, JavaScript, TypeScript, React.js, Node.js, PHP, Android Studio, Tailwind CSS',
@@ -528,7 +491,7 @@ const DEFAULT_CANDIDATE = {
   accomplishments: '• International CodeForge Hackathon: Participated in Build & Submit Prototype Development Round.\n• Technical Festivals Presenter: Demonstrated AI + IoT integrated smart healthcare system at university symposium.'
 }
 
-// Top 50 Technical Interview Flashcards
+// Flashcards
 const INTERVIEW_QUESTIONS = [
   {
     topic: 'React.js',
@@ -549,22 +512,16 @@ const INTERVIEW_QUESTIONS = [
     topic: 'Networking & OS',
     q: 'Explain the 3-Way TCP Handshake and why it is essential.',
     a: 'TCP establishes reliable connections via SYN (Client sends sequence #), SYN-ACK (Server acknowledges and sends its sequence #), and ACK (Client confirms). It synchronizes sequence numbers on both sides to prevent packet loss.'
-  },
-  {
-    topic: 'Databases & SQL',
-    q: 'What are ACID properties in Relational Database Management Systems?',
-    a: 'Atomicity (all operations succeed or whole transaction rolls back), Consistency (data satisfies all constraints), Isolation (concurrent transactions do not conflict), and Durability (committed changes persist permanently).'
   }
 ]
 
-// Mock Curated Job Database
+// Mock Jobs
 const MOCK_JOBS = [
   {
     id: 1,
     title: 'AI & Full Stack Software Engineering Intern',
     company: 'CloudScale Global Technologies',
     location: 'Remote (Worldwide / US / India)',
-    type: 'Internship',
     stipend: '$1,200 - $2,200 / month (₹45,000 - ₹85,000)',
     tags: ['React.js', 'Python', 'Node.js', 'Remote', 'Mentorship'],
     description: 'Work with senior AI engineers building interactive dashboards, LLM integrations, and responsive React applications. Direct pre-placement job offer (PPO) pathway.',
@@ -575,7 +532,6 @@ const MOCK_JOBS = [
     title: 'Junior Machine Learning & Android Trainee',
     company: 'NeuroPulse Mobile Labs',
     location: 'Pune / Mumbai / Bengaluru (Hybrid)',
-    type: 'Fresher / Entry',
     stipend: '₹5.5 - ₹8.5 LPA',
     tags: ['Android Studio', 'Kotlin', 'Python', 'Campus Drive'],
     description: 'Entry-level engineering position for ambitious students. Build on-device ML models, native Android components, and RESTful cloud backends.',
@@ -586,35 +542,27 @@ const MOCK_JOBS = [
     title: 'Frontend UI & Vector Graphic Engineer',
     company: 'HyperGrowth SaaS Inc.',
     location: 'San Francisco / Remote',
-    type: 'Internship',
     stipend: '$28 / hour',
     tags: ['Tailwind CSS', 'TypeScript', 'Vite', 'Global'],
     description: 'Construct pixel-perfect UI suites, automated PDF compilation pipelines, and responsive design systems with 100% responsiveness.',
     url: 'https://wellfound.com'
-  },
-  {
-    id: 4,
-    title: 'Backend API Developer (Batch 2025-2028)',
-    company: 'Veritas Infotech Systems',
-    location: 'Bengaluru / Hyderabad / Remote',
-    type: 'Fresher / Trainee',
-    stipend: '₹6.0 - ₹9.2 LPA',
-    tags: ['Express.js', 'SQL', 'Docker', 'REST APIs'],
-    description: 'Design robust authentication systems, database schema architectures, and asynchronous workers with Node.js and PostgreSQL.',
-    url: 'https://www.naukri.com'
   }
 ]
 
 export default function App() {
+  // Theme state: defaults to Obsidian or Light Pearl
+  const [currentThemeKey, setCurrentThemeKey] = useState('obsidian')
+  const theme = THEMES[currentThemeKey] || THEMES.obsidian
+
   // 1. Language default is ENGLISH as requested by user!
   const [lang, setLang] = useState('en')
-  const [currency, setCurrency] = useState('USD') // 'USD', 'INR', 'EUR', 'GBP'
-  const [activeTab, setActiveTab] = useState('dashboard') // 'dashboard', 'resume', 'coverLetter', 'jobs', 'freelance', 'roadmaps'
+  const [currency, setCurrency] = useState('USD')
+  const [activeTab, setActiveTab] = useState('dashboard')
   const [resumeSubTab, setResumeSubTab] = useState('personal')
-  const [templateStyle, setTemplateStyle] = useState('modernTech') // 'modernTech', 'minimalATS', 'executive'
+  const [templateStyle, setTemplateStyle] = useState('modernTech')
   const [toastMsg, setToastMsg] = useState('')
 
-  // 2. Candidate State with clean random example data (Format reference structure matching PDF)
+  // 2. Candidate State
   const [candidate, setCandidate] = useState(DEFAULT_CANDIDATE)
   const [resumeHtml, setResumeHtml] = useState('')
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
@@ -636,7 +584,7 @@ export default function App() {
   const [calcRate, setCalcRate] = useState(30)
   const [proposalService, setProposalService] = useState('react')
 
-  // 6. Flashcard Toggles
+  // 6. Flashcards
   const [revealedAnswers, setRevealedAnswers] = useState({})
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en
@@ -659,7 +607,7 @@ Dear ${emailRecipient} at ${emailCompany},
 
 I hope this email finds you well.
 
-I have been closely following ${emailCompany}'s engineering products and was deeply inspired by your innovative solutions. I am writing to express my strong enthusiasm for the ${emailTargetRole} position.
+I have been closely following ${emailCompany}'s engineering initiatives and was deeply inspired by your high-impact software products. I am writing to express my strong interest in the ${emailTargetRole} position.
 
 As an Artificial Intelligence & Software Engineering student with hands-on experience in ${emailStrongSkill}, I have built production-ready web platforms, native mobile applications, and automated document engines.
 
@@ -698,7 +646,7 @@ ${candidate.links}`
       const res = await axios.post('http://localhost:4000/api/resume/generate', candidate)
       setResumeHtml(res.data)
     } catch (err) {
-      // Fallback local renderer if backend is compiling
+      // Local clean fallback
       const skillsHtml = Object.entries(candidate.skillsCategorized).map(([cat, items]) => `
         <div style="margin-bottom: 6px;">
           <div style="font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #475569; margin-bottom: 3px;">${cat}</div>
@@ -812,7 +760,7 @@ ${candidate.links}`
     }
   }
 
-  // AI Polish Handler
+  // AI Polish
   const handleAiPolish = () => {
     const polished = `Results-driven and technology-focused Artificial Intelligence & Computer Engineering student with strong mastery in full-stack web architectures, native mobile development, and data-driven machine learning algorithms. Proven record of developing practical academic projects and completing industrial engineering trainings. Committed to building scalable software solutions that solve real-world problems.`
     setCandidate({ ...candidate, summary: polished })
@@ -870,7 +818,7 @@ ${candidate.links}`
   })
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-600 selection:text-white pb-20">
+    <div className={`min-h-screen ${theme.bodyBg} ${theme.textColor} transition-colors duration-300 font-sans pb-20`}>
       
       {/* Toast Notification */}
       {toastMsg && (
@@ -881,7 +829,7 @@ ${candidate.links}`
       )}
 
       {/* TOP HEADER */}
-      <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800 shadow-md">
+      <header className={`sticky top-0 z-40 ${theme.headerBg} backdrop-blur-xl border-b ${theme.cardBorder} shadow-sm`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             
@@ -890,17 +838,17 @@ ${candidate.links}`
               onClick={() => setActiveTab('dashboard')} 
               className="flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-cyan-400 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition">
-                <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
-                  <Compass className="w-6 h-6 text-cyan-400" />
+              <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${theme.accentGrad} p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition`}>
+                <div className={`w-full h-full ${currentThemeKey === 'lightPearl' ? 'bg-white' : 'bg-slate-950'} rounded-[14px] flex items-center justify-center`}>
+                  <Compass className={`w-6 h-6 ${theme.accentText}`} />
                 </div>
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1">
-                    {t.brandName} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 text-sm font-black">AI</span>
+                  <h1 className={`text-xl font-extrabold tracking-tight ${theme.textColor} flex items-center gap-1`}>
+                    {t.brandName} <span className={`text-transparent bg-clip-text bg-gradient-to-r ${theme.accentGrad} text-sm font-black`}>AI</span>
                   </h1>
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                  <span className={`text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded-full border ${theme.badgeBg}`}>
                     2026
                   </span>
                 </div>
@@ -910,18 +858,45 @@ ${candidate.links}`
               </div>
             </div>
 
-            {/* Language & Currency Tools */}
+            {/* Language, Theme & Currency Tools */}
             <div className="flex items-center gap-2 sm:gap-3">
+              
+              {/* THEME ENGINE SWITCHER */}
+              <div className={`flex items-center ${theme.inputBg} border ${theme.inputBorder} rounded-2xl p-1 shadow-inner`}>
+                {Object.entries(THEMES).map(([key, item]) => {
+                  const Icon = item.icon
+                  const isActive = currentThemeKey === key
+
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setCurrentThemeKey(key)
+                        showToast(`Theme switched to ${item.name}!`)
+                      }}
+                      title={item.name}
+                      className={`p-1.5 rounded-xl transition ${
+                        isActive
+                          ? `bg-gradient-to-r ${theme.accentGrad} text-white shadow`
+                          : 'text-slate-400 hover:text-slate-200'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </button>
+                  )
+                })}
+              </div>
+
               {/* Language Selector */}
-              <div className="flex items-center bg-slate-950 border border-slate-800 rounded-2xl px-3 py-1.5 shadow-inner">
-                <Globe className="w-4 h-4 text-cyan-400 mr-2 shrink-0" />
+              <div className={`flex items-center ${theme.inputBg} border ${theme.inputBorder} rounded-2xl px-3 py-1.5 shadow-inner`}>
+                <Globe className={`w-4 h-4 ${theme.accentText} mr-2 shrink-0`} />
                 <select
                   value={lang}
                   onChange={(e) => {
                     setLang(e.target.value)
                     showToast(`Language set to ${TRANSLATIONS[e.target.value]?.langName}`)
                   }}
-                  className="bg-transparent text-xs font-bold text-slate-200 outline-none cursor-pointer pr-1"
+                  className={`bg-transparent text-xs font-bold ${theme.textColor} outline-none cursor-pointer pr-1`}
                 >
                   {Object.entries(TRANSLATIONS).map(([k, v]) => (
                     <option key={k} value={k} className="bg-slate-900 text-slate-100">
@@ -932,7 +907,7 @@ ${candidate.links}`
               </div>
 
               {/* Currency Selector */}
-              <div className="hidden sm:flex items-center bg-slate-950 border border-slate-800 rounded-2xl px-3 py-1.5 text-xs font-bold text-indigo-400 shadow-inner">
+              <div className={`hidden sm:flex items-center ${theme.inputBg} border ${theme.inputBorder} rounded-2xl px-3 py-1.5 text-xs font-bold ${theme.accentText} shadow-inner`}>
                 <select
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
@@ -950,16 +925,16 @@ ${candidate.links}`
                 href="https://github.com/vina-yak711/student-career-assist"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-700 transition"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-2xl ${theme.inputBg} border ${theme.inputBorder} text-xs font-semibold text-slate-400 hover:${theme.textColor} transition`}
               >
-                <Github className="w-4 h-4 text-slate-400" />
+                <Github className="w-4 h-4" />
                 <span className="hidden md:inline">GitHub</span>
               </a>
             </div>
           </div>
 
           {/* MAIN NAVIGATION TABS */}
-          <nav className="flex items-center gap-1.5 overflow-x-auto pb-3 pt-1 scrollbar-none border-t border-slate-800/60 mt-1">
+          <nav className={`flex items-center gap-1.5 overflow-x-auto pb-3 pt-1 scrollbar-none border-t ${theme.cardBorder} mt-1`}>
             {[
               { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
               { key: 'resume', label: t.nav.resume, icon: FileText },
@@ -973,8 +948,8 @@ ${candidate.links}`
                 onClick={() => setActiveTab(key)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                   activeTab === key
-                    ? 'bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-indigo-600/30'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    ? `bg-gradient-to-r ${theme.accentGrad} text-white shadow-lg shadow-indigo-600/30`
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -993,12 +968,12 @@ ${candidate.links}`
         {/* ============================================================ */}
         {activeTab === 'dashboard' && (
           <div className="space-y-8">
-            <div className="bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden`}>
               <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-extrabold mb-3">
+                <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border ${theme.badgeBg} text-xs font-extrabold mb-3`}>
                   <Zap className="w-3.5 h-3.5" /> All-in-One Global Career Platform
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                <h2 className={`text-2xl sm:text-4xl font-extrabold ${theme.textColor} leading-tight`}>
                   {t.dashboard.welcome}
                 </h2>
                 <p className="mt-2 text-slate-400 text-sm sm:text-base leading-relaxed">
@@ -1007,21 +982,21 @@ ${candidate.links}`
                 <div className="mt-6 flex flex-wrap items-center gap-3">
                   <button
                     onClick={() => setActiveTab('resume')}
-                    className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold px-6 py-3 rounded-2xl shadow-xl shadow-indigo-600/30 transition flex items-center gap-2 text-xs sm:text-sm"
+                    className={`bg-gradient-to-r ${theme.accentGrad} hover:opacity-90 text-white font-bold px-6 py-3 rounded-2xl shadow-xl transition flex items-center gap-2 text-xs sm:text-sm`}
                   >
                     <FileText className="w-4 h-4" />
                     <span>{t.dashboard.btnBuildResume}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('jobs')}
-                    className="bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition flex items-center gap-2 text-xs sm:text-sm"
+                    className={`${theme.inputBg} hover:opacity-80 ${theme.textColor} font-bold px-6 py-3 rounded-2xl border ${theme.inputBorder} transition flex items-center gap-2 text-xs sm:text-sm`}
                   >
-                    <Briefcase className="w-4 h-4 text-cyan-400" />
+                    <Briefcase className={`w-4 h-4 ${theme.accentText}`} />
                     <span>{t.dashboard.btnSearchJobs}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('coverLetter')}
-                    className="bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold px-6 py-3 rounded-2xl border border-slate-700 transition flex items-center gap-2 text-xs sm:text-sm"
+                    className={`${theme.inputBg} hover:opacity-80 ${theme.textColor} font-bold px-6 py-3 rounded-2xl border ${theme.inputBorder} transition flex items-center gap-2 text-xs sm:text-sm`}
                   >
                     <Mail className="w-4 h-4 text-emerald-400" />
                     <span>{t.dashboard.btnWriteEmail}</span>
@@ -1034,7 +1009,7 @@ ${candidate.links}`
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div 
                 onClick={() => setActiveTab('resume')}
-                className="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+                className={`${theme.cardBg} border ${theme.cardBorder} hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.dashboard.atsCardTitle}</span>
@@ -1042,7 +1017,7 @@ ${candidate.links}`
                     <FileText className="w-5 h-5" />
                   </div>
                 </div>
-                <div className="text-3xl font-black text-white flex items-center gap-2">
+                <div className={`text-3xl font-black ${theme.textColor} flex items-center gap-2`}>
                   <span className={atsScore >= 75 ? 'text-emerald-400' : 'text-amber-400'}>{atsScore}%</span>
                   <span className="text-xs font-bold text-slate-400">/ 100</span>
                 </div>
@@ -1051,7 +1026,7 @@ ${candidate.links}`
 
               <div 
                 onClick={() => setActiveTab('jobs')}
-                className="bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+                className={`${theme.cardBg} border ${theme.cardBorder} hover:border-cyan-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.dashboard.savedJobsTitle}</span>
@@ -1059,7 +1034,7 @@ ${candidate.links}`
                     <BookmarkCheck className="w-5 h-5" />
                   </div>
                 </div>
-                <div className="text-3xl font-black text-white">
+                <div className={`text-3xl font-black ${theme.textColor}`}>
                   {savedJobIds.length} <span className="text-xs font-bold text-slate-400">Saved</span>
                 </div>
                 <p className="text-xs text-slate-400 mt-2">Active student internships in radar</p>
@@ -1067,7 +1042,7 @@ ${candidate.links}`
 
               <div 
                 onClick={() => setActiveTab('freelance')}
-                className="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+                className={`${theme.cardBg} border ${theme.cardBorder} hover:border-emerald-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Freelance Potential</span>
@@ -1083,7 +1058,7 @@ ${candidate.links}`
 
               <div 
                 onClick={() => setActiveTab('roadmaps')}
-                className="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group"
+                className={`${theme.cardBg} border ${theme.cardBorder} hover:border-purple-500/50 rounded-3xl p-6 shadow-xl cursor-pointer transition group`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Technical QA</span>
@@ -1107,10 +1082,10 @@ ${candidate.links}`
           <div className="space-y-6">
             
             {/* Toolbar */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl`}>
               <div>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
-                  <FileText className="w-6 h-6 text-indigo-400" />
+                <h3 className={`text-xl sm:text-2xl font-extrabold ${theme.textColor} flex items-center gap-2`}>
+                  <FileText className={`w-6 h-6 ${theme.accentText}`} />
                   {t.resume.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
@@ -1119,7 +1094,7 @@ ${candidate.links}`
               </div>
 
               {/* Theme Template Selector */}
-              <div className="flex items-center gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+              <div className={`flex items-center gap-2 ${theme.inputBg} p-1.5 rounded-2xl border ${theme.inputBorder}`}>
                 <span className="text-[11px] font-bold text-slate-400 px-2">{t.resume.templateStyle}</span>
                 {[
                   { key: 'modernTech', label: t.resume.modernTech },
@@ -1131,7 +1106,7 @@ ${candidate.links}`
                     onClick={() => setTemplateStyle(key)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
                       templateStyle === key
-                        ? 'bg-indigo-600 text-white shadow'
+                        ? `bg-gradient-to-r ${theme.accentGrad} text-white shadow`
                         : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
@@ -1146,10 +1121,10 @@ ${candidate.links}`
               
               {/* Left Column: Form Builder with 7 Sub-tabs */}
               <div className="lg:col-span-6 space-y-4">
-                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 shadow-2xl">
+                <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-7 shadow-2xl`}>
                   
                   {/* Step Sub-tabs */}
-                  <div className="flex items-center gap-2 border-b border-slate-800 pb-3 mb-5 overflow-x-auto scrollbar-none">
+                  <div className={`flex items-center gap-2 border-b ${theme.cardBorder} pb-3 mb-5 overflow-x-auto scrollbar-none`}>
                     {[
                       { key: 'personal', label: t.resume.personalTab },
                       { key: 'summary', label: t.resume.summaryTab },
@@ -1164,7 +1139,7 @@ ${candidate.links}`
                         onClick={() => setResumeSubTab(key)}
                         className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                           resumeSubTab === key
-                            ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+                            ? `${theme.badgeBg} border`
                             : 'text-slate-400 hover:text-slate-200'
                         }`}
                       >
@@ -1180,7 +1155,7 @@ ${candidate.links}`
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.fullName}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                           value={candidate.name}
                           onChange={(e) => setCandidate({ ...candidate, name: e.target.value })}
                         />
@@ -1189,7 +1164,7 @@ ${candidate.links}`
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.targetRole}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                          className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                           value={candidate.role}
                           onChange={(e) => setCandidate({ ...candidate, role: e.target.value })}
                         />
@@ -1199,7 +1174,7 @@ ${candidate.links}`
                           <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.email}</label>
                           <input
                             type="email"
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                             value={candidate.email}
                             onChange={(e) => setCandidate({ ...candidate, email: e.target.value })}
                           />
@@ -1208,7 +1183,7 @@ ${candidate.links}`
                           <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.phone}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                             value={candidate.phone}
                             onChange={(e) => setCandidate({ ...candidate, phone: e.target.value })}
                           />
@@ -1219,7 +1194,7 @@ ${candidate.links}`
                           <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.location}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                             value={candidate.location}
                             onChange={(e) => setCandidate({ ...candidate, location: e.target.value })}
                           />
@@ -1228,7 +1203,7 @@ ${candidate.links}`
                           <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.links}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                            className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                             value={candidate.links}
                             onChange={(e) => setCandidate({ ...candidate, links: e.target.value })}
                           />
@@ -1246,7 +1221,7 @@ ${candidate.links}`
                           <button
                             type="button"
                             onClick={handleAiPolish}
-                            className="text-xs text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1"
+                            className={`text-xs ${theme.accentText} hover:opacity-80 font-bold flex items-center gap-1`}
                           >
                             <Sparkles className="w-3.5 h-3.5" />
                             <span>{t.resume.aiPolish}</span>
@@ -1254,7 +1229,7 @@ ${candidate.links}`
                         </div>
                         <textarea
                           rows={4}
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition leading-relaxed"
+                          className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition leading-relaxed`}
                           value={candidate.summary}
                           onChange={(e) => setCandidate({ ...candidate, summary: e.target.value })}
                         />
@@ -1263,7 +1238,7 @@ ${candidate.links}`
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.resume.mottoLabel}</label>
                         <input
                           type="text"
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition italic"
+                          className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition italic`}
                           value={candidate.motto}
                           onChange={(e) => setCandidate({ ...candidate, motto: e.target.value })}
                         />
@@ -1275,11 +1250,11 @@ ${candidate.links}`
                   {resumeSubTab === 'education' && (
                     <div className="space-y-4">
                       {candidate.educationList.map((ed, idx) => (
-                        <div key={idx} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2.5">
-                          <div className="font-bold text-xs text-indigo-400 uppercase">Degree #{idx + 1}</div>
+                        <div key={idx} className={`${theme.inputBg} p-4 rounded-2xl border ${theme.inputBorder} space-y-2.5`}>
+                          <div className={`font-bold text-xs ${theme.accentText} uppercase`}>Degree #{idx + 1}</div>
                           <input
                             type="text"
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                            className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                             placeholder="Degree Name"
                             value={ed.degree}
                             onChange={(e) => {
@@ -1291,7 +1266,7 @@ ${candidate.links}`
                           <div className="grid grid-cols-2 gap-2">
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                               placeholder="College / University"
                               value={ed.institution}
                               onChange={(e) => {
@@ -1302,7 +1277,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                               placeholder="Year / Score"
                               value={ed.year}
                               onChange={(e) => {
@@ -1314,7 +1289,7 @@ ${candidate.links}`
                           </div>
                           <textarea
                             rows={2}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                            className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                             placeholder="Bullet points (one per line)"
                             value={ed.bullets}
                             onChange={(e) => {
@@ -1332,11 +1307,11 @@ ${candidate.links}`
                   {resumeSubTab === 'experience' && (
                     <div className="space-y-4">
                       {candidate.experienceList.map((exp, idx) => (
-                        <div key={idx} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2.5">
+                        <div key={idx} className={`${theme.inputBg} p-4 rounded-2xl border ${theme.inputBorder} space-y-2.5`}>
                           <div className="font-bold text-xs text-emerald-400 uppercase">Training / Experience #{idx + 1}</div>
                           <input
                             type="text"
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                            className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                             placeholder="Program / Role Title"
                             value={exp.title}
                             onChange={(e) => {
@@ -1348,7 +1323,7 @@ ${candidate.links}`
                           <div className="grid grid-cols-2 gap-2">
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                               placeholder="Company Name"
                               value={exp.company}
                               onChange={(e) => {
@@ -1359,7 +1334,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                               placeholder="Duration"
                               value={exp.period}
                               onChange={(e) => {
@@ -1371,7 +1346,7 @@ ${candidate.links}`
                           </div>
                           <textarea
                             rows={3}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                            className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                             placeholder="Highlights (one bullet per line)"
                             value={exp.bullets}
                             onChange={(e) => {
@@ -1389,11 +1364,11 @@ ${candidate.links}`
                   {resumeSubTab === 'projects' && (
                     <div className="space-y-4">
                       {candidate.projectsList.map((p, idx) => (
-                        <div key={idx} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
+                        <div key={idx} className={`${theme.inputBg} p-4 rounded-2xl border ${theme.inputBorder} space-y-2`}>
                           <div className="grid grid-cols-2 gap-2">
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100 font-bold"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor} font-bold`}
                               placeholder="Project Title"
                               value={p.title}
                               onChange={(e) => {
@@ -1404,7 +1379,7 @@ ${candidate.links}`
                             />
                             <input
                               type="text"
-                              className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                              className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                               placeholder="Domain (e.g. React • AI • Python)"
                               value={p.domain}
                               onChange={(e) => {
@@ -1416,7 +1391,7 @@ ${candidate.links}`
                           </div>
                           <textarea
                             rows={2}
-                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-100"
+                            className={`w-full ${theme.cardBg} border ${theme.cardBorder} rounded-xl px-3 py-1.5 text-xs ${theme.textColor}`}
                             placeholder="Description..."
                             value={p.desc}
                             onChange={(e) => {
@@ -1438,7 +1413,7 @@ ${candidate.links}`
                           <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">{cat}</label>
                           <input
                             type="text"
-                            className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2 text-xs text-slate-100 transition"
+                            className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2 text-xs ${theme.textColor} transition`}
                             value={items}
                             onChange={(e) => {
                               setCandidate({
@@ -1462,7 +1437,7 @@ ${candidate.links}`
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Hackathons & Key Accomplishments</label>
                         <textarea
                           rows={4}
-                          className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-xs text-slate-100 transition leading-relaxed"
+                          className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-xs ${theme.textColor} transition leading-relaxed`}
                           value={candidate.accomplishments}
                           onChange={(e) => setCandidate({ ...candidate, accomplishments: e.target.value })}
                         />
@@ -1471,11 +1446,11 @@ ${candidate.links}`
                   )}
 
                   {/* Action Buttons Toolbar */}
-                  <div className="pt-4 border-t border-slate-800 mt-6 flex flex-wrap items-center gap-3">
+                  <div className={`pt-4 border-t ${theme.cardBorder} mt-6 flex flex-wrap items-center gap-3`}>
                     <button
                       onClick={handleDownloadPdf}
                       disabled={isGeneratingPdf}
-                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-2xl shadow-xl shadow-indigo-600/30 transition"
+                      className={`flex-1 flex items-center justify-center gap-2 bg-gradient-to-r ${theme.accentGrad} hover:opacity-90 text-white font-bold py-3.5 px-5 rounded-2xl shadow-xl transition`}
                     >
                       <Download className={`w-4 h-4 ${isGeneratingPdf ? 'animate-bounce' : ''}`} />
                       <span>{isGeneratingPdf ? 'Compiling PDF...' : t.resume.btnDownload}</span>
@@ -1483,7 +1458,7 @@ ${candidate.links}`
                     
                     <button
                       onClick={() => window.print()}
-                      className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition"
+                      className={`flex items-center justify-center gap-1.5 ${theme.inputBg} hover:opacity-80 ${theme.textColor} font-bold py-3.5 px-4 rounded-2xl border ${theme.inputBorder} transition`}
                     >
                       <Printer className="w-4 h-4 text-slate-400" />
                       <span>{t.resume.btnPrint}</span>
@@ -1491,13 +1466,13 @@ ${candidate.links}`
 
                     <button
                       onClick={handleExportJson}
-                      className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition"
+                      className={`flex items-center justify-center gap-1.5 ${theme.inputBg} hover:opacity-80 ${theme.textColor} font-bold py-3.5 px-4 rounded-2xl border ${theme.inputBorder} transition`}
                     >
                       <Download className="w-4 h-4 text-slate-400" />
                       <span>{t.resume.btnExportJson}</span>
                     </button>
 
-                    <label className="flex items-center justify-center gap-1.5 bg-slate-950 hover:bg-slate-800 text-slate-200 font-bold py-3.5 px-4 rounded-2xl border border-slate-800 transition cursor-pointer">
+                    <label className={`flex items-center justify-center gap-1.5 ${theme.inputBg} hover:opacity-80 ${theme.textColor} font-bold py-3.5 px-4 rounded-2xl border ${theme.inputBorder} transition cursor-pointer`}>
                       <ExternalLink className="w-4 h-4 text-slate-400" />
                       <span>{t.resume.btnImportJson}</span>
                       <input type="file" accept=".json" onChange={handleImportJson} className="hidden" />
@@ -1506,9 +1481,9 @@ ${candidate.links}`
                 </div>
 
                 {/* ATS Quality Analysis */}
-                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-xl">
+                <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-5 shadow-xl`}>
                   <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                    <h4 className={`text-xs font-bold uppercase tracking-wider ${theme.textColor} flex items-center gap-2`}>
                       <CheckCircle className="w-4 h-4 text-emerald-400" />
                       {t.resume.atsAnalysisTitle}
                     </h4>
@@ -1517,19 +1492,19 @@ ${candidate.links}`
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-400">
                       <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Contact details complete</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-400">
                       <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Summary & Motto optimized</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-400">
                       <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Industrial Training included</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-400">
                       <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
                       <span>Categorized technical skills</span>
                     </div>
@@ -1539,11 +1514,11 @@ ${candidate.links}`
 
               {/* Right Column: Live A4 White Document Preview */}
               <div className="lg:col-span-6 space-y-4">
-                <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 shadow-2xl flex flex-col h-full`}>
+                  <div className={`flex items-center justify-between mb-4 pb-3 border-b ${theme.cardBorder}`}>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="font-bold text-sm text-slate-200">{t.resume.liveSheetTitle}</span>
+                      <span className={`font-bold text-sm ${theme.textColor}`}>{t.resume.liveSheetTitle}</span>
                     </div>
                     <span className="text-xs text-slate-400 font-medium">Standard A4 Sheet</span>
                   </div>
@@ -1564,10 +1539,10 @@ ${candidate.links}`
         {/* ============================================================ */}
         {activeTab === 'coverLetter' && (
           <div className="space-y-6">
-            <div className="bg-gradient-to-r from-slate-900 via-indigo-950/50 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-2xl`}>
               <div className="max-w-3xl">
-                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
-                  <Mail className="w-6 h-6 text-indigo-400" />
+                <h3 className={`text-2xl font-extrabold ${theme.textColor} flex items-center gap-2`}>
+                  <Mail className={`w-6 h-6 ${theme.accentText}`} />
                   {t.emailTool.title}
                 </h3>
                 <p className="text-sm text-slate-400 mt-1">
@@ -1577,12 +1552,12 @@ ${candidate.links}`
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
+              <div className={`lg:col-span-5 ${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 shadow-xl space-y-4`}>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.companyName}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                     value={emailCompany}
                     onChange={(e) => {
                       setEmailCompany(e.target.value)
@@ -1594,7 +1569,7 @@ ${candidate.links}`
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.targetPosition}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                     value={emailTargetRole}
                     onChange={(e) => {
                       setEmailTargetRole(e.target.value)
@@ -1606,7 +1581,7 @@ ${candidate.links}`
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.recipientRole}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                     value={emailRecipient}
                     onChange={(e) => {
                       setEmailRecipient(e.target.value)
@@ -1618,7 +1593,7 @@ ${candidate.links}`
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">{t.emailTool.myStrongSkill}</label>
                   <input
                     type="text"
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm text-slate-100 transition"
+                    className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl px-4 py-2.5 text-sm ${theme.textColor} transition`}
                     value={emailStrongSkill}
                     onChange={(e) => {
                       setEmailStrongSkill(e.target.value)
@@ -1628,17 +1603,17 @@ ${candidate.links}`
                 </div>
                 <button
                   onClick={generateColdEmail}
-                  className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-2xl transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 text-sm"
+                  className={`w-full bg-gradient-to-r ${theme.accentGrad} hover:opacity-90 text-white font-bold py-3 rounded-2xl transition shadow-lg flex items-center justify-center gap-2 text-sm`}
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>{t.emailTool.btnGenerate}</span>
                 </button>
               </div>
 
-              <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+              <div className={`lg:col-span-7 ${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 shadow-xl flex flex-col justify-between`}>
                 <div>
-                  <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-800">
-                    <span className="font-bold text-sm text-slate-200">{t.emailTool.previewTitle}</span>
+                  <div className={`flex items-center justify-between mb-3 pb-3 border-b ${theme.cardBorder}`}>
+                    <span className={`font-bold text-sm ${theme.textColor}`}>{t.emailTool.previewTitle}</span>
                     <button
                       onClick={() => {
                         navigator.clipboard.writeText(generatedColdEmail)
@@ -1650,7 +1625,7 @@ ${candidate.links}`
                       <span>{t.emailTool.btnCopy}</span>
                     </button>
                   </div>
-                  <div className="bg-slate-950 rounded-2xl p-5 border border-slate-800 font-mono text-xs sm:text-sm text-slate-200 whitespace-pre-wrap leading-relaxed max-h-[460px] overflow-y-auto">
+                  <div className={`${theme.inputBg} rounded-2xl p-5 border ${theme.inputBorder} font-mono text-xs sm:text-sm ${theme.textColor} whitespace-pre-wrap leading-relaxed max-h-[460px] overflow-y-auto`}>
                     {generatedColdEmail}
                   </div>
                 </div>
@@ -1664,10 +1639,10 @@ ${candidate.links}`
         {/* ============================================================ */}
         {activeTab === 'jobs' && (
           <div className="space-y-6">
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-2xl`}>
               <div className="max-w-3xl">
-                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
-                  <Briefcase className="w-6 h-6 text-indigo-400" />
+                <h3 className={`text-2xl font-extrabold ${theme.textColor} flex items-center gap-2`}>
+                  <Briefcase className={`w-6 h-6 ${theme.accentText}`} />
                   {t.jobs.title}
                 </h3>
                 <p className="text-sm text-slate-400 mt-1">
@@ -1684,14 +1659,14 @@ ${candidate.links}`
                     value={jobSearchQuery}
                     onChange={(e) => setJobSearchQuery(e.target.value)}
                     placeholder={t.jobs.searchPlaceholder}
-                    className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-slate-100 transition"
+                    className={`w-full ${theme.inputBg} border ${theme.inputBorder} focus:border-indigo-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm ${theme.textColor} transition`}
                   />
                 </div>
 
                 <select
                   value={jobFilterLocation}
                   onChange={(e) => setJobFilterLocation(e.target.value)}
-                  className="bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-xs font-bold text-slate-200 outline-none"
+                  className={`${theme.inputBg} border ${theme.inputBorder} rounded-2xl px-4 py-3 text-xs font-bold ${theme.textColor} outline-none`}
                 >
                   <option value="all">{t.jobs.allLocations}</option>
                   <option value="remote">{t.jobs.remoteOnly}</option>
@@ -1705,7 +1680,7 @@ ${candidate.links}`
                   <button
                     key={tg}
                     onClick={() => setJobSearchQuery(tg)}
-                    className="text-xs px-3.5 py-1 rounded-full bg-slate-950 hover:bg-indigo-600/30 border border-slate-800 hover:border-indigo-500 text-slate-300 transition"
+                    className={`text-xs px-3.5 py-1 rounded-full ${theme.inputBg} hover:opacity-80 border ${theme.inputBorder} text-slate-400 hover:${theme.textColor} transition`}
                   >
                     {tg}
                   </button>
@@ -1721,11 +1696,11 @@ ${candidate.links}`
                 return (
                   <div
                     key={job.id}
-                    className="bg-slate-900/80 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col justify-between"
+                    className={`${theme.cardBg} border ${theme.cardBorder} hover:border-indigo-500/50 rounded-3xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col justify-between`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+                        <span className={`text-xs font-bold px-3 py-1 rounded-full border ${theme.badgeBg}`}>
                           {job.location}
                         </span>
                         <button
@@ -1733,7 +1708,7 @@ ${candidate.links}`
                           className={`text-xs font-bold flex items-center gap-1 px-3 py-1 rounded-xl transition ${
                             isSaved
                               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                              : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+                              : `${theme.inputBg} text-slate-400 border ${theme.inputBorder}`
                           }`}
                         >
                           <Bookmark className="w-3.5 h-3.5" />
@@ -1741,7 +1716,7 @@ ${candidate.links}`
                         </button>
                       </div>
 
-                      <h4 className="text-lg font-bold text-white">
+                      <h4 className={`text-lg font-bold ${theme.textColor}`}>
                         {job.title}
                       </h4>
                       <div className="text-xs font-medium text-slate-400 mt-1">{job.company}</div>
@@ -1750,20 +1725,20 @@ ${candidate.links}`
                         💰 {job.stipend}
                       </div>
 
-                      <p className="text-sm text-slate-300 mt-3 leading-relaxed">
+                      <p className="text-sm text-slate-400 mt-3 leading-relaxed">
                         {job.description}
                       </p>
 
                       <div className="mt-4 flex flex-wrap gap-1.5">
                         {job.tags.map((tag, i) => (
-                          <span key={i} className="text-[11px] font-semibold bg-slate-950 text-slate-300 px-2.5 py-0.5 rounded-lg border border-slate-800">
+                          <span key={i} className={`text-[11px] font-semibold ${theme.inputBg} text-slate-400 px-2.5 py-0.5 rounded-lg border ${theme.inputBorder}`}>
                             {tag}
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+                    <div className={`mt-6 pt-4 border-t ${theme.cardBorder} flex items-center justify-between`}>
                       <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
                         <CheckCircle className="w-3.5 h-3.5" /> {t.jobs.directApply}
                       </span>
@@ -1771,7 +1746,7 @@ ${candidate.links}`
                         href={job.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
+                        className={`inline-flex items-center gap-1.5 bg-gradient-to-r ${theme.accentGrad} text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition`}
                       >
                         <span>Apply</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -1789,9 +1764,9 @@ ${candidate.links}`
         {/* ============================================================ */}
         {activeTab === 'freelance' && (
           <div className="space-y-8">
-            <div className="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-2xl`}>
               <div className="max-w-3xl">
-                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
+                <h3 className={`text-2xl font-extrabold ${theme.textColor} flex items-center gap-2`}>
                   <DollarSign className="w-6 h-6 text-emerald-400" />
                   {t.freelance.title}
                 </h3>
@@ -1802,17 +1777,17 @@ ${candidate.links}`
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                  <Sliders className="w-5 h-5 text-indigo-400" />
+              <div className={`lg:col-span-6 ${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-xl space-y-6`}>
+                <h4 className={`text-lg font-bold ${theme.textColor} flex items-center gap-2`}>
+                  <Sliders className={`w-5 h-5 ${theme.accentText}`} />
                   {t.freelance.hourlyRateCalc}
                 </h4>
 
                 <div className="space-y-4">
                   <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                    <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
                       <span>{t.freelance.hoursPerWeek}</span>
-                      <span className="text-cyan-400">{calcHours} hrs/week</span>
+                      <span className={theme.accentText}>{calcHours} hrs/week</span>
                     </div>
                     <input
                       type="range"
@@ -1826,9 +1801,9 @@ ${candidate.links}`
                   </div>
 
                   <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-300 mb-2">
+                    <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
                       <span>{t.freelance.expectedRate}</span>
-                      <span className="text-cyan-400">{currency === 'INR' ? `₹${calcRate * 80}` : `$${calcRate}`} / hr</span>
+                      <span className={theme.accentText}>{currency === 'INR' ? `₹${calcRate * 80}` : `$${calcRate}`} / hr</span>
                     </div>
                     <input
                       type="range"
@@ -1841,7 +1816,7 @@ ${candidate.links}`
                     />
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800 bg-slate-950 p-4 rounded-2xl flex items-center justify-between">
+                  <div className={`pt-4 border-t ${theme.cardBorder} ${theme.inputBg} p-4 rounded-2xl flex items-center justify-between`}>
                     <span className="text-xs font-bold text-slate-400">{t.freelance.projectedMonthly}</span>
                     <span className="text-2xl font-black text-emerald-400">
                       {currency === 'INR' ? `₹${(calcHours * calcRate * 80 * 4).toLocaleString('en-IN')}` : `$${calcHours * calcRate * 4}`}
@@ -1851,17 +1826,17 @@ ${candidate.links}`
               </div>
 
               {/* Instant Proposal Generator */}
-              <div className="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between">
+              <div className={`lg:col-span-6 ${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between`}>
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                      <Zap className="w-5 h-5 text-cyan-400" />
+                    <h4 className={`text-lg font-bold ${theme.textColor} flex items-center gap-2`}>
+                      <Zap className={`w-5 h-5 ${theme.accentText}`} />
                       {t.freelance.proposalGen}
                     </h4>
                     <select
                       value={proposalService}
                       onChange={(e) => setProposalService(e.target.value)}
-                      className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1 text-xs font-bold text-slate-200 outline-none"
+                      className={`${theme.inputBg} border ${theme.inputBorder} rounded-xl px-3 py-1 text-xs font-bold ${theme.textColor} outline-none`}
                     >
                       <option value="react">React & Full Stack Web UI</option>
                       <option value="pdf">Automated PDF Generator API</option>
@@ -1869,7 +1844,7 @@ ${candidate.links}`
                     </select>
                   </div>
 
-                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs font-mono text-slate-300 leading-relaxed max-h-[160px] overflow-y-auto">
+                  <div className={`${theme.inputBg} p-4 rounded-2xl border ${theme.inputBorder} text-xs font-mono text-slate-300 leading-relaxed max-h-[160px] overflow-y-auto`}>
                     {proposalService === 'react' && `Hi [Client],\n\nI noticed you need a clean, responsive, and high-speed web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI can deliver production-ready code with 100% responsiveness within 48 hours.\n\nBest regards,\n${candidate.name}`}
                     {proposalService === 'pdf' && `Hello [Client],\n\nI can build a robust automated PDF document generation service using Node.js, Express, and Puppeteer with custom A4 formatting.\n\nReady to start immediately.\n\nBest,\n${candidate.name}`}
                     {proposalService === 'android' && `Hi there!\n\nI specialize in native Android development with Android Studio, Kotlin/Java, and REST API integrations. I can build clean UI flows with local caching.\n\nWarm regards,\n${candidate.name}`}
@@ -1894,14 +1869,14 @@ ${candidate.links}`
         )}
 
         {/* ============================================================ */}
-        {/* VIEW 6: ROADMAPS & INTERVIEW FLASHCARDS */}
+        {/* VIEW 6: ROADMAPS & FLASHCARDS */}
         {/* ============================================================ */}
         {activeTab === 'roadmaps' && (
           <div className="space-y-8">
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+            <div className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 sm:p-8 shadow-2xl`}>
               <div className="max-w-3xl">
-                <h3 className="text-2xl font-extrabold text-white flex items-center gap-2">
-                  <Rocket className="w-6 h-6 text-indigo-400" />
+                <h3 className={`text-2xl font-extrabold ${theme.textColor} flex items-center gap-2`}>
+                  <Rocket className={`w-6 h-6 ${theme.accentText}`} />
                   {t.roadmaps.title}
                 </h3>
                 <p className="text-sm text-slate-400 mt-1">
@@ -1911,8 +1886,8 @@ ${candidate.links}`
             </div>
 
             <div className="space-y-4">
-              <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-cyan-400" />
+              <h4 className={`text-lg font-bold ${theme.textColor} flex items-center gap-2`}>
+                <BookOpen className={`w-5 h-5 ${theme.accentText}`} />
                 {t.roadmaps.interviewPrepTitle}
               </h4>
 
@@ -1923,26 +1898,26 @@ ${candidate.links}`
                   return (
                     <div
                       key={idx}
-                      className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between"
+                      className={`${theme.cardBg} border ${theme.cardBorder} rounded-3xl p-6 shadow-xl flex flex-col justify-between`}
                     >
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+                          <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${theme.badgeBg}`}>
                             {item.topic}
                           </span>
                         </div>
-                        <h5 className="font-bold text-white text-sm sm:text-base mt-2">
+                        <h5 className={`font-bold ${theme.textColor} text-sm sm:text-base mt-2`}>
                           {item.q}
                         </h5>
 
                         {isShown && (
-                          <div className="mt-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                          <div className={`mt-4 p-4 rounded-2xl ${theme.inputBg} border ${theme.inputBorder} text-xs text-slate-400 leading-relaxed`}>
                             {item.a}
                           </div>
                         )}
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+                      <div className={`mt-4 pt-3 border-t ${theme.cardBorder} flex justify-end`}>
                         <button
                           onClick={() => {
                             setRevealedAnswers({
@@ -1950,7 +1925,7 @@ ${candidate.links}`
                               [idx]: !isShown
                             })
                           }}
-                          className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition"
+                          className={`text-xs font-bold ${theme.accentText} hover:opacity-80 transition`}
                         >
                           {isShown ? t.roadmaps.hideAnswer : t.roadmaps.showAnswer}
                         </button>
