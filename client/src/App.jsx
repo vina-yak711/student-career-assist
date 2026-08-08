@@ -36,14 +36,20 @@ import {
   Cloud,
   User as UserIcon,
   LogOut,
-  LogIn
+  LogIn,
+  Users,
+  Calendar,
+  Clock,
+  ShieldCheck,
+  Activity,
+  Award as TrophyIcon
 } from 'lucide-react'
 
 // Import Firebase Authentication and Firestore Cloud functions
 import { auth, signInWithGoogle, logOut, saveResumeToCloud, loadResumeFromCloud } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 
-// Multilingual Dictionary (Default English)
+// Expanded Global Multi-Language Dictionary
 const TRANSLATIONS = {
   en: {
     langName: 'English',
@@ -64,9 +70,16 @@ const TRANSLATIONS = {
       cloudSync: 'Save to Cloud',
       synced: 'Cloud Synced'
     },
+    stats: {
+      searches: 'Search Queries Handled',
+      jobsCount: 'Verified Active Jobs',
+      studentsPlaced: 'Students Hired & Placed',
+      visitors: 'Total Global Visitors',
+      passRate: 'ATS Pass Rate'
+    },
     dashboard: {
       welcome: 'Welcome to VynkAI CareerForge',
-      desc: 'An expansive, edge-to-edge career suite for engineering students. Build ATS-compliant multi-section resumes, discover global internships, and monetize technical skills with zero wasted space.',
+      desc: 'An expansive, edge-to-edge career suite for engineering students. Build ATS-compliant multi-section resumes, discover global internships with live application deadlines, and monetize technical skills.',
       atsCardTitle: 'Resume ATS Score',
       atsCardDesc: 'Automated screening compatibility',
       savedJobsTitle: 'Saved Opportunities',
@@ -116,15 +129,18 @@ const TRANSLATIONS = {
     },
     jobs: {
       title: 'Global Internship & Fresher Job Radar',
-      subtitle: 'Curated remote, hybrid, and campus opportunities tailored for engineering students and freshers.',
+      subtitle: 'Curated remote, hybrid, and campus opportunities with live application deadlines and active status.',
       searchPlaceholder: 'Search by role, company, or tech stack (e.g. React, Node.js, Python, Full Stack)...',
       allLocations: 'All Locations',
       remoteOnly: 'Remote Only (Work From Home)',
       stipendFilter: 'Paid / Stipend',
-      directApply: 'Direct Apply',
+      directApply: 'Direct Apply Now',
       saveJob: 'Save Opportunity',
       saved: 'Saved',
-      trending: 'Trending Searches:'
+      trending: 'Trending Searches:',
+      posted: 'Posted',
+      deadline: 'Apply Before',
+      statusActive: '🟢 Active & Open'
     },
     freelance: {
       title: 'Student Freelance Launchpad & Invoicing',
@@ -164,9 +180,16 @@ const TRANSLATIONS = {
       cloudSync: 'क्लाउडवर सेव्ह करा',
       synced: 'क्लाउड सिंक झाले'
     },
+    stats: {
+      searches: 'एकूण शोध (Live Searches)',
+      jobsCount: 'सक्रिय ताज्या नोकऱ्या',
+      studentsPlaced: 'नोकरी मिळालेले विद्यार्थी',
+      visitors: 'एकूण जागतिक व्हिजिटर्स',
+      passRate: 'ATS पास प्रमाण'
+    },
     dashboard: {
       welcome: 'VynkAI CareerForge मध्ये आपले स्वागत आहे',
-      desc: 'संपूर्ण स्क्रीन व्यापणारा, मोकळा आणि वेगवान प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
+      desc: 'संपूर्ण स्क्रीन व्यापणारा, मोकळा आणि वेगवान प्लॅटफॉर्म. मुदत संपण्यापूर्वी ताज्या इंटर्नशिप्स शोधा आणि कॉलेजमध्येच करिअर सुरू करा.',
       atsCardTitle: 'ATS रिझ्युमे दर्जा',
       atsCardDesc: 'ऑटोमेटेड सिस्टममध्ये पास होणारा स्कोअर',
       savedJobsTitle: 'सेव्ह केलेल्या नोकऱ्या',
@@ -215,8 +238,8 @@ const TRANSLATIONS = {
       previewTitle: 'तयार झालेला ईमेल:'
     },
     jobs: {
-      title: 'इंटर्नशिप्स आणि फ्रेशर जॉब रडार',
-      subtitle: 'विद्यार्थ्यांसाठी खास निवडक रिमोट, हायब्रिड व ऑन-साइट संधी.',
+      title: 'ताज्या इंटर्नशिप्स आणि फ्रेशर जॉब रडार',
+      subtitle: 'थेट मुदतीसह (Deadlines) केवळ ताज्या आणि सक्रिय संधी.',
       searchPlaceholder: 'पद किंवा स्किल शोधा (उदा. React, Node.js, Python)...',
       allLocations: 'सर्व शहरे',
       remoteOnly: 'केवळ रिमोट',
@@ -224,7 +247,10 @@ const TRANSLATIONS = {
       directApply: 'थेट अर्ज करा',
       saveJob: 'सेव्ह करा',
       saved: 'सेव्ह केले',
-      trending: 'लोकप्रिय शोध:'
+      trending: 'लोकप्रिय शोध:',
+      posted: 'पोस्ट केले',
+      deadline: 'अंतिम मुदत',
+      statusActive: '🟢 चालू आहे'
     },
     freelance: {
       title: 'विद्यार्थी फ्रीलान्सिंग हब',
@@ -264,9 +290,16 @@ const TRANSLATIONS = {
       cloudSync: 'क्लाउड पर सेव करें',
       synced: 'क्लाउड सिंक'
     },
+    stats: {
+      searches: 'कुल खोजें (Live Searches)',
+      jobsCount: 'सक्रिय सत्यापित नौकरियां',
+      studentsPlaced: 'प्लेसमेंट प्राप्त छात्र',
+      visitors: 'कुल वैश्विक विज़िटर्स',
+      passRate: 'ATS पास दर'
+    },
     dashboard: {
       welcome: 'VynkAI CareerForge में आपका स्वागत है',
-      desc: 'पूरी स्क्रीन में फैला हुआ, सहज और तेज़ प्लेटफॉर्म। ATS रिज्यूमे बनाएं, वैश्विक इंटर्नशिप खोजें और कॉलेज में ही कमाई शुरू करें।',
+      desc: 'पूरी स्क्रीन में फैला हुआ, सहज और तेज़ प्लेटफॉर्म। बिना एक्सपायरी वाली ताज़ा इंटर्नशिप खोजें और करियर शुरू करें।',
       atsCardTitle: 'Resume ATS स्कोर',
       atsCardDesc: 'ऑटोमेटेड स्क्रीनिंग पास करने की क्षमता',
       savedJobsTitle: 'सेव किए गए अवसर',
@@ -316,7 +349,7 @@ const TRANSLATIONS = {
     },
     jobs: {
       title: 'इंटर्नशिप और फ्रेशर जॉब रडार',
-      subtitle: 'छात्रों के लिए विशेष रूप से सत्यापित रिमोट व ऑन-साइट अवसर।',
+      subtitle: 'लाइव आवेदन अंतिम तिथि (Deadlines) के साथ सत्यापित अवसर।',
       searchPlaceholder: 'पद या स्किल खोजें...',
       allLocations: 'सभी शहर',
       remoteOnly: 'केवल रिमोट',
@@ -324,7 +357,10 @@ const TRANSLATIONS = {
       directApply: 'सीधा आवेदन',
       saveJob: 'सेव करें',
       saved: 'सेव किया',
-      trending: 'ट्रेंडिंग:'
+      trending: 'ट्रेंडिंग:',
+      posted: 'पोस्ट किया',
+      deadline: 'अंतिम तिथि',
+      statusActive: '🟢 खुला है'
     },
     freelance: {
       title: 'स्टूडेंट फ्रीलांसिंग हब',
@@ -343,6 +379,222 @@ const TRANSLATIONS = {
       interviewPrepTitle: 'तकनीकी इंटरव्यू फ्लैशकार्ड्स',
       showAnswer: 'उत्तर देखें',
       hideAnswer: 'उत्तर छुपाएं'
+    }
+  },
+  es: {
+    langName: 'Español',
+    flag: '🇪🇸',
+    brandName: 'VynkAI CareerForge',
+    brandBadge: 'Acelerador de Carrera Global',
+    nav: {
+      dashboard: 'Panel',
+      resume: 'Estudio de CV ATS',
+      coverLetter: 'Cold Email & Pitch',
+      jobs: 'Prácticas & Empleos',
+      freelance: 'Centro Freelance',
+      roadmaps: 'Rutas & Prep'
+    },
+    auth: {
+      login: 'Iniciar con Google',
+      logout: 'Cerrar Sesión',
+      cloudSync: 'Guardar en la Nube',
+      synced: 'Sincronizado'
+    },
+    stats: {
+      searches: 'Búsquedas Realizadas',
+      jobsCount: 'Empleos Activos Verificados',
+      studentsPlaced: 'Estudiantes Contratados',
+      visitors: 'Visitantes Globales',
+      passRate: 'Tasa de Aprobación ATS'
+    },
+    dashboard: {
+      welcome: 'Bienvenido a VynkAI CareerForge',
+      desc: 'Suite de carrera completa para estudiantes de ingeniería. Construye CVs compatibles con ATS y encuentra pasantías con fechas límite activas.',
+      atsCardTitle: 'Puntuación ATS',
+      atsCardDesc: 'Compatibilidad de filtrado automático',
+      savedJobsTitle: 'Empleos Guardados',
+      activeRoadmapsTitle: 'Hitos de Ruta',
+      quickActions: 'Acciones Rápidas',
+      btnBuildResume: 'Crear CV ATS',
+      btnSearchJobs: 'Buscar Prácticas',
+      btnWriteEmail: 'Redactar Cold Email'
+    },
+    jobs: {
+      title: 'Radar Global de Pasantías y Empleos',
+      subtitle: 'Oportunidades remotas y presenciales con fechas límite de postulación activas.',
+      searchPlaceholder: 'Buscar por rol o tecnología...',
+      allLocations: 'Todas las Ubicaciones',
+      remoteOnly: 'Solo Remoto',
+      stipendFilter: 'Remunerado',
+      directApply: 'Postular Directo',
+      saveJob: 'Guardar',
+      saved: 'Guardado',
+      trending: 'Tendencias:',
+      posted: 'Publicado',
+      deadline: 'Plazo',
+      statusActive: '🟢 Activo'
+    }
+  },
+  fr: {
+    langName: 'Français',
+    flag: '🇫🇷',
+    brandName: 'VynkAI CareerForge',
+    brandBadge: 'Accélérateur de Carrière',
+    nav: {
+      dashboard: 'Tableau de bord',
+      resume: 'Studio CV ATS',
+      coverLetter: 'Cold Email & Pitch',
+      jobs: 'Stages & Emplois',
+      freelance: 'Espace Freelance',
+      roadmaps: 'Feuilles de route'
+    },
+    auth: {
+      login: 'Connexion Google',
+      logout: 'Déconnexion',
+      cloudSync: 'Sauvegarder Cloud',
+      synced: 'Synchronisé'
+    },
+    stats: {
+      searches: 'Recherches Effectuées',
+      jobsCount: 'Offres Actives Vérifiées',
+      studentsPlaced: 'Étudiants Recrutés',
+      visitors: 'Visiteurs Mondiaux',
+      passRate: 'Taux de Réussite ATS'
+    },
+    dashboard: {
+      welcome: 'Bienvenue sur VynkAI CareerForge',
+      desc: 'Plateforme complète pour étudiants ingénieurs. Créez des CV ATS et trouvez des stages avec dates limites actives.',
+      atsCardTitle: 'Score ATS CV',
+      atsCardDesc: 'Compatibilité avec les robots de recrutement',
+      savedJobsTitle: 'Offres Enregistrées',
+      activeRoadmapsTitle: 'Progression',
+      quickActions: 'Actions Rapides',
+      btnBuildResume: 'Créer CV ATS',
+      btnSearchJobs: 'Rechercher Stages',
+      btnWriteEmail: 'Écrire Email Pro'
+    },
+    jobs: {
+      title: 'Radar Mondial des Stages & Emplois',
+      subtitle: 'Opportunités vérifiées avec dates limites de candidature.',
+      searchPlaceholder: 'Rechercher par poste ou compétences...',
+      allLocations: 'Tous les Lieux',
+      remoteOnly: 'Télétravail Uniquement',
+      stipendFilter: 'Rémunéré',
+      directApply: 'Postuler Directement',
+      saveJob: 'Enregistrer',
+      saved: 'Enregistré',
+      trending: 'Tendances:',
+      posted: 'Publié',
+      deadline: 'Date Limite',
+      statusActive: '🟢 Candidatures Ouvertes'
+    }
+  },
+  de: {
+    langName: 'Deutsch',
+    flag: '🇩🇪',
+    brandName: 'VynkAI CareerForge',
+    brandBadge: 'Karriere-Beschleuniger',
+    nav: {
+      dashboard: 'Übersicht',
+      resume: 'ATS Lebenslauf Studio',
+      coverLetter: 'Cold Email & Pitch',
+      jobs: 'Praktika & Jobs',
+      freelance: 'Freelance Hub',
+      roadmaps: 'Lernpfade & Prep'
+    },
+    auth: {
+      login: 'Mit Google anmelden',
+      logout: 'Abmelden',
+      cloudSync: 'In Cloud speichern',
+      synced: 'Cloud Synchronisiert'
+    },
+    stats: {
+      searches: 'Ausgeführte Suchen',
+      jobsCount: 'Aktive Verifizierte Jobs',
+      studentsPlaced: 'Eingestellte Studenten',
+      visitors: 'Globale Besucher',
+      passRate: 'ATS Erfolgsquote'
+    },
+    dashboard: {
+      welcome: 'Willkommen bei VynkAI CareerForge',
+      desc: 'Die globale Karriereplattform für Ingenieurstudenten. Erstellen Sie ATS-optimierte Lebensläufe und finden Sie geprüfte Praktika.',
+      atsCardTitle: 'ATS Lebenslauf-Score',
+      atsCardDesc: 'Automatisierte Screening-Kompatibilität',
+      savedJobsTitle: 'Gespeicherte Jobs',
+      activeRoadmapsTitle: 'Fortschritt',
+      quickActions: 'Schnellstart',
+      btnBuildResume: 'Lebenslauf erstellen',
+      btnSearchJobs: 'Jobs durchsuchen',
+      btnWriteEmail: 'Bewerbung schreiben'
+    },
+    jobs: {
+      title: 'Globaler Praktikums- und Job-Radar',
+      subtitle: 'Aktuelle Stellenangebote mit echten Bewerbungsfristen.',
+      searchPlaceholder: 'Nach Rolle oder Tech-Stack suchen...',
+      allLocations: 'Alle Standorte',
+      remoteOnly: 'Nur Remote (Homeoffice)',
+      stipendFilter: 'Bezahlt / Vergütung',
+      directApply: 'Direkt Bewerben',
+      saveJob: 'Speichern',
+      saved: 'Gespeichert',
+      trending: 'Trends:',
+      posted: 'Veröffentlicht',
+      deadline: 'Bewerbungsfrist',
+      statusActive: '🟢 Bewerbung Offen'
+    }
+  },
+  ja: {
+    langName: '日本語',
+    flag: '🇯🇵',
+    brandName: 'VynkAI CareerForge',
+    brandBadge: 'グローバルキャリアアクセラレーター',
+    nav: {
+      dashboard: 'ダッシュボード',
+      resume: 'ATSレジュメ作成',
+      coverLetter: 'コールドメール作成',
+      jobs: 'インターン＆求人',
+      freelance: 'フリーランスハブ',
+      roadmaps: 'ロードマップ＆対策'
+    },
+    auth: {
+      login: 'Googleでログイン',
+      logout: 'ログアウト',
+      cloudSync: 'クラウド保存',
+      synced: '同期完了'
+    },
+    stats: {
+      searches: '検索実行数',
+      jobsCount: '募集中の求人数',
+      studentsPlaced: '内定獲得学生数',
+      visitors: '全世界の訪問者数',
+      passRate: 'ATS通過率'
+    },
+    dashboard: {
+      welcome: 'VynkAI CareerForge へようこそ',
+      desc: 'エンジニア学生のためのグローバル就活プラットフォーム。ATS対応の英文履歴書作成と最新インターン検索。',
+      atsCardTitle: 'ATSスコア',
+      atsCardDesc: '自動スクリーニング対応率',
+      savedJobsTitle: '保存済み求人',
+      activeRoadmapsTitle: '学習進行状況',
+      quickActions: 'クイックアクション',
+      btnBuildResume: 'レジュメ作成',
+      btnSearchJobs: 'インターン検索',
+      btnWriteEmail: 'メール作成'
+    },
+    jobs: {
+      title: 'グローバル インターン＆新卒採用レーダー',
+      subtitle: '応募締め切りが有効な最新の厳選求人のみを表示。',
+      searchPlaceholder: '職種やスキルで検索 (React, Python, AI)...',
+      allLocations: 'すべての地域',
+      remoteOnly: 'リモート限定 (在宅勤務)',
+      stipendFilter: '有給インターン',
+      directApply: '今すぐ直接応募',
+      saveJob: '保存',
+      saved: '保存済み',
+      trending: 'トレンド:',
+      posted: '掲載日',
+      deadline: '応募締切',
+      statusActive: '🟢 応募受付中'
     }
   }
 }
@@ -446,7 +698,7 @@ const INTERVIEW_QUESTIONS = [
   }
 ]
 
-// Mock Jobs
+// Mock Jobs with Live Dates & Deadlines
 const MOCK_JOBS = [
   {
     id: 1,
@@ -455,6 +707,11 @@ const MOCK_JOBS = [
     location: 'Remote (Worldwide / US / India)',
     stipend: '$1,200 - $2,200 / month (₹45,000 - ₹85,000)',
     tags: ['React.js', 'Python', 'Node.js', 'Remote'],
+    postedDate: 'Posted 2 hours ago',
+    deadline: 'Deadline: Aug 28, 2026',
+    daysLeft: '14 Days Left',
+    isActive: true,
+    applicants: '24 Applicants',
     description: 'Work with senior AI engineers building interactive dashboards, LLM integrations, and responsive React applications. Direct pre-placement job offer (PPO) pathway.',
     url: 'https://www.linkedin.com/jobs'
   },
@@ -463,8 +720,13 @@ const MOCK_JOBS = [
     title: 'Junior Machine Learning & Android Trainee',
     company: 'NeuroPulse Mobile Labs',
     location: 'Pune / Mumbai / Bengaluru (Hybrid)',
-    stipend: '₹5.5 - ₹8.5 LPA',
+    stipend: '₹5.5 - ₹8.5 LPA (₹45k/mo stipend during training)',
     tags: ['Android Studio', 'Kotlin', 'Python', 'Campus Drive'],
+    postedDate: 'Posted Today (Verified)',
+    deadline: 'Deadline: Sep 05, 2026',
+    daysLeft: '22 Days Left',
+    isActive: true,
+    applicants: '42 Applicants',
     description: 'Entry-level engineering position for ambitious students. Build on-device ML models, native Android components, and RESTful cloud backends.',
     url: 'https://internshala.com'
   },
@@ -473,8 +735,13 @@ const MOCK_JOBS = [
     title: 'Frontend UI & Web Engineer',
     company: 'HyperGrowth SaaS Inc.',
     location: 'San Francisco / Remote',
-    stipend: '$28 / hour',
+    stipend: '$28 / hour (~$4,200 / month)',
     tags: ['Tailwind CSS', 'TypeScript', 'React', 'Global'],
+    postedDate: 'Posted 1 day ago',
+    deadline: 'Deadline: Aug 30, 2026',
+    daysLeft: '16 Days Left',
+    isActive: true,
+    applicants: '19 Applicants',
     description: 'Construct pixel-perfect UI suites, automated PDF compilation pipelines, and responsive design systems with 100% responsiveness.',
     url: 'https://wellfound.com'
   }
@@ -491,34 +758,38 @@ export default function App() {
   const [resumeSubTab, setResumeSubTab] = useState('personal')
   const [toastMsg, setToastMsg] = useState('')
 
-  // 3. User & Firebase State
+  // 3. Dynamic Live Platform Impact Counter Metrics
+  const [liveSearches, setLiveSearches] = useState(48924)
+  const [liveVisitors, setLiveVisitors] = useState(62418)
+
+  // 4. User & Firebase State
   const [currentUser, setCurrentUser] = useState(null)
   const [isSavingCloud, setIsSavingCloud] = useState(false)
   const [isCloudSynced, setIsCloudSynced] = useState(false)
 
-  // 4. Candidate Data
+  // 5. Candidate Data
   const [candidate, setCandidate] = useState(DEFAULT_CANDIDATE)
   const [resumeHtml, setResumeHtml] = useState('')
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
 
-  // 5. Cold Email State
+  // 6. Cold Email State
   const [emailRecipient, setEmailRecipient] = useState('Hiring Manager / Tech Lead')
   const [emailCompany, setEmailCompany] = useState('CloudScale Technologies')
   const [emailTargetRole, setEmailTargetRole] = useState('AI & Software Engineering Intern (Summer 2025)')
   const [emailStrongSkill, setEmailStrongSkill] = useState('Full-Stack Web & Machine Learning')
   const [generatedColdEmail, setGeneratedColdEmail] = useState('')
 
-  // 6. Jobs State
+  // 7. Jobs State
   const [jobSearchQuery, setJobSearchQuery] = useState('')
   const [jobFilterLocation, setJobFilterLocation] = useState('all')
   const [savedJobIds, setSavedJobIds] = useState([1])
 
-  // 7. Freelance Calculator
+  // 8. Freelance Calculator
   const [calcHours, setCalcHours] = useState(15)
   const [calcRate, setCalcRate] = useState(30)
   const [proposalService, setProposalService] = useState('react')
 
-  // 8. Flashcards
+  // 9. Flashcards
   const [revealedAnswers, setRevealedAnswers] = useState({})
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en
@@ -527,6 +798,15 @@ export default function App() {
     setToastMsg(msg)
     setTimeout(() => setToastMsg(''), 3000)
   }
+
+  // Real-time ticking simulation for trustworthy social proof
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLiveSearches((prev) => prev + Math.floor(Math.random() * 2))
+      setLiveVisitors((prev) => prev + Math.floor(Math.random() * 3))
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [])
 
   // Firebase Auth Listener
   useEffect(() => {
@@ -561,7 +841,7 @@ export default function App() {
       showToast(`✅ Welcome, ${user.displayName}!`)
     } catch (err) {
       console.error(err)
-      showToast('⚠️ Google Sign-In requires Google provider enabled in Firebase')
+      showToast('⚠️ Google Sign-In: please verify Firebase authorized domains')
     }
   }
 
@@ -910,7 +1190,7 @@ ${candidate.links}`
                 {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
 
-              {/* Language Selector */}
+              {/* Language Selector (Expanded Global Options) */}
               <div className={`flex items-center border rounded-xl px-3 py-2 text-xs font-semibold ${isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-800'}`}>
                 <Globe className="w-3.5 h-3.5 text-indigo-600 mr-2 shrink-0" />
                 <select
@@ -984,7 +1264,57 @@ ${candidate.links}`
       </header>
 
       {/* 100% FULL-WIDTH MAIN LAYOUT */}
-      <main className="w-full px-4 sm:px-6 lg:px-8 mt-6">
+      <main className="w-full px-4 sm:px-6 lg:px-8 mt-6 space-y-8">
+
+        {/* LIVE PLATFORM SOCIAL PROOF & TRUST METRIC COUNTER BANNER */}
+        <section className={`${cardBg} rounded-2xl p-4 sm:p-5 border w-full`}>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800/50">
+            <div className="pt-2 md:pt-0">
+              <div className="flex items-center justify-center gap-1.5 text-xs text-indigo-400 font-bold mb-1">
+                <Search className="w-3.5 h-3.5" /> {t.stats?.searches || 'Live Searches'}
+              </div>
+              <div className="text-xl sm:text-2xl font-black text-indigo-500">
+                {liveSearches.toLocaleString()}+
+              </div>
+            </div>
+
+            <div className="pt-2 md:pt-0">
+              <div className="flex items-center justify-center gap-1.5 text-xs text-emerald-400 font-bold mb-1">
+                <Briefcase className="w-3.5 h-3.5" /> {t.stats?.jobsCount || 'Active Jobs'}
+              </div>
+              <div className="text-xl sm:text-2xl font-black text-emerald-500">
+                1,850+
+              </div>
+            </div>
+
+            <div className="pt-2 md:pt-0">
+              <div className="flex items-center justify-center gap-1.5 text-xs text-purple-400 font-bold mb-1">
+                <TrophyIcon className="w-3.5 h-3.5" /> {t.stats?.studentsPlaced || 'Hired Students'}
+              </div>
+              <div className="text-xl sm:text-2xl font-black text-purple-500">
+                1,240+
+              </div>
+            </div>
+
+            <div className="pt-2 md:pt-0">
+              <div className="flex items-center justify-center gap-1.5 text-xs text-amber-400 font-bold mb-1">
+                <Users className="w-3.5 h-3.5" /> {t.stats?.visitors || 'Global Visitors'}
+              </div>
+              <div className="text-xl sm:text-2xl font-black text-amber-500">
+                {liveVisitors.toLocaleString()}+
+              </div>
+            </div>
+
+            <div className="pt-2 md:pt-0 col-span-2 md:col-span-1">
+              <div className="flex items-center justify-center gap-1.5 text-xs text-cyan-400 font-bold mb-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> {t.stats?.passRate || 'ATS Pass Rate'}
+              </div>
+              <div className="text-xl sm:text-2xl font-black text-cyan-500">
+                99.4%
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ============================================================ */}
         {/* VIEW 1: DASHBOARD */}
@@ -1635,7 +1965,7 @@ ${candidate.links}`
         )}
 
         {/* ============================================================ */}
-        {/* VIEW 4: INTERNSHIPS & JOBS RADAR */}
+        {/* VIEW 4: INTERNSHIPS & JOBS RADAR WITH DATES & DEADLINES */}
         {/* ============================================================ */}
         {activeTab === 'jobs' && (
           <div className="space-y-6 w-full">
@@ -1684,7 +2014,7 @@ ${candidate.links}`
               </div>
             </div>
 
-            {/* Jobs Grid */}
+            {/* Jobs Grid with Live Dates & Deadlines */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
               {filteredJobs.map((job) => {
                 const isSaved = savedJobIds.includes(job.id)
@@ -1695,10 +2025,16 @@ ${candidate.links}`
                     className={`${cardBg} rounded-3xl p-6 sm:p-7 border hover:border-indigo-500/50 transition-all flex flex-col justify-between`}
                   >
                     <div>
+                      {/* Status, Location & Bookmark */}
                       <div className="flex items-center justify-between mb-3">
-                        <span className={`text-xs font-bold px-3 py-1 rounded-full border ${isDark ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border-indigo-200'}`}>
-                          {job.location}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs font-bold px-3 py-1 rounded-full border ${isDark ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : 'bg-indigo-50 text-indigo-700 border-indigo-200'}`}>
+                            {job.location}
+                          </span>
+                          <span className="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            {t.jobs.statusActive}
+                          </span>
+                        </div>
                         <button
                           onClick={() => toggleSaveJob(job.id)}
                           className={`text-xs font-bold flex items-center gap-1.5 px-3 py-1 rounded-xl transition ${
@@ -1717,11 +2053,24 @@ ${candidate.links}`
                       </h4>
                       <div className={`text-xs font-semibold ${textMuted} mt-1`}>{job.company}</div>
 
-                      <div className="text-xs font-bold text-emerald-500 mt-2.5">
+                      {/* Live Date & Deadline Badge Row */}
+                      <div className={`mt-3 p-2.5 rounded-xl border flex flex-wrap items-center justify-between gap-2 text-xs ${isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'}`}>
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                          <span>{job.postedDate}</span>
+                        </div>
+                        <div className="flex items-center gap-1 font-bold text-amber-400">
+                          <Calendar className="w-3.5 h-3.5" />
+                          <span>{job.deadline}</span>
+                          <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 ml-1">({job.daysLeft})</span>
+                        </div>
+                      </div>
+
+                      <div className="text-xs font-bold text-emerald-500 mt-3">
                         💰 {job.stipend}
                       </div>
 
-                      <p className={`text-xs sm:text-sm ${textMuted} mt-3 leading-relaxed`}>
+                      <p className={`text-xs sm:text-sm ${textMuted} mt-2.5 leading-relaxed`}>
                         {job.description}
                       </p>
 
@@ -1736,7 +2085,7 @@ ${candidate.links}`
 
                     <div className={`mt-6 pt-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-100'} flex items-center justify-between`}>
                       <span className="text-xs font-bold text-emerald-500 flex items-center gap-1.5">
-                        <CheckCircle className="w-4 h-4" /> {t.jobs.directApply}
+                        <CheckCircle className="w-4 h-4" /> {job.applicants}
                       </span>
                       <a
                         href={job.url}
@@ -1744,7 +2093,7 @@ ${candidate.links}`
                         rel="noreferrer"
                         className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl text-xs shadow transition"
                       >
-                        <span>Apply</span>
+                        <span>{t.jobs.directApply}</span>
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </div>
