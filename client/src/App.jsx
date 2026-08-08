@@ -54,6 +54,9 @@ import {
 import { auth, signInWithGoogle, logOut, saveResumeToCloud, loadResumeFromCloud } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 
+// Import PDF.js parser
+import { extractTextFromPdf } from './pdfParser'
+
 // Complete, 100% functional translations for all global languages
 const TRANSLATIONS = {
   en: {
@@ -1055,18 +1058,34 @@ export default function App() {
     }
   }
 
-  // Handle Resume File Upload & AI Scanning
-  const handleFileUpload = (e) => {
+  // Handle Resume File Upload (Supports .pdf, .txt, .json, .md) & AI Scanning
+  const handleFileUpload = async (e) => {
     const file = e.target.files[0]
     if (!file) return
 
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      const content = event.target.result
-      setResumeUploadText(content)
-      analyzeUploadedResume(content)
+    if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+      setIsScanning(true)
+      showToast('📄 Reading & Parsing PDF Resume...')
+      try {
+        const arrayBuffer = await file.arrayBuffer()
+        const text = await extractTextFromPdf(arrayBuffer)
+        setResumeUploadText(text)
+        analyzeUploadedResume(text)
+        showToast('✅ PDF parsed successfully!')
+      } catch (err) {
+        console.error(err)
+        showToast('⚠️ Could not extract text from PDF. Try pasting text.')
+        setIsScanning(false)
+      }
+    } else {
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        const content = event.target.result
+        setResumeUploadText(content)
+        analyzeUploadedResume(content)
+      }
+      reader.readAsText(file)
     }
-    reader.readAsText(file)
   }
 
   // AI Resume Matcher Core Engine
@@ -1695,11 +1714,11 @@ ${candidate.links}`
                 >
                   <Upload className="w-8 h-8 text-indigo-500" />
                   <span className="text-xs font-bold text-indigo-500">{t.scanner.dragDrop}</span>
-                  <span className={`text-[11px] ${textMuted}`}>Supports .txt, .json, markdown or raw text</span>
+                  <span className={`text-[11px] ${textMuted}`}>Supports PDF (.pdf), TXT (.txt), JSON (.json), and Markdown (.md)</span>
                   <input
                     type="file"
                     ref={fileInputRef}
-                    accept=".txt,.json,.md,.doc"
+                    accept=".pdf,.txt,.json,.md,.doc,.docx"
                     onChange={handleFileUpload}
                     className="hidden"
                   />
