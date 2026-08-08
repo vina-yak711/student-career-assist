@@ -32,8 +32,16 @@ import {
   Sliders,
   LayoutDashboard,
   Sun,
-  Moon
+  Moon,
+  Cloud,
+  User as UserIcon,
+  LogOut,
+  LogIn
 } from 'lucide-react'
+
+// Import Firebase Authentication and Firestore Cloud functions
+import { auth, signInWithGoogle, logOut, saveResumeToCloud, loadResumeFromCloud } from './firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 // Multilingual Dictionary (Default English)
 const TRANSLATIONS = {
@@ -49,6 +57,12 @@ const TRANSLATIONS = {
       jobs: 'Internships & Jobs',
       freelance: 'Freelance Hub',
       roadmaps: 'Roadmaps & Prep'
+    },
+    auth: {
+      login: 'Sign in with Google',
+      logout: 'Sign Out',
+      cloudSync: 'Save to Cloud',
+      synced: 'Cloud Synced'
     },
     dashboard: {
       welcome: 'Welcome to VynkAI CareerForge',
@@ -144,6 +158,12 @@ const TRANSLATIONS = {
       freelance: 'फ्रीलान्सिंग हब',
       roadmaps: 'रोडमॅप & मुलाखत तयारी'
     },
+    auth: {
+      login: 'Google ने लॉगिन करा',
+      logout: 'लॉगआउट',
+      cloudSync: 'क्लाउडवर सेव्ह करा',
+      synced: 'क्लाउड सिंक झाले'
+    },
     dashboard: {
       welcome: 'VynkAI CareerForge मध्ये आपले स्वागत आहे',
       desc: 'संपूर्ण स्क्रीन व्यापणारा, मोकळा आणि वेगवान प्लॅटफॉर्म. ATS रिझ्युमे बनवा, जागतिक इंटर्नशिप्स शोधा आणि कॉलेजमध्येच कमाई सुरू करा.',
@@ -237,6 +257,12 @@ const TRANSLATIONS = {
       jobs: 'इंटर्नशिप्स & नौकरियां',
       freelance: 'फ्रीलांसिंग हब',
       roadmaps: 'रोडमैप & इंटरव्यू'
+    },
+    auth: {
+      login: 'Google से लॉगिन करें',
+      logout: 'लॉगआउट',
+      cloudSync: 'क्लाउड पर सेव करें',
+      synced: 'क्लाउड सिंक'
     },
     dashboard: {
       welcome: 'VynkAI CareerForge में आपका स्वागत है',
@@ -465,29 +491,34 @@ export default function App() {
   const [resumeSubTab, setResumeSubTab] = useState('personal')
   const [toastMsg, setToastMsg] = useState('')
 
-  // 3. Candidate Data
+  // 3. User & Firebase State
+  const [currentUser, setCurrentUser] = useState(null)
+  const [isSavingCloud, setIsSavingCloud] = useState(false)
+  const [isCloudSynced, setIsCloudSynced] = useState(false)
+
+  // 4. Candidate Data
   const [candidate, setCandidate] = useState(DEFAULT_CANDIDATE)
   const [resumeHtml, setResumeHtml] = useState('')
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
 
-  // 4. Cold Email State
+  // 5. Cold Email State
   const [emailRecipient, setEmailRecipient] = useState('Hiring Manager / Tech Lead')
   const [emailCompany, setEmailCompany] = useState('CloudScale Technologies')
   const [emailTargetRole, setEmailTargetRole] = useState('AI & Software Engineering Intern (Summer 2025)')
   const [emailStrongSkill, setEmailStrongSkill] = useState('Full-Stack Web & Machine Learning')
   const [generatedColdEmail, setGeneratedColdEmail] = useState('')
 
-  // 5. Jobs State
+  // 6. Jobs State
   const [jobSearchQuery, setJobSearchQuery] = useState('')
   const [jobFilterLocation, setJobFilterLocation] = useState('all')
   const [savedJobIds, setSavedJobIds] = useState([1])
 
-  // 6. Freelance Calculator
+  // 7. Freelance Calculator
   const [calcHours, setCalcHours] = useState(15)
   const [calcRate, setCalcRate] = useState(30)
   const [proposalService, setProposalService] = useState('react')
 
-  // 7. Flashcards
+  // 8. Flashcards
   const [revealedAnswers, setRevealedAnswers] = useState({})
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS.en
@@ -497,10 +528,73 @@ export default function App() {
     setTimeout(() => setToastMsg(''), 3000)
   }
 
+  // Firebase Auth Listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user)
+        showToast(`👋 Logged in as ${user.displayName || user.email}`)
+        // Load cloud resume if exists
+        const cloudData = await loadResumeFromCloud(user.uid)
+        if (cloudData && cloudData.name) {
+          setCandidate(cloudData)
+          setIsCloudSynced(true)
+          showToast('☁️ Cloud resume loaded!')
+        }
+      } else {
+        setCurrentUser(null)
+      }
+    })
+    return () => unsubscribe()
+  }, [])
+
   useEffect(() => {
     renderLiveResume()
     generateColdEmail()
   }, [lang, candidate])
+
+  // Handle Google Login
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await signInWithGoogle()
+      setCurrentUser(user)
+      showToast(`✅ Welcome, ${user.displayName}!`)
+    } catch (err) {
+      console.error(err)
+      showToast('⚠️ Google Sign-In requires Google provider enabled in Firebase')
+    }
+  }
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      await logOut()
+      setCurrentUser(null)
+      showToast('Logged out successfully')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  // Handle Cloud Save
+  const handleSaveToCloud = async () => {
+    if (!currentUser) {
+      showToast('Please sign in with Google first')
+      handleGoogleLogin()
+      return
+    }
+    setIsSavingCloud(true)
+    try {
+      await saveResumeToCloud(currentUser.uid, candidate)
+      setIsCloudSynced(true)
+      showToast('☁️ Saved to Firebase Cloud!')
+    } catch (err) {
+      console.error(err)
+      showToast('⚠️ Could not save to cloud')
+    } finally {
+      setIsSavingCloud(false)
+    }
+  }
 
   // Generate Cold Email
   function generateColdEmail() {
@@ -543,7 +637,7 @@ ${candidate.links}`
   }
   const atsScore = calculateAtsScore()
 
-  // Generate Live Resume HTML (100% Client + Backend Synchronized with NO unparsed tags)
+  // Generate Live Resume HTML
   function buildCleanResumeHtml(cand) {
     const skillsHtml = Object.entries(cand.skillsCategorized).map(([cat, items]) => `
       <div style="margin-bottom: 8px;">
@@ -718,7 +812,7 @@ ${candidate.links}`
     return matchQuery && matchLocation
   })
 
-  // Theme Class Mappings (Full width edge-to-edge)
+  // Theme Class Mappings
   const themeBg = isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
   const headerBg = isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white/95 border-slate-200 shadow-sm'
   const cardBg = isDark ? 'bg-slate-900/90 border-slate-800 shadow-xl' : 'bg-white border-slate-200/80 shadow-sm'
@@ -737,7 +831,7 @@ ${candidate.links}`
         </div>
       )}
 
-      {/* 100% FULL-WIDTH TOP HEADER (Zero wasted margins) */}
+      {/* 100% FULL-WIDTH TOP HEADER */}
       <header className={`sticky top-0 z-40 w-full ${headerBg} backdrop-blur-xl border-b`}>
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -765,9 +859,45 @@ ${candidate.links}`
               </div>
             </div>
 
-            {/* Language, Currency & Dark Mode Switcher */}
+            {/* Google Auth, Cloud Sync, Language & Theme */}
             <div className="flex items-center gap-2 sm:gap-3">
               
+              {/* Google Authentication Button */}
+              {currentUser ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleSaveToCloud}
+                    disabled={isSavingCloud}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold hover:bg-emerald-500/20 transition"
+                  >
+                    <Cloud className={`w-4 h-4 ${isSavingCloud ? 'animate-spin' : ''}`} />
+                    <span className="hidden md:inline">{isSavingCloud ? 'Saving...' : t.auth.cloudSync}</span>
+                  </button>
+                  <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
+                    <img
+                      src={currentUser.photoURL || 'https://via.placeholder.com/32'}
+                      alt={currentUser.displayName || 'User'}
+                      className="w-8 h-8 rounded-full border border-indigo-500"
+                    />
+                    <button
+                      onClick={handleLogout}
+                      className={`p-2 rounded-xl border text-xs font-semibold ${isDark ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-rose-400' : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-rose-600'}`}
+                      title={t.auth.logout}
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={handleGoogleLogin}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span className="hidden sm:inline">{t.auth.login}</span>
+                </button>
+              )}
+
               {/* Dark Theme Toggle Button */}
               <button
                 onClick={() => {
@@ -826,7 +956,7 @@ ${candidate.links}`
             </div>
           </div>
 
-          {/* HORIZONTAL NAVIGATION TABS (Edge-to-edge flow) */}
+          {/* HORIZONTAL NAVIGATION TABS */}
           <nav className={`flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none border-t ${isDark ? 'border-slate-800/80' : 'border-slate-100'} mt-1`}>
             {[
               { key: 'dashboard', label: t.nav.dashboard, icon: LayoutDashboard },
@@ -853,7 +983,7 @@ ${candidate.links}`
         </div>
       </header>
 
-      {/* 100% TRUE FULL-WIDTH MAIN LAYOUT (Zero dead side margins) */}
+      {/* 100% FULL-WIDTH MAIN LAYOUT */}
       <main className="w-full px-4 sm:px-6 lg:px-8 mt-6">
 
         {/* ============================================================ */}
@@ -961,24 +1091,41 @@ ${candidate.links}`
         )}
 
         {/* ============================================================ */}
-        {/* VIEW 2: MULTI-SECTION ATS RESUME BUILDER (FULL-WIDTH 50-50) */}
+        {/* VIEW 2: MULTI-SECTION ATS RESUME BUILDER */}
         {/* ============================================================ */}
         {activeTab === 'resume' && (
           <div className="space-y-6 w-full">
             
-            {/* Toolbar Banner */}
+            {/* Toolbar Banner with Cloud Save Indicator */}
             <div className={`${cardBg} rounded-3xl p-6 sm:p-7 border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 w-full`}>
               <div>
-                <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
-                  <FileText className="w-6 h-6 text-indigo-600" />
-                  {t.resume.title}
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                    <FileText className="w-6 h-6 text-indigo-600" />
+                    {t.resume.title}
+                  </h3>
+                  {currentUser && (
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                      <CheckCircle className="w-3.5 h-3.5" /> Cloud Active
+                    </span>
+                  )}
+                </div>
                 <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
                   {t.resume.subtitle}
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2.5">
+                {currentUser && (
+                  <button
+                    onClick={handleSaveToCloud}
+                    disabled={isSavingCloud}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-3 rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center gap-1.5"
+                  >
+                    <Cloud className={`w-4 h-4 ${isSavingCloud ? 'animate-spin' : ''}`} />
+                    <span>{isSavingCloud ? 'Saving...' : 'Save to Cloud'}</span>
+                  </button>
+                )}
                 <button
                   onClick={handleDownloadPdf}
                   disabled={isGeneratingPdf}
@@ -1692,7 +1839,7 @@ ${candidate.links}`
                   </div>
 
                   <div className={`${isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'} p-4 rounded-2xl border text-xs font-mono leading-relaxed max-h-[160px] overflow-y-auto`}>
-                    {proposalService === 'react' && `Hi [Client],\n\nI noticed you need a clean, responsive, and high-speed web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI can deliver production-ready code with 100% responsiveness within 48 hours.\n\nBest regards,\n${candidate.name}`}
+                    {proposalService === 'react' && `Hi [Client],\n\nI noticed you need a clean responsive web application. I specialize in React, Vite, Tailwind CSS, and REST API integrations.\n\nI can deliver production-ready code with 100% responsiveness within 48 hours.\n\nBest regards,\n${candidate.name}`}
                     {proposalService === 'pdf' && `Hello [Client],\n\nI can build a robust automated PDF document generation service using Node.js, Express, and Puppeteer with custom A4 formatting.\n\nReady to start immediately.\n\nBest,\n${candidate.name}`}
                     {proposalService === 'android' && `Hi there!\n\nI specialize in native Android development with Android Studio, Kotlin/Java, and REST API integrations. I can build clean UI flows with local caching.\n\nWarm regards,\n${candidate.name}`}
                   </div>
