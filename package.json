@@ -1,20 +1,16 @@
 {
-  "name": "student-career-assist",
-  "version": "0.1.0",
+  "name": "student-career-assist-root",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "start": "node server/index.js",
     "server": "node server/index.js",
-    "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client": "npm run dev --prefix client"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
-    "puppeteer": "^20.7.4",
-    "axios": "^1.4.0"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.1"
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
   }
 }

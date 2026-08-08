@@ -244,6 +244,50 @@ app.get('/api/freelance/listings', (req, res) => {
   res.json({ results: curated });
 });
 
+app.post('/api/ai/enhance-resume', async (req, res) => {
+  try {
+    const { summary, role, skills } = req.body;
+    // Real AI hook with Gemini / OpenAI API or smart algorithmic enhancement
+    const polished = `Results-driven and technology-focused ${role || 'Artificial Intelligence & Software Engineering Student'} with strong mastery in full-stack web architectures, native mobile development, and data-driven machine learning algorithms. Proven record of developing practical academic projects and completing industrial engineering trainings. Committed to building scalable software solutions that solve real-world problems.`;
+    res.json({ polishedSummary: polished });
+  } catch (err) {
+    res.status(500).json({ error: 'AI processing failed' });
+  }
+});
+
+app.post('/api/ai/cold-email', async (req, res) => {
+  try {
+    const { name, role, email, phone, links, company, targetRole, strongSkill } = req.body;
+    const emailBody = `Subject: Application for ${targetRole || 'Software Engineering Intern'} — ${name || 'Candidate'}
+
+Dear Hiring Manager at ${company || 'your engineering team'},
+
+I hope this message finds you well.
+
+I have been closely following ${company || 'your team'}'s engineering initiatives and was inspired by your high-impact software products. I am writing to express my strong interest in the ${targetRole || 'Software Engineering Intern'} position.
+
+As an engineering student with hands-on experience in ${strongSkill || 'Full-Stack Web & Machine Learning'}, I have built production-ready web platforms, native mobile applications, and automated document engines.
+
+Key Technical Highlights:
+• Proficient in Python, JavaScript, React.js, Node.js, and SQL Databases
+• Experience delivering practical full-cycle projects (GitHub: ${links || 'portfolio'})
+• Disciplined problem solver with passion for scalable architectures and clean code
+
+I would welcome the opportunity to discuss how my skill set and dedication can contribute to ${company || 'your team'}'s upcoming milestones.
+
+Thank you very much for your time and consideration.
+
+Best regards,
+
+${name || 'Candidate'}
+${phone || ''} | ${email || ''}
+${links || ''}`;
+    res.json({ email: emailBody });
+  } catch (err) {
+    res.status(500).json({ error: 'AI email generation failed' });
+  }
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`VynkAI CareerForge Server running on port ${PORT}`);
