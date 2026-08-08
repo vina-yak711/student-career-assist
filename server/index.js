@@ -12,8 +12,8 @@ app.use(bodyParser.json({ limit: '5mb' }));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'CareerSarthi Global Career Engine',
-    version: '2.0.0',
+    service: 'VynkAI CareerForge Global Engine',
+    version: '3.0.0',
     timestamp: Date.now()
   });
 });
@@ -22,27 +22,134 @@ function formatResumeHtml(data) {
   const templatePath = path.join(__dirname, '..', 'templates', 'resume.html');
   let html = fs.readFileSync(templatePath, 'utf8');
 
-  const skillsList = Array.isArray(data.skills) ? data.skills : (data.skills ? data.skills.split(',') : []);
-  const skillsTags = skillsList
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(s => `<span class="skill-tag">${s}</span>`)
-    .join('\n');
+  // Format Motto quote
+  const mottoBlock = data.motto ? `<div class="motto-quote">"${data.motto}"</div>` : '';
+
+  // Format Education entries
+  let educationEntries = '';
+  if (data.educationList && Array.isArray(data.educationList)) {
+    educationEntries = data.educationList.map(ed => `
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>${ed.degree || 'Degree Program'}</span>
+          <span style="color: #64748b; font-weight: 500;">${ed.year || '2022 - 2026'}</span>
+        </div>
+        <div class="item-sub">${ed.institution || 'University Name'}${ed.score ? ` • Aggregate: ${ed.score}` : ''}</div>
+        ${ed.bullets ? `<ul class="bullet-list">${ed.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}</ul>` : ''}
+      </div>
+    `).join('');
+  } else {
+    educationEntries = `
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>${data.degree || 'Bachelor of Science in Computer Science & AI'}</span>
+          <span style="color: #64748b; font-weight: 500;">${data.gradYear || '2024 - 2028 (Pursuing)'}</span>
+        </div>
+        <div class="item-sub">${data.university || 'Institute of Technology & Engineering'}${data.cgpa ? ` • ${data.cgpa}` : ''}</div>
+        <ul class="bullet-list">
+          <li>Core coursework: Machine Learning, Data Analytics, Cloud Computing, Full-Stack Engineering, and Mobile Architectures.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  // Format Industrial Training & Experience entries
+  let experienceEntries = '';
+  if (data.experienceList && Array.isArray(data.experienceList)) {
+    experienceEntries = data.experienceList.map(exp => `
+      <div style="margin-bottom: 10px;">
+        <div class="item-header">
+          <span>${exp.title || 'Software Engineering Industrial Training'}</span>
+          <span style="color: #64748b; font-weight: 500;">${exp.period || 'Summer Internship'}</span>
+        </div>
+        <div class="item-sub">${exp.company || 'Tech Innovations Corp'}</div>
+        ${exp.bullets ? `<ul class="bullet-list">${exp.bullets.split('\n').filter(Boolean).map(b => `<li>${b.replace(/^[•\-*]\s*/, '')}</li>`).join('')}</ul>` : ''}
+      </div>
+    `).join('');
+  } else if (data.experience) {
+    experienceEntries = `
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>Software Engineering & App Development Industrial Training</span>
+          <span style="color: #64748b; font-weight: 500;">6-Week Intensive Track</span>
+        </div>
+        <div class="item-sub">Global EdTech & Software Labs</div>
+        <ul class="bullet-list">
+          <li>Engineered native UIs, managing component lifecycles, state flows, and REST API integrations.</li>
+          <li>Handled debugging, memory profiling, local database connectivity, and deployment workflows.</li>
+        </ul>
+      </div>
+    `;
+  }
+
+  // Format Projects entries
+  let projectsEntries = '';
+  if (data.projectsList && Array.isArray(data.projectsList)) {
+    projectsEntries = data.projectsList.map(p => `
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>${p.title || 'Project Name'}</span>
+          <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">${p.domain || 'Full-Stack / AI'}</span>
+        </div>
+        <div style="color: #334155; font-size: 12.5px; margin-top: 2px;">${p.desc || 'Comprehensive web implementation with scalable endpoints.'}</div>
+      </div>
+    `).join('');
+  } else {
+    projectsEntries = `
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>AI-Powered Health Analytics & IoT Monitoring System</span>
+          <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">AI & IoT</span>
+        </div>
+        <div style="color: #334155; font-size: 12.5px;">Combines Machine Learning models with sensor streams to predict real-time health metrics. Presented at technical symposiums.</div>
+      </div>
+      <div style="margin-bottom: 8px;">
+        <div class="item-header">
+          <span>Web-Based Multi-Format Resume Builder Suite</span>
+          <span style="color: #2563eb; font-size: 11.5px; font-weight: 600;">React • Node.js</span>
+        </div>
+        <div style="color: #334155; font-size: 12.5px;">Full-stack React & Node.js application enabling students to construct and export ATS-friendly resumes with live preview.</div>
+      </div>
+    `;
+  }
+
+  // Format Categorized Skills
+  let skillsCategorized = '';
+  if (data.skillsCategorized && typeof data.skillsCategorized === 'object') {
+    skillsCategorized = Object.entries(data.skillsCategorized).map(([category, items]) => {
+      const tagList = Array.isArray(items) ? items : String(items).split(',').map(s => s.trim()).filter(Boolean);
+      return `
+        <div class="skill-category">
+          <div class="skill-cat-title">${category}</div>
+          <div class="skills-flex">
+            ${tagList.map(t => `<span class="skill-tag">${t}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+  } else {
+    const rawSkills = Array.isArray(data.skills) ? data.skills : (data.skills ? String(data.skills).split(',') : ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning']);
+    skillsCategorized = `
+      <div class="skills-flex">
+        ${rawSkills.map(s => `<span class="skill-tag">${s.trim()}</span>`).join('')}
+      </div>
+    `;
+  }
 
   html = html
-    .replace(/{{name}}/g, data.name || 'Student Candidate')
-    .replace(/{{role}}/g, data.role || 'Aspiring Software Engineer & Tech Innovator')
-    .replace(/{{email}}/g, data.email || 'student@domain.edu')
-    .replace(/{{phone}}/g, data.phone || '+91 98765 43210')
-    .replace(/{{location}}/g, data.location || 'Pune / Mumbai / Remote')
-    .replace(/{{summary}}/g, data.summary || 'Proactive and ambitious learner with solid foundations in engineering principles, problem solving, and modern digital development.')
-    .replace(/{{skills_tags}}/g, skillsTags || '<span class="skill-tag">Web Development</span>')
-    .replace(/{{education}}/g, data.education || 'Bachelor of Technology (B.Tech) in Computer Science')
-    .replace(/{{gradYear}}/g, data.gradYear || '2022 - 2026')
-    .replace(/{{university}}/g, data.university || 'State Technical University • CGPA: 8.8/10')
-    .replace(/{{projects}}/g, data.projects || 'Full-Stack Career Assist Platform with real-time PDF generation, multi-currency gig launcher, and global internship radars.')
-    .replace(/{{languages}}/g, data.languages || 'English (Fluent), Marathi (Native), Hindi (Professional)')
-    .replace(/{{certifications}}/g, data.certifications || 'AWS Cloud Practitioner Essentials, Meta Frontend Specialization');
+    .replace(/{{name}}/g, data.name || 'Alex Morgan')
+    .replace(/{{role}}/g, data.role || 'Artificial Intelligence & Software Engineering Student')
+    .replace(/{{email}}/g, data.email || 'alex.morgan.tech@example.com')
+    .replace(/{{phone}}/g, data.phone || '+1 (555) 382-9104')
+    .replace(/{{location}}/g, data.location || 'San Francisco, CA (Open to Global Remote)')
+    .replace(/{{links}}/g, data.links || 'github.com/alex-dev • linkedin.com/in/alex-morgan')
+    .replace(/{{summary}}/g, data.summary || 'Passionate and technology-driven Computer Engineering undergraduate with strong foundations in full-stack web architectures, native mobile development, and machine learning algorithms. Proven record of developing practical academic projects and completing industrial engineering trainings.')
+    .replace(/{{motto_block}}/g, mottoBlock)
+    .replace(/{{education_entries}}/g, educationEntries)
+    .replace(/{{experience_entries}}/g, experienceEntries)
+    .replace(/{{projects_entries}}/g, projectsEntries)
+    .replace(/{{skills_categorized}}/g, skillsCategorized)
+    .replace(/{{accomplishments}}/g, data.accomplishments || '• International CodeForge Hackathon: Participated in prototype development round.\n• Technical Festivals Presenter: Demonstrated AI + IoT integrated smart healthcare system.');
 
   return html;
 }
@@ -63,7 +170,7 @@ app.post('/api/resume/pdf', async (req, res) => {
     const html = formatResumeHtml(req.body);
     const pdfBuffer = await generatePdfBuffer(html);
     res.setHeader('Content-Type', 'application/pdf');
-    const filename = `${(req.body.name || 'Student_Resume').replace(/\s+/g, '_')}_CareerSarthi.pdf`;
+    const filename = `${(req.body.name || 'Candidate_Resume').replace(/\s+/g, '_')}_VynkAI_CareerForge.pdf`;
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.send(pdfBuffer);
   } catch (err) {
@@ -73,68 +180,46 @@ app.post('/api/resume/pdf', async (req, res) => {
 });
 
 app.get('/api/jobs/search', (req, res) => {
-  const q = (req.query.q || 'frontend').toLowerCase();
-  const region = req.query.region || 'all';
-
+  const q = req.query.q || 'Full Stack';
   const mockDatabase = [
     {
+      id: 1,
       source: 'LinkedIn Global',
-      title: `${req.query.q || 'Full Stack'} Intern`,
-      company: 'CloudScale Technologies',
-      location: 'Remote (Global)',
-      stipend: '$800 - $1,500 / month',
+      title: `${q} Engineering Intern`,
+      company: 'CloudScale Global Inc.',
+      location: 'Remote (Worldwide)',
+      stipend: '$1,200 - $2,000 / month',
       category: 'internship',
-      tags: ['React', 'Node.js', 'TypeScript', 'Remote'],
-      description: 'Join an agile international team building high-performance cloud applications. Mentorship, flexible hours, and pre-placement offer (PPO) opportunity.',
+      tags: ['React', 'TypeScript', 'Node.js', 'Remote'],
+      description: 'Hands-on mentorship on production SaaS systems. Work with senior cloud architects and build responsive web tools. Pre-placement offer (PPO) pathway.',
       url: 'https://www.linkedin.com/jobs'
     },
     {
-      source: 'Internshala Verified',
-      title: `Junior ${req.query.q || 'Software'} Engineer`,
-      company: 'Nexus Infotech Solutions',
-      location: 'Pune / Mumbai / Bengaluru',
-      stipend: '₹35,000 - ₹50,000 / month',
-      category: 'fresher',
-      tags: ['JavaScript', 'Tailwind', 'REST APIs', 'India'],
-      description: 'Ideal role for fresh graduates and final-year students with passion for web development, UI engineering, and clean code principles.',
-      url: 'https://internshala.com'
-    },
-    {
+      id: 2,
       source: 'Wellfound (AngelList)',
-      title: 'Frontend & UI Engineering Intern',
-      company: 'HyperGrowth AI Startup',
+      title: 'AI & Data Science Student Trainee',
+      company: 'NeuroPulse AI Labs',
       location: 'San Francisco / Remote',
       stipend: '$25 / hour',
       category: 'internship',
-      tags: ['Next.js', 'Vite', 'Figma', 'US-Remote'],
-      description: 'Build futuristic AI interfaces with real-time streaming, interactive canvas, and sleek motion components.',
+      tags: ['Python', 'PyTorch', 'LLMs', 'FastAPI'],
+      description: 'Develop intelligent agentic pipelines, retrieval-augmented generation (RAG), and data analytics dashboards.',
       url: 'https://wellfound.com'
     },
     {
-      source: 'RemoteOK',
-      title: 'Backend API Developer (Entry Level)',
-      company: 'Veritas Global Systems',
-      location: 'Remote (Worldwide)',
-      stipend: '$2,000 - $3,200 / month',
+      id: 3,
+      source: 'Internshala Super50',
+      title: `Junior ${q} Engineer`,
+      company: 'Nexus Tech Systems',
+      location: 'Pune / Mumbai / Bengaluru (Hybrid)',
+      stipend: '₹40,000 - ₹60,000 / month',
       category: 'fresher',
-      tags: ['Node.js', 'Express', 'PostgreSQL', 'Docker'],
-      description: 'Develop robust microservices and secure authentication pipelines. Great learning curve with senior architects.',
-      url: 'https://remoteok.com'
-    },
-    {
-      source: 'Naukri Campus',
-      title: 'Graduate Tech Trainee (Batch 2024-2026)',
-      company: 'Tata Consultancy & Innovation',
-      location: 'Hyderabad / Chennai / Remote',
-      stipend: '₹4.5 - ₹7.2 LPA',
-      category: 'fresher',
-      tags: ['Java/Python', 'Cloud', 'Data Structures', 'Campus'],
-      description: 'Accelerated graduate development track with structured rotation across Cloud, DevOps, and Full-Stack development.',
-      url: 'https://www.naukri.com'
+      tags: ['JavaScript', 'Express', 'PostgreSQL', 'India'],
+      description: 'Accelerated engineering track for recent graduates and final-year students with passion for clean code and problem solving.',
+      url: 'https://internshala.com'
     }
   ];
-
-  res.json({ results: mockDatabase, count: mockDatabase.length });
+  res.json({ results: mockDatabase });
 });
 
 app.get('/api/freelance/listings', (req, res) => {
@@ -142,29 +227,18 @@ app.get('/api/freelance/listings', (req, res) => {
     {
       platform: 'Upwork',
       category: 'Web & Mobile Dev',
-      avgRate: '$30 - $75 / hr',
+      avgRate: '$35 - $80 / hr',
       fastStartTitle: 'Landing Page & Responsive UI Development',
-      strategy: 'Send short proposal (under 120 words) with 2 live portfolio links and a 30-second Loom screen walkthrough.',
-      template: 'Hi [Client], I noticed you need a clean, responsive Tailwind UI. I built a similar high-speed web app recently (see link). I can finish this within 48 hours for you.',
+      strategy: 'Send concise video proposals demonstrating similar functional projects and 48-hour turnarounds.',
       url: 'https://www.upwork.com'
     },
     {
       platform: 'Fiverr',
-      category: 'Micro-SaaS & Custom Scripts',
-      avgRate: '$25 - $120 / gig',
-      fastStartTitle: 'Custom React Components & PDF Generator APIs',
-      strategy: 'Create 3 structured tiers (Basic $20, Standard $50, Premium $120) with fast 24-hour turnaround for maximum 5-star conversion.',
-      template: 'I will create modern, responsive React/Node.js features and automated PDF workflows with 100% satisfaction guarantee.',
+      category: 'Micro-SaaS & PDF Generation APIs',
+      avgRate: '$25 - $150 / gig',
+      fastStartTitle: 'Automated Document & Resume Compilation Engines',
+      strategy: 'Offer 3-tiered gig packages with instant express delivery to earn quick 5-star ratings.',
       url: 'https://www.fiverr.com'
-    },
-    {
-      platform: 'Toptal / Contra',
-      category: 'Independent Developer Network',
-      avgRate: '$50 - $110 / hr',
-      fastStartTitle: 'Freelance Frontend Architect',
-      strategy: 'Showcase verified GitHub contributions, open-source repositories, and interactive demo deployments.',
-      template: 'Specialized in building performant web applications with 99+ Google Lighthouse scores and seamless user experience.',
-      url: 'https://contra.com'
     }
   ];
   res.json({ results: curated });
@@ -172,5 +246,5 @@ app.get('/api/freelance/listings', (req, res) => {
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`CareerSarthi Global Server running on port ${PORT}`);
+  console.log(`VynkAI CareerForge Server running on port ${PORT}`);
 });

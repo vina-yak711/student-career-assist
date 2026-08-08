@@ -11,80 +11,73 @@
         font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         color: #0f172a;
         background: #ffffff;
-        padding: 36px 42px;
+        padding: 32px 38px;
         line-height: 1.5;
-        font-size: 13.5px;
+        font-size: 13px;
       }
       
       .header-container {
         border-bottom: 2.5px solid #2563eb;
-        padding-bottom: 16px;
-        margin-bottom: 18px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
+        padding-bottom: 14px;
+        margin-bottom: 16px;
       }
       .name-title {
         font-size: 26px;
         font-weight: 800;
         color: #0f172a;
         letter-spacing: -0.5px;
+        line-height: 1.2;
       }
       .subtitle {
-        font-size: 13px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 700;
         color: #2563eb;
-        margin-top: 2px;
+        margin-top: 3px;
       }
-      .contact-info {
-        text-align: right;
+      .contact-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
         font-size: 12px;
         color: #475569;
-        line-height: 1.6;
       }
-      .contact-item { font-weight: 500; }
+      .contact-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+      }
       
       .section-block {
         margin-bottom: 16px;
       }
       .section-title {
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        color: #1e3a8a;
-        border-bottom: 1px solid #e2e8f0;
+        color: #0f172a;
+        border-bottom: 1.5px solid #cbd5e1;
         padding-bottom: 3px;
         margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
       }
       .section-content {
         color: #334155;
-        font-size: 13px;
+        font-size: 12.8px;
         line-height: 1.55;
       }
-      
-      .skills-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 4px;
-      }
-      .skill-tag {
-        background: #f1f5f9;
-        color: #1e293b;
-        border: 1px solid #cbd5e1;
-        padding: 3px 9px;
-        border-radius: 6px;
-        font-size: 11.5px;
-        font-weight: 600;
+      .motto-quote {
+        margin-top: 6px;
+        padding: 6px 12px;
+        background: #f8fafc;
+        border-left: 3px solid #3b82f6;
+        font-style: italic;
+        color: #475569;
+        font-size: 12px;
+        border-radius: 0 4px 4px 0;
       }
       
-      .experience-item, .project-item {
-        margin-bottom: 8px;
-      }
       .item-header {
         display: flex;
         justify-content: space-between;
@@ -93,15 +86,49 @@
         color: #0f172a;
       }
       .item-sub {
-        font-size: 12px;
-        color: #64748b;
-        font-weight: 500;
+        font-size: 12.5px;
+        color: #2563eb;
+        font-weight: 600;
         margin-bottom: 3px;
+      }
+      .bullet-list {
+        margin-left: 18px;
+        margin-top: 4px;
+        color: #334155;
+        font-size: 12.5px;
+      }
+      .bullet-list li {
+        margin-bottom: 3px;
+      }
+      
+      .skill-category {
+        margin-bottom: 6px;
+      }
+      .skill-cat-title {
+        font-size: 11.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: #475569;
+        margin-bottom: 4px;
+      }
+      .skills-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .skill-tag {
+        background: #f1f5f9;
+        color: #1e293b;
+        border: 1px solid #cbd5e1;
+        padding: 2.5px 8px;
+        border-radius: 5px;
+        font-size: 11.5px;
+        font-weight: 600;
       }
       
       .footer-badge {
         margin-top: 24px;
-        padding-top: 10px;
+        padding-top: 8px;
         border-top: 1px dashed #cbd5e1;
         font-size: 10.5px;
         color: #94a3b8;
@@ -112,55 +139,50 @@
   </head>
   <body>
     <div class="header-container">
-      <div>
-        <div class="name-title">{{name}}</div>
-        <div class="subtitle">{{role}}</div>
-      </div>
-      <div class="contact-info">
-        <div class="contact-item">{{email}}</div>
-        <div class="contact-item">{{phone}}</div>
-        <div class="contact-item">{{location}}</div>
+      <div class="name-title">{{name}}</div>
+      <div class="subtitle">{{role}}</div>
+      <div class="contact-row">
+        <span class="contact-item">📧 {{email}}</span>
+        <span class="contact-item">📱 {{phone}}</span>
+        <span class="contact-item">📍 {{location}}</span>
+        <span class="contact-item">🔗 {{links}}</span>
       </div>
     </div>
 
     <div class="section-block">
-      <div class="section-title">Career Objective & Summary</div>
+      <div class="section-title">Professional Summary</div>
       <div class="section-content">{{summary}}</div>
+      {{motto_block}}
     </div>
 
     <div class="section-block">
-      <div class="section-title">Technical Expertise & Competencies</div>
-      <div class="skills-grid">
-        {{skills_tags}}
-      </div>
+      <div class="section-title">Education & Academic Background</div>
+      {{education_entries}}
     </div>
 
     <div class="section-block">
-      <div class="section-title">Education & Credentials</div>
-      <div class="experience-item">
-        <div class="item-header">
-          <span>{{education}}</span>
-          <span style="color: #64748b; font-weight: normal;">{{gradYear}}</span>
-        </div>
-        <div class="item-sub">{{university}}</div>
-      </div>
+      <div class="section-title">Industrial Training & Experience</div>
+      {{experience_entries}}
     </div>
 
     <div class="section-block">
-      <div class="section-title">Key Projects & Hands-On Work</div>
-      <div class="project-item">
-        <div class="section-content">{{projects}}</div>
-      </div>
+      <div class="section-title">Key Projects</div>
+      {{projects_entries}}
     </div>
 
     <div class="section-block">
-      <div class="section-title">Languages & Certifications</div>
-      <div class="section-content">{{languages}} • {{certifications}}</div>
+      <div class="section-title">Technical Skillset</div>
+      {{skills_categorized}}
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Hackathons & Key Accomplishments</div>
+      <div class="section-content">{{accomplishments}}</div>
     </div>
 
     <div class="footer-badge">
-      <span>Verified Student Portfolio • ATS Standard Compliant</span>
-      <span>Generated with CareerSarthi Global Suite</span>
+      <span>Verified Multi-Section Portfolio • ATS Standard Compliant</span>
+      <span>VynkAI CareerForge Global Suite</span>
     </div>
   </body>
 </html>
