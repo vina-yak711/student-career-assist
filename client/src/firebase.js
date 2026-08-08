@@ -13,19 +13,25 @@ const firebaseConfig = {
   measurementId: "G-98XBB4Y7VB"
 }
 
-// Initialize Firebase
+// Initialize Firebase App
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const googleProvider = new GoogleAuthProvider()
+googleProvider.setCustomParameters({ prompt: 'select_account' })
 export const db = getFirestore(app)
 
-// Google Login Helper
+// Google Login with clear error handling
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider)
     return result.user
   } catch (error) {
     console.error('Google Sign-in Error:', error)
+    if (error.code === 'auth/unauthorized-domain') {
+      alert('⚠️ Firebase Authorized Domain Setup: Please add "client-rust-ten-69.vercel.app" in Firebase Console > Authentication > Settings > Authorized Domains.')
+    } else if (error.code === 'auth/configuration-not-found') {
+      alert('⚠️ Please enable Google Provider in Firebase Console > Authentication > Sign-in method > Google > Enable.')
+    }
     throw error
   }
 }
@@ -40,9 +46,12 @@ export const logOut = async () => {
   }
 }
 
-// Save Resume to Firestore Cloud
+// Save Resume to Firestore Cloud + Local Storage Backup
 export const saveResumeToCloud = async (userId, candidateData) => {
   try {
+    // 1. Local backup
+    localStorage.setItem(`vynkai_resume_${userId}`, JSON.stringify(candidateData))
+    // 2. Firestore Cloud Save
     const userDocRef = doc(db, 'resumes', userId)
     await setDoc(userDocRef, {
       ...candidateData,
@@ -51,11 +60,13 @@ export const saveResumeToCloud = async (userId, candidateData) => {
     return true
   } catch (error) {
     console.error('Error saving to cloud:', error)
-    throw error
+    // Fallback to local storage
+    localStorage.setItem(`vynkai_resume_${userId}`, JSON.stringify(candidateData))
+    return true
   }
 }
 
-// Load Resume from Firestore Cloud
+// Load Resume from Firestore Cloud or Local Storage Backup
 export const loadResumeFromCloud = async (userId) => {
   try {
     const userDocRef = doc(db, 'resumes', userId)
@@ -63,10 +74,13 @@ export const loadResumeFromCloud = async (userId) => {
     if (docSnap.exists()) {
       return docSnap.data()
     }
-    return null
+    // Fallback to local storage if Firestore is empty
+    const local = localStorage.getItem(`vynkai_resume_${userId}`)
+    return local ? JSON.parse(local) : null
   } catch (error) {
     console.error('Error loading from cloud:', error)
-    return null
+    const local = localStorage.getItem(`vynkai_resume_${userId}`)
+    return local ? JSON.parse(local) : null
   }
 }
 
