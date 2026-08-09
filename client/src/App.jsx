@@ -75,7 +75,26 @@ const TRANSLATIONS = {
       coverLetter: 'Cold Email & Pitch',
       jobs: 'Internships & Jobs',
       freelance: 'Freelance Hub',
-      roadmaps: 'Roadmaps & Prep'
+      roadmaps: 'Roadmaps & Prep',
+      contact: 'About & Contact Developer'
+    },
+    contact: {
+      title: 'About Creator, Contact & Feedback Hub',
+      subtitle: 'Connect directly with Vinayak (Creator of VynkAI CareerForge) for suggestions, partnerships, and developer support.',
+      whatsappTitle: 'Direct WhatsApp Chat',
+      whatsappSub: 'Instant response on WhatsApp',
+      instaTitle: 'Instagram Direct (DM)',
+      instaSub: 'Follow & connect @vinayak_tech',
+      emailTitle: 'Direct Email Support',
+      emailSub: 'Send your suggestions & questions',
+      githubTitle: 'Official GitHub Repository',
+      githubSub: 'Check code & contribute on GitHub',
+      formTitle: 'Send Instant Feedback or Feature Request',
+      nameLabel: 'Your Name',
+      contactLabel: 'Your Phone or Email',
+      typeLabel: 'Message Type',
+      msgLabel: 'Your Feedback / Feature Suggestion',
+      btnSend: 'Send Message to Vinayak (WhatsApp / Mail)'
     },
     auth: {
       login: 'Sign in with Google',
@@ -198,7 +217,26 @@ const TRANSLATIONS = {
       coverLetter: 'Cold Email & कव्हर लेटर',
       jobs: 'इंटर्नशिप्स & जॉब्स',
       freelance: 'फ्रीलान्सिंग हब',
-      roadmaps: 'रोडमॅप & मुलाखत तयारी'
+      roadmaps: 'रोडमॅप & मुलाखत तयारी',
+      contact: 'माहिती & संपर्क (About)'
+    },
+    contact: {
+      title: 'निर्माता माहिती, संपर्क व फीडबॅक हब (About & Contact)',
+      subtitle: 'VynkAI CareerForge चे निर्माता विनायक यांच्याशी थेट WhatsApp, Instagram किंवा Email वर संपर्क साधा.',
+      whatsappTitle: 'थेट WhatsApp चॅट (Instant Chat)',
+      whatsappSub: 'WhatsApp वर त्वरित संवाद साधा',
+      instaTitle: 'Instagram प्रोफाईल (DM)',
+      instaSub: 'फॉलो आणि मेसेज करा @vinayak_tech',
+      emailTitle: 'थेट ईमेल पाठवा (Email Inquiry)',
+      emailSub: 'तुमच्या सूचना आणि प्रश्न पाठवा',
+      githubTitle: 'अधिकृत GitHub रिपॉझिटरी',
+      githubSub: 'कोड पाहा आणि GitHub वर योगदान द्या',
+      formTitle: 'थेट सूचना / अभिप्राय पाठवा (Feedback Form)',
+      nameLabel: 'तुमचे पूर्ण नाव',
+      contactLabel: 'तुमचा फोन किंवा ईमेल',
+      typeLabel: 'संदेशाचा प्रकार',
+      msgLabel: 'तुमचा संदेश किंवा सूचना',
+      btnSend: 'विनायक यांना मेसेज पाठवा (WhatsApp / Mail)'
     },
     auth: {
       login: 'Google ने लॉगिन करा',
@@ -975,8 +1013,12 @@ export default function App() {
   const [calcRate, setCalcRate] = useState(30)
   const [proposalService, setProposalService] = useState('react')
 
-  // 10. Contact Creator State
+  // 10. Contact Creator & Feedback State
   const [showContactModal, setShowContactModal] = useState(false)
+  const [feedbackName, setFeedbackName] = useState('')
+  const [feedbackContact, setFeedbackContact] = useState('')
+  const [feedbackType, setFeedbackType] = useState('Feature Suggestion')
+  const [feedbackMsg, setFeedbackMsg] = useState('')
 
   // 11. Flashcards
   const [revealedAnswers, setRevealedAnswers] = useState({})
@@ -1532,7 +1574,8 @@ ${candidate.links}`
               { key: 'coverLetter', label: t.nav.coverLetter, icon: Mail },
               { key: 'jobs', label: t.nav.jobs, icon: Briefcase },
               { key: 'freelance', label: t.nav.freelance, icon: DollarSign },
-              { key: 'roadmaps', label: t.nav.roadmaps, icon: Rocket }
+              { key: 'roadmaps', label: t.nav.roadmaps, icon: Rocket },
+              { key: 'contact', label: t.nav.contact || 'About & Contact', icon: PhoneCall }
             ].map(({ key, label, icon: Icon }) => (
               <button
                 key={key}
@@ -2714,6 +2757,133 @@ ${candidate.links}`
                     </div>
                   )
                 })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* VIEW 8: ABOUT & CONTACT CREATOR */}
+        {/* ============================================================ */}
+        {activeTab === 'contact' && (
+          <div className="space-y-6 w-full">
+            <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full`}>
+              <h3 className={`text-xl sm:text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'} flex items-center gap-2.5`}>
+                <PhoneCall className="w-6 h-6 text-indigo-600" />
+                {t.contact?.title || 'About Creator, Contact & Feedback Hub'}
+              </h3>
+              <p className={`text-xs sm:text-sm ${textMuted} mt-1`}>
+                {t.contact?.subtitle || 'Connect directly for suggestions, partnerships, and developer support.'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+              {/* Direct Links */}
+              <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full space-y-4`}>
+                <h4 className="text-base font-bold flex items-center gap-2 mb-2">
+                  <UserIcon className="w-4 h-4 text-indigo-600" />
+                  Connect Directly
+                </h4>
+                
+                <a href="https://wa.me/?text=Hi%20Vinayak,%20I%20checked%20out%20VynkAI%20CareerForge" target="_blank" rel="noreferrer" className={`flex items-center justify-between p-4 rounded-2xl ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} border hover:border-emerald-500/50 transition group`}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                      <Send className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className={`font-bold text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{t.contact?.whatsappTitle || 'Direct WhatsApp Chat'}</div>
+                      <div className="text-xs text-slate-500">{t.contact?.whatsappSub || 'Instant response on WhatsApp'}</div>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition" />
+                </a>
+
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" className={`flex items-center justify-between p-4 rounded-2xl ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} border hover:border-rose-500/50 transition group`}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-500">
+                      <Instagram className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className={`font-bold text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{t.contact?.instaTitle || 'Instagram Direct (DM)'}</div>
+                      <div className="text-xs text-slate-500">{t.contact?.instaSub || 'Follow & connect @vinayak_tech'}</div>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-rose-500 transition" />
+                </a>
+
+                <a href="mailto:contact.vinayak.dev@gmail.com" className={`flex items-center justify-between p-4 rounded-2xl ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} border hover:border-indigo-500/50 transition group`}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className={`font-bold text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{t.contact?.emailTitle || 'Direct Email Support'}</div>
+                      <div className="text-xs text-slate-500">{t.contact?.emailSub || 'Send your suggestions'}</div>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 transition" />
+                </a>
+
+                <a href="https://github.com/vina-yak711" target="_blank" rel="noreferrer" className={`flex items-center justify-between p-4 rounded-2xl ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'} border hover:border-slate-500/50 transition group`}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-white">
+                      <Github className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className={`font-bold text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{t.contact?.githubTitle || 'GitHub Repository'}</div>
+                      <div className="text-xs text-slate-500">{t.contact?.githubSub || 'Check code on GitHub'}</div>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-slate-500 transition" />
+                </a>
+              </div>
+
+              {/* Feedback Form */}
+              <div className={`${cardBg} rounded-3xl p-6 sm:p-8 border w-full flex flex-col`}>
+                <h4 className="text-base font-bold flex items-center gap-2 mb-4">
+                  <MessageSquare className="w-4 h-4 text-indigo-600" />
+                  {t.contact?.formTitle || 'Send Instant Feedback'}
+                </h4>
+                
+                <div className="space-y-4 flex-1">
+                  <div>
+                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{t.contact?.nameLabel || 'Your Name'}</label>
+                    <input type="text" value={feedbackName} onChange={e => setFeedbackName(e.target.value)} placeholder="Your Name" className={`${inputBg} w-full px-4 py-2.5 rounded-xl border text-sm font-semibold outline-none focus:border-indigo-500 transition`} />
+                  </div>
+                  <div>
+                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{t.contact?.contactLabel || 'Your Phone or Email'}</label>
+                    <input type="text" value={feedbackContact} onChange={e => setFeedbackContact(e.target.value)} placeholder="Phone or Email" className={`${inputBg} w-full px-4 py-2.5 rounded-xl border text-sm font-semibold outline-none focus:border-indigo-500 transition`} />
+                  </div>
+                  <div>
+                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{t.contact?.typeLabel || 'Message Type'}</label>
+                    <select value={feedbackType} onChange={e => setFeedbackType(e.target.value)} className={`${inputBg} w-full px-4 py-2.5 rounded-xl border text-sm font-semibold outline-none focus:border-indigo-500 transition`}>
+                      <option>Feature Suggestion</option>
+                      <option>Bug Report</option>
+                      <option>Partnership</option>
+                      <option>Other / General</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={`block text-xs font-bold mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{t.contact?.msgLabel || 'Your Message'}</label>
+                    <textarea value={feedbackMsg} onChange={e => setFeedbackMsg(e.target.value)} placeholder="Write your message here..." rows={3} className={`${inputBg} w-full px-4 py-2.5 rounded-xl border text-sm font-semibold outline-none focus:border-indigo-500 transition resize-none`}></textarea>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                  <button 
+                    onClick={() => {
+                      if(!feedbackName || !feedbackMsg) {
+                        alert('Please enter name and message');
+                        return;
+                      }
+                      const msg = `Hi Vinayak, I am ${feedbackName}. Contact: ${feedbackContact}. Type: ${feedbackType}. Message: ${feedbackMsg}`;
+                      window.open(`mailto:contact.vinayak.dev@gmail.com?subject=${encodeURIComponent(feedbackType)}&body=${encodeURIComponent(msg)}`);
+                    }}
+                    className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
+                    <Send className="w-4 h-4" />
+                    {t.contact?.btnSend || 'Send Message'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
